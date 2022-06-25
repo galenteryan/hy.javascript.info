@@ -1,31 +1,31 @@
 
-# Property getters and setters
+# Հատկության ստացողներ (getters) և տեղադրողներ (setters)
 
-There are two kinds of object properties.
+Գոյություն ունեն օբյեկտի երկու տեսակի հատկություններ:
 
-The first kind is *data properties*. We already know how to work with them. All properties that we've been using until now were data properties.
+Առաջինը *տվյալային հատկություններ* (data properties) տեսակն է: Մենք արդեն գիտենք, թե ինչպես աշխատենք դրանց հետ: Բոլոր հատկությունները, որոնք մինչև հիմա օգտագործում էինք, տվյալային հատկություններ էին:
 
-The second type of property is something new. It's an *accessor property*. They are essentially functions that execute on getting and setting a value, but look like regular properties to an external code.
+Հատկության երկրորդ տեսակը մի նոր բան է: Դա *մուտքային հատկություն* (accessor property) է. Դրանք ըստ իրենց էության ֆունկցիաներ են, որոնք կատարվում են արժեքի ստացման և տեղադրման ժամանակ, բայց արտաքին կոդից սովորական հատկությունների տեսք ունեն:
 
-## Getters and setters
+## Գեթթերներ և սեթթերներ
 
-Accessor properties are represented by "getter" and "setter" methods. In an object literal they are denoted by `get` and `set`:
+Մուտքային հատկությունները ներկայացված են «գեթթեր» (ստացող) և «սեթթեր» (տեղադրող) մեթոդներով: Օբյեկտում բառացիորեն դրանք նշվում են որպես `get` և `set`.
 
 ```js
 let obj = {
   *!*get propName()*/!* {
-    // getter, the code executed on getting obj.propName
+    // գեթթեր, կոդը կատարվում է obj.propName ստացման ժամանակ
   },
 
   *!*set propName(value)*/!* {
-    // setter, the code executed on setting obj.propName = value
+    // սեթթեր, կոդը կատարվում է obj.propName = value տեղադրման ժամանակ
   }
 };
 ```
 
-The getter works when `obj.propName` is read, the setter -- when it is assigned.
+Գեթթերն աշխատում է, երբ `obj.propName`-ն ընթերցվում է, իսկ սեթթերը՝ երբ նշանակվում է:
 
-For instance, we have a `user` object with `name` and `surname`:
+Օրինակի համար, մենք ունենք `user` օբյեկտ՝ `name` և `surname` հատկություններով.
 
 ```js
 let user = {
@@ -34,7 +34,7 @@ let user = {
 };
 ```
 
-Now we want to add a `fullName` property, that should be `"John Smith"`. Of course, we don't want to copy-paste existing information, so we can implement it as an accessor:
+Այժմ ցանկանում ենք ավելացնել `fullName` հատկությունը, որը պետք է լինի `"John Smith"`: Իհարկե, մենք չենք ցանկանում կլոնավորել առկա ինֆորմացիան, այնպես որ կարող ենք իրագործել այն որպես մուտքային մեթոդ․
 
 ```js run
 let user = {
@@ -53,9 +53,9 @@ alert(user.fullName); // John Smith
 */!*
 ```
 
-From the outside, an accessor property looks like a regular one. That's the idea of accessor properties. We don't *call* `user.fullName` as a function, we *read* it normally: the getter runs behind the scenes.
+Մուտքային հատկությունն արտաքինից սովորական հատկության տեսք ունի: Դա է մուտքային հատկությունների գաղափարը: Մենք չենք *կանչում* `user.fullName`-ը որպես ֆունկցիա, այլ *ընթերցում* ենք այն սովորականի պես. գեթթերն աշխատում է «կուլիսների ետևում»:
 
-As of now, `fullName` has only a getter. If we attempt to assign `user.fullName=`, there will be an error:
+Այս պահին `fullName`-ն ունի միայն գեթթեր: Եթե փորձենք արժեվորել `user.fullName=`, ապա տեղի կունենա սխալ․
 
 ```js run
 let user = {
@@ -65,11 +65,11 @@ let user = {
 };
 
 *!*
-user.fullName = "Test"; // Error (property has only a getter)
+user.fullName = "Թեստ"; // Սխալ (հատկությունն ունի միայն գեթթեր)
 */!*
 ```
 
-Let's fix it by adding a setter for `user.fullName`:
+Եկեք շտկենք դա՝ ավելացնելով սեթթեր `user.fullName`-ի համար.
 
 ```js run
 let user = {
@@ -87,29 +87,29 @@ let user = {
 */!*
 };
 
-// set fullName is executed with the given value.
-user.fullName = "Alice Cooper";
+// set fullName կատարվում է տրված արժեքով
+user.fullName = "Գասպար Գալենտերյան";
 
-alert(user.name); // Alice
-alert(user.surname); // Cooper
+alert(user.name); // Գասպար
+alert(user.surname); // Գալենտերյան
 ```
 
-As the result, we have a "virtual" property `fullName`. It is readable and writable.
+Արդյունքում մենք ունենք «վիրտուալ» հատկություն `fullName`: Այն հասանելի է ընթերցելու և արժեվորելու համար:
 
-## Accessor descriptors
+## Մուտքային տվյալների նկարագրիչներ
 
-Descriptors for accessor properties are different from those for data properties.
+Մուտքային հատկությունների նկարագրիչները տարբերվում են տվյալային հատկությունների նկարագրիչներից:
 
-For accessor properties, there is no `value` or `writable`, but instead there are `get` and `set` functions.
+Մուտքային հատկությունների համար չկա `value` կամ `writable`, բայց փոխարենը կան `get` և `set` ֆունկցիաներ:
 
-That is, an accessor descriptor may have:
+Այսինքն, մուտքային հատկությունների նկարագրիչը կարող է ունենալ.
 
-- **`get`** -- a function without arguments, that works when a property is read,
-- **`set`** -- a function with one argument, that is called when the property is set,
-- **`enumerable`** -- same as for data properties,
-- **`configurable`** -- same as for data properties.
+- **`get`** -- առանց արգումենտների ֆունկցիա, որն աշխատում է հատկության ընթերցման ժամանակ,
+- **`set`** -- մեկ արգումենտով ֆունկցիա, որը կանչվում է հատկության արժեվորման ժամանակ,
+- **`enumerable`** -- նույնը, ինչ տվյալային հատկությունների համար,
+- **`configurable`** -- նույնը, ինչ տվյալային հատկությունների համար:
 
-For instance, to create an accessor `fullName` with `defineProperty`, we can pass a descriptor with `get` and `set`:
+Օրինակի համար, `defineProperty`-ով `fullName` մուտքային հատկություն ստեղծելու համար, մենք կարող ենք փոխանցել նկարագրիչը `get`-ով և `set`-ով.
 
 ```js run
 let user = {
@@ -134,9 +134,9 @@ alert(user.fullName); // John Smith
 for(let key in user) alert(key); // name, surname
 ```
 
-Please note that a property can be either an accessor (has `get/set` methods) or a data property (has a `value`), not both.
+Նկատի ունեցեք, որ հատկությունը կարող է լինել մուտքային (ունի `get/set` մեթոդներ) կամ տվյալային (ունի `value`), բայց ոչ՝ երկուսն էլ միաժամանակ:
 
-If we try to supply both `get` and `value` in the same descriptor, there will be an error:
+Եթե փորձենք կիրառել երկուսն էլ՝ `get` և `value` միևնույն նկարագրիչում, ապա տեղի կունենա սխալ.
 
 ```js run
 *!*
