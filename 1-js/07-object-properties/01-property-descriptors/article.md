@@ -1,40 +1,40 @@
 
-# Property flags and descriptors
+# Հատկության դրոշակներ և նկարագրիչներ
 
-As we know, objects can store properties.
+Ինչպես գիտենք, օբյեկտները կարող են պահել հատկություներ:
 
-Until now, a property was a simple "key-value" pair to us. But an object property is actually a more flexible and powerful thing.
+Մինչև հիմա հատկությունը պարզ «բանալի-արժեք» զույգ էր մեզ համար: Բայց օբյեկտի հատկությունն իրականում ավելի ճկուն և հզոր բան է:
 
-In this chapter we'll study additional configuration options, and in the next we'll see how to invisibly turn them into getter/setter functions.
+Այս գլխում մենք կսովորենք լրացուցիչ կարգավորման պարամետրեր, սիկ հաջորդ գլխում կտեսնենք ինչպես դրանք անտեսանելի կերպով վերածել գեթթեր/սեթթեր ֆունկցիաների:
 
-## Property flags
+## Հատկության դրոշակներ
 
-Object properties, besides a **`value`**, have three special attributes (so-called "flags"):
+Բացի **`value`**-ից, օբյեկտի հատկություններն ունեն երեք հատուկ ատրիբուտներ (այսպես կոչված «դրոշակներ»):
 
-- **`writable`** -- if `true`, the value can be changed, otherwise it's read-only.
-- **`enumerable`** -- if `true`, then listed in loops, otherwise not listed.
-- **`configurable`** -- if `true`, the property can be deleted and these attributes can be modified, otherwise not.
+- **`writable`** -- եթե `true` է, ապա արժեքը կարող է փոփոխվել, այլապես այն միայն ընթեռնելի է:
+- **`enumerable`** -- եթե `true` է, ապա թվարկվում է ցիկլերում, այլապես չի թվարկվում:
+- **`configurable`** -- եթե `true` է, ապա հատկությունը կարող է ջնջվել, իսկ այդ ատրիբուտները կարող են փոփոխվել, այլապես՝ ոչ։
 
-We didn't see them yet, because generally they do not show up. When we create a property "the usual way", all of them are `true`. But we also can change them anytime.
+Մենք դեռ չենք հանդիպել դրանց, որովհետև հիմնականում դրանքք չեն ցուցադրվում: Երբ մենք ստեղծում ենք հատկություն «սովորական ձևով», դրանք բոլորը `true` են։ Բայց մենք կարող ենք նաև փոփոխել դրանք ցանկացած ժամանակ:
 
-First, let's see how to get those flags.
+Նախ, եկեք տեսնենք, թե ինչպես ստանալ այդ դրոշակները:
 
-The method [Object.getOwnPropertyDescriptor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor) allows to query the *full* information about a property.
+Այս մեթոդը՝ [Object.getOwnPropertyDescriptor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor), թուլ է տալիս հարցում կատարել հատկության *ամբողջական* տեղեկատվության վերաբերյալ:
 
-The syntax is:
+Շարահյուսությունը կլինի.
 ```js
 let descriptor = Object.getOwnPropertyDescriptor(obj, propertyName);
 ```
 
 `obj`
-: The object to get information from.
+: Օբյեկտ, որտեղից տեղեկատվություն ենք ստանալու։
 
 `propertyName`
-: The name of the property.
+: Հատկության անվանումը:
 
-The returned value is a so-called "property descriptor" object: it contains the value and all the flags.
+Վերադարձված արժեքը այսպես կոչված «հատկությունների նկարագրիչ» օբյեկտ է. այն պարունակում է արժեքը և բոլոր դրոշակները:
 
-For instance:
+Օրինակ՝
 
 ```js run
 let user = {
@@ -44,7 +44,7 @@ let user = {
 let descriptor = Object.getOwnPropertyDescriptor(user, 'name');
 
 alert( JSON.stringify(descriptor, null, 2 ) );
-/* property descriptor:
+/* հատկության նկարագրիչ.
 {
   "value": "John",
   "writable": true,
@@ -54,23 +54,23 @@ alert( JSON.stringify(descriptor, null, 2 ) );
 */
 ```
 
-To change the flags, we can use [Object.defineProperty](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty).
+Դրոշակները փոփոխելու համար կարող ենք օգտագործել [Object.defineProperty](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)։
 
-The syntax is:
+Շարահյուսությունը կլինի.
 
 ```js
 Object.defineProperty(obj, propertyName, descriptor)
 ```
 
 `obj`, `propertyName`
-: The object and its property to apply the descriptor.
+: Օբյեկտը և իր հատկությունը, որի համար պետք է կիրառվի նկարագրիչը:
 
 `descriptor`
-: Property descriptor object to apply.
+: Հատկության համար կիրառվող նկարագրիչ օբյեկտը։
 
-If the property exists, `defineProperty` updates its flags. Otherwise, it creates the property with the given value and flags; in that case, if a flag is not supplied, it is assumed `false`.
+Եթե հատկությունը գոյություն ունի, `defineProperty`-ն թարմացնում է դրա դրոշակները. Այլապես, այն ստեղծում է հատկությունը նշված արժեքով և դրոշակներով և այդ դեպքում, եթե դրոշակը չի նշվել, այն արժեվորվում է որպես `false`։
 
-For instance, here a property `name` is created with all falsy flags:
+Օրինակի համար, այստեղ ստեղծվում է `name` հատկությունը, որի բոլոր դրոշակները կեղծ արժեք ունեն․
 
 ```js run
 let user = {};
@@ -96,9 +96,9 @@ alert( JSON.stringify(descriptor, null, 2 ) );
  */
 ```
 
-Compare it with "normally created" `user.name` above: now all flags are falsy. If that's not what we want then we'd better set them to `true` in `descriptor`.
+Համեմատեք այն «սովորական ձևով ստեղծված» վերոնշյալ `user.name`-ի հետ․ այժմ բոլոր դրոշակները կեղծ են: Եթե դա այն չէ, ինչ մենք ուզում ենք, ապա ավելի լավ է դրանք սահմանենք `descriptor`-ում՝ տալով `true` արժեք։
 
-Now let's see effects of the flags by example.
+Այժմ եկեք տեսնենք դրոշակների ազդեցությունը օրինակով․
 
 ## Non-writable
 
