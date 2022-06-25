@@ -151,11 +151,11 @@ Object.defineProperty({}, 'prop', {
 });
 ```
 
-## Smarter getters/setters
+## Խելացի գեթթերներ և սեթթերներ
 
-Getters/setters can be used as wrappers over "real" property values to gain more control over operations with them.
+Գեթթերներն ու սեթթերները կարող են օգտագործվել որպես հատկության «իրական» արժեքների փաթաթաններ, ավելի շատ հսկողություն ձեռք բերելու համար նրանց հետ գործողությունների ժամանակ:
 
-For instance, if we want to forbid too short names for `user`, we can have a setter `name` and keep the value in a separate property `_name`:
+Օրինակի համար, եթե ցանկանում ենք արգելել շատ կարճ անունները `user`-ի համար, մենք կարող ենք ունենալ `name` սեթթեր և պահել արժեքը առանձին հատկությունով՝ `_name`․
 
 ```js run
 let user = {
@@ -165,22 +165,22 @@ let user = {
 
   set name(value) {
     if (value.length < 4) {
-      alert("Name is too short, need at least 4 characters");
+      alert("Անունը շատ կարճ է, պետք է լինի նվազագույնը 4 նիշ");
       return;
     }
     this._name = value;
   }
 };
 
-user.name = "Pete";
-alert(user.name); // Pete
+user.name = "Պողոս";
+alert(user.name); // Պողոս
 
-user.name = ""; // Name is too short...
+user.name = ""; // Անունը շատ կարճ է...
 ```
 
-So, the name is stored in `_name` property, and the access is done via getter and setter.
+Այսպիսով, անունը պահվում է `_name` հատկության մեջ, իսկ հասանելիությունը լինում է գեթթերի և սեթթերի միջոցով:
 
-Technically, external code is able to access the name directly by using `user._name`. But there is a widely known convention that properties starting with an underscore `"_"` are internal and should not be touched from outside the object.
+Տեխնիկապես արտաքին կոդը ի վիճակի է ուղղակիորեն մուտք ունենալ անվանը՝ օգտագործելով `user._name`: Բայց, gwjwu2jwun wuni լայնորեն հայտնի կոնվենցիա, որ ներքևի գծով `"_"` սկսվող հատկությունները համարվում են ներքին և պետք է անձեռնմխելի լինեն օբյեկտից դուրս:
 
 
 ## Using for compatibility
