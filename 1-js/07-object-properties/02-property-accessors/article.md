@@ -180,14 +180,14 @@ user.name = ""; // Անունը շատ կարճ է...
 
 Այսպիսով, անունը պահվում է `_name` հատկության մեջ, իսկ հասանելիությունը լինում է գեթթերի և սեթթերի միջոցով:
 
-Տեխնիկապես արտաքին կոդը ի վիճակի է ուղղակիորեն մուտք ունենալ անվանը՝ օգտագործելով `user._name`: Բայց, gwjwu2jwun wuni լայնորեն հայտնի կոնվենցիա, որ ներքևի գծով `"_"` սկսվող հատկությունները համարվում են ներքին և պետք է անձեռնմխելի լինեն օբյեկտից դուրս:
+Տեխնիկապես արտաքին կոդը ի վիճակի է ուղղակիորեն մուտք ունենալ անվանը՝ օգտագործելով `user._name`: Բայց, գոյություն ունի լայնորեն հայտնի կոնվենցիա, որ ներքևի գծով `«_»` սկսվող հատկությունները համարվում են ներքին և պետք է անձեռնմխելի լինեն օբյեկտից դուրս:
 
 
-## Using for compatibility
+## Համատեղելիության համար օգտագործում
 
-One of the great uses of accessors is that they allow to take control over a "regular" data property at any moment by replacing it with a getter and a setter and tweak its behavior.
+Մուտքային հատկությունների մեծ կիրառություններից մեկն այն է, որ դրանք թույլ են տալիս ցանկացած պահի վերահսկել «սովորական» տվյալային հատկությունը՝ փոխարինելով այն գեթթերով և սեթթերով, և կարգավորել պահելաձևը:
 
-Imagine we started implementing user objects using data properties `name` and `age`:
+Պատկերացրեք, որ մենք սկսել ենք ներդնել օգտվողի օբյեկտներ՝ օգտագործելով տվյալային `name` և `age` հատկությունները.
 
 ```js
 function User(name, age) {
@@ -200,7 +200,7 @@ let john = new User("John", 25);
 alert( john.age ); // 25
 ```
 
-...But sooner or later, things may change. Instead of `age` we may decide to store `birthday`, because it's more precise and convenient:
+...բայց վաղ թե ուշ, կարող է բան փոխվել և `age`-ի փոխարեն մենք միգուցե որոշենք `birthday`-ը պահել, որովհետև դա ավելի ճշգրիտ է և հարմար.
 
 ```js
 function User(name, birthday) {
@@ -211,13 +211,13 @@ function User(name, birthday) {
 let john = new User("John", new Date(1992, 6, 1));
 ```
 
-Now what to do with the old code that still uses `age` property?
+Հիմա ի՞նչ անել հին կոդի հետ, որը դեռ օգտագործում է `age` հատկությունը:
 
-We can try to find all such places and fix them, but that takes time and can be hard to do if that code is used by many other people. And besides, `age` is a nice thing to have in `user`, right?
+Մենք կարող ենք փորձել գտնել բոլոր նմանատիպ հատվածները և շտկել դրանք, բայց դա ժամանակ է պահանջում և կարող է դժվար լինել, եթե այդ կոդը օգտագործվում է շատ այլ մարդկանց կողմից: Եվ բացի այդ, `age`-ը լավ բան է `user`-ում ունենալու համար, այդպես չէ՞:
 
-Let's keep it.
+Եկեք պահենք այն:
 
-Adding a getter for `age` solves the problem:
+Գեթթերի ավելացումը `age`-ի համար կլուծի խնդիրը.
 
 ```js run no-beautify
 function User(name, birthday) {
@@ -237,8 +237,8 @@ function User(name, birthday) {
 
 let john = new User("John", new Date(1992, 6, 1));
 
-alert( john.birthday ); // birthday is available
-alert( john.age );      // ...as well as the age
+alert( john.birthday ); // ծննդյան օրը հասանելի է
+alert( john.age );      // ...ինչպես նաև տարիքը
 ```
 
-Now the old code works too and we've got a nice additional property.
+Այժմ հին կոդը նույնպես աշխատում է, և մենք ունենք լրացուցիչ լավ հատկություն:
