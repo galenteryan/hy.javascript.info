@@ -1,3 +1,3 @@
-# Object properties configuration
+# Օբյեկտի հատկությունների կազմաձևում
 
-In this section we return to objects and study their properties even more in-depth.
+Այս բաժնում մենք վերադառնում ենք օբյեկտներին և ավելի խորությամբ կուսումնասիրենք դրանց հատկությունները:
