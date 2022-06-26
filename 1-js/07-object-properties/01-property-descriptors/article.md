@@ -5,7 +5,7 @@
 
 Մինչև հիմա հատկությունը պարզ «բանալի-արժեք» զույգ էր մեզ համար: Բայց օբյեկտի հատկությունն իրականում ավելի ճկուն և հզոր բան է:
 
-Այս գլխում մենք կսովորենք լրացուցիչ կարգավորման պարամետրեր, սիկ հաջորդ գլխում կտեսնենք ինչպես դրանք անտեսանելի կերպով վերածել գեթթեր/սեթթեր ֆունկցիաների:
+Այս գլխում մենք կսովորենք լրացուցիչ կարգավորման պարամետրեր, իսկ հաջորդ գլխում կտեսնենք ինչպես դրանք անտեսանելի կերպով վերածել գեթթեր/սեթթեր ֆունկցիաների:
 
 ## Հատկության դրոշակներ
 
@@ -15,11 +15,11 @@
 - **`enumerable`** -- եթե `true` է, ապա թվարկվում է ցիկլերում, այլապես չի թվարկվում:
 - **`configurable`** -- եթե `true` է, ապա հատկությունը կարող է ջնջվել, իսկ այդ ատրիբուտները կարող են փոփոխվել, այլապես՝ ոչ։
 
-Մենք դեռ չենք հանդիպել դրանց, որովհետև հիմնականում դրանքք չեն ցուցադրվում: Երբ մենք ստեղծում ենք հատկություն «սովորական ձևով», դրանք բոլորը `true` են։ Բայց մենք կարող ենք նաև փոփոխել դրանք ցանկացած ժամանակ:
+Մենք դեռ չենք հանդիպել դրանց, որովհետև հիմնականում դրանք չեն ցուցադրվում: Երբ մենք ստեղծում ենք հատկություն «սովորական ձևով», դրանք բոլորը `true` են։ Բայց մենք կարող ենք նաև փոփոխել դրանք ցանկացած ժամանակ:
 
 Նախ, եկեք տեսնենք, թե ինչպես ստանալ այդ դրոշակները:
 
-Այս մեթոդը՝ [Object.getOwnPropertyDescriptor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor), թուլ է տալիս հարցում կատարել հատկության *ամբողջական* տեղեկատվության վերաբերյալ:
+Այս մեթոդը՝ [Object.getOwnPropertyDescriptor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor), թույլ է տալիս հարցում կատարել հատկության *ամբողջական* տեղեկատվության վերաբերյալ:
 
 Շարահյուսությունը կլինի.
 ```js
@@ -327,23 +327,23 @@ for (let key in user) {
 Կան նաև մեթոդներ, որոնք սահմանափակում են մուտքը դեպի *ամբողջ* օբյեկտ.
 
 [Object.preventExtensions(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/preventExtensions)
-: Forbids the addition of new properties to the object.
+: Արգելում է նոր հատկություններ ավելացնել օբյեկտում։
 
 [Object.seal(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal)
-: Forbids adding/removing of properties. Sets `configurable: false` for all existing properties.
+: Արգելում է հատկությունների ավելացում/հեռացում։ Սահմանում է `configurable: false` բոլոր գոյություն ունեցող հատկությունների համար:
 
 [Object.freeze(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze)
-: Forbids adding/removing/changing of properties. Sets `configurable: false, writable: false` for all existing properties.
+: Արգելում է հատկությունների ավելացում/հեռացում/փոփոխում։ Բոլոր գոյություն ունեցող հատկությունների համար սահմանում է `configurable: false, writable: false`:
 
 And also there are tests for them:
 
 [Object.isExtensible(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isExtensible)
-: Returns `false` if adding properties is forbidden, otherwise `true`.
+: Վերադարձնում է `false`, եթե հատկությունների ավելացումն արգելվում է, այլապես՝ `true`:
 
 [Object.isSealed(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isSealed)
-: Returns `true` if adding/removing properties is forbidden, and all existing properties have `configurable: false`.
+: Վերադարձնում է `true`, եթե արգելվում է հատկությունների ավելացում/հեռացում, իսկ առկա բոլոր հատկություններն ունեն `configurable: false`։
 
 [Object.isFrozen(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isFrozen)
-: Returns `true` if adding/removing/changing properties is forbidden, and all current properties are `configurable: false, writable: false`.
+: Վերադարձնում է `true`, եթե հատկությունների ավելացում/հեռացում/փոփոխում արգելված է, իսկ բոլոր ընթացիկ հատկություններն ունեն `configurable: false, writable: false`:
 
-These methods are rarely used in practice.
+Այս մեթոդները գործնականում հազվադեպ են օգտագործվում:
