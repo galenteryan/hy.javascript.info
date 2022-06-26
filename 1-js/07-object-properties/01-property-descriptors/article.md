@@ -34,7 +34,7 @@ let descriptor = Object.getOwnPropertyDescriptor(obj, propertyName);
 
 Վերադարձված արժեքը այսպես կոչված «հատկությունների նկարագրիչ» օբյեկտ է. այն պարունակում է արժեքը և բոլոր դրոշակները:
 
-Օրինակ՝
+Օրինակ․
 
 ```js run
 let user = {
@@ -68,7 +68,7 @@ Object.defineProperty(obj, propertyName, descriptor)
 `descriptor`
 : Հատկության համար կիրառվող նկարագրիչ օբյեկտը։
 
-Եթե հատկությունը գոյություն ունի, `defineProperty`-ն թարմացնում է դրա դրոշակները. Այլապես, այն ստեղծում է հատկությունը նշված արժեքով և դրոշակներով և այդ դեպքում, եթե դրոշակը չի նշվել, այն արժեվորվում է որպես `false`։
+Եթե հատկությունը գոյություն ունի, `defineProperty`-ն թարմացնում է դրա դրոշակները. Այլապես, այն ստեղծում է հատկությունը նշված արժեքով և դրոշակներով և այդ դեպքում, եթե դրոշակը չի նշվել, այն արժևորվում է որպես `false`։
 
 Օրինակի համար, այստեղ ստեղծվում է `name` հատկությունը, որի բոլոր դրոշակները կեղծ արժեք ունեն․
 
@@ -123,7 +123,7 @@ user.name = "Pete"; // Ախալ․ հնարավոր չէ նշանակել միա
 Այժմ ոչ ոք չի կարող փոփոխել մեր օգտատիրոջ անունը, մինչև նրանք չկիրառեն իրենց `defineProperty`-ն՝ մերը չեղարկելու համար:
 
 ```smart header="Սխալները հայտնվում են միայն խիստ ռեժիմում (strict mode)"
-Ոչ խիստ ռեժիմում (non-strict mode) սխալներ չեն երևում, երբ արժեվորում ենք անգրառելի և նմանատիպ հատկությունները։ Բայց գործողությունը, այնուամենայնիվ, չի հաջողվի: Դրոշակների կանոնները խախտող գործողությունները պարզապես լուռ անտեսվում են ոչ խիստ ռեժիմում:
+Ոչ խիստ ռեժիմում (non-strict mode) սխալներ չեն երևում, երբ արժևորում ենք անգրառելի և նմանատիպ հատկությունները։ Բայց գործողությունը, այնուամենայնիվ, չի հաջողվի: Դրոշակների կանոնները խախտող գործողությունները պարզապես լուռ անտեսվում են ոչ խիստ ռեժիմում:
 ```
 
 Ահա նույն օրինակը, բայց հատկությունը ստեղծվում է զրոյից․
@@ -269,14 +269,14 @@ Object.defineProperty(user, "name", { value: "Pete" });
 ```smart header="Միակ ատրիբուտը, որի փոփոխությունը հնարավոր է․ writable true -> false"
 Դրոշակները փոփոխելու հարցում մի փոքր բացառություն կա:
 
-Անկարգավորելի հատկության համար կարող ենք փոփոխել `writable: true`-ն `false`-ով՝ այդպիսով կանխելով դրա արժեքի փոփոխությունը (պաշտպանության ևս մեկ շերտ ավելացնելու համար)։ Սակայն ոչ հակառակը:
+Անկարգավորելի հատկության համար կարող ենք փոփոխել `writable: true`-ն `false`-ով՝ այդպիսով կանխելով դրա արժեքի փոփոխությունը (պաշտպանության ևս մեկ շերտ ավելացնելու համար), սակայն ոչ հակառակը:
 ```
 
 ## Object.defineProperties
 
-There's a method [Object.defineProperties(obj, descriptors)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties) that allows to define many properties at once.
+Կա մեթոդ՝ [Object.defineProperties(obj, descriptors)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties), որը թույլ է տալիս նշել մի քանի հատկություններ միանգամից։
 
-The syntax is:
+Շարահյուսությունը կլինի․
 
 ```js
 Object.defineProperties(obj, {
@@ -286,7 +286,7 @@ Object.defineProperties(obj, {
 });
 ```
 
-For instance:
+Օրինակ․
 
 ```js
 Object.defineProperties(user, {
@@ -296,19 +296,19 @@ Object.defineProperties(user, {
 });
 ```
 
-So, we can set many properties at once.
+Այսպիսով, մենք կարող ենք միանգամից բազմաթիվ հատկություններ սահմանել:
 
 ## Object.getOwnPropertyDescriptors
 
-To get all property descriptors at once, we can use the method [Object.getOwnPropertyDescriptors(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors).
+Բոլոր հատկությունների նկարագրիչները միանգամից ստանալու համար կարող ենք օգտագործել [Object.getOwnPropertyDescriptors(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors) մեթոդը։
 
-Together with `Object.defineProperties` it can be used as a "flags-aware" way of cloning an object:
+Այն `Object.defineProperties`-ի հետ միասին կարող է օգտագործվել որպես օբյեկտի կլոնավորման միջոց՝ ներառված դրոշակները.
 
 ```js
 let clone = Object.defineProperties({}, Object.getOwnPropertyDescriptors(obj));
 ```
 
-Normally when we clone an object, we use an assignment to copy properties, like this:
+Սովորաբար, երբ կլոնավորում ենք օբյեկտը, օգտագործում ենք արժևորում՝ հատկությունները պատճենելու համար, ինչպես այստեղ.
 
 ```js
 for (let key in user) {
@@ -316,9 +316,9 @@ for (let key in user) {
 }
 ```
 
-...But that does not copy flags. So if we want a "better" clone then `Object.defineProperties` is preferred.
+...Բայց սա չի կլոնավորում դրոշակները։ Այսպիսով, եթե ուզում ենք «ավելի լավ» կլոն, ապա նախընտրելի է `Object.defineProperties`-ը:
 
-Another difference is that `for..in` ignores symbolic and non-enumerable properties, but `Object.getOwnPropertyDescriptors` returns *all* property descriptors including symbolic and non-enumerable ones.
+Մեկ այլ տարբերությունն այն է, որ `for..in`-ն անտեսում է սիմվոլիկ և անթվարկելի հատկությունները, բայց `Object.getOwnPropertyDescriptors`-ը վերադարձնում է հատկության *բոլոր* նկարագրիչները՝ ներառյալ սիմվոլիկ և անթվարկելի հատկությունները։
 
 ## Sealing an object globally
 
