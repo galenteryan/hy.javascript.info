@@ -1,1 +1,1 @@
-# Prototypes, inheritance
+# Նախատիպեր, ժառանգություն
