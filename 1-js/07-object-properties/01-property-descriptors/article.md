@@ -11,7 +11,7 @@
 
 Բացի **`value`**-ից, օբյեկտի հատկություններն ունեն երեք հատուկ ատրիբուտներ (այսպես կոչված «դրոշակներ»):
 
-- **`writable`** -- եթե `true` է, ապա արժեքը կարող է փոփոխվել, այլապես այն միայն ընթեռնելի է:
+- **`writable`** -- եթե `true` է, ապա արժեքը կարող է փոփոխվել, այլապես այն միայն ընթեռնելի է՝ անգրառելի:
 - **`enumerable`** -- եթե `true` է, ապա թվարկվում է ցիկլերում, այլապես չի թվարկվում:
 - **`configurable`** -- եթե `true` է, ապա հատկությունը կարող է ջնջվել, իսկ այդ ատրիբուտները կարող են փոփոխվել, այլապես՝ ոչ։
 
@@ -100,9 +100,9 @@ alert( JSON.stringify(descriptor, null, 2 ) );
 
 Այժմ եկեք տեսնենք դրոշակների ազդեցությունը օրինակով․
 
-## Non-writable
+## Անգրառելի
 
-Let's make `user.name` non-writable (can't be reassigned) by changing `writable` flag:
+Եկեք `user.name`-ը դարձնենք անգրառելի (չի կարող վերանշանակվել)՝ փոփոխելով `writable` դրոշակը․
 
 ```js run
 let user = {
@@ -120,13 +120,13 @@ user.name = "Pete"; // Error: Cannot assign to read only property 'name'
 */!*
 ```
 
-Now no one can change the name of our user, unless they apply their own `defineProperty` to override ours.
+Այժմ ոչ ոք չի կարող փոփոխել մեր օգտատիրոջ անունը, մինչև նրանք չկիրառեն իրենց `defineProperty`-ն՝ մերը չեղարկելու համար:
 
-```smart header="Errors appear only in strict mode"
-In the non-strict mode, no errors occur when writing to non-writable properties and such. But the operation still won't succeed. Flag-violating actions are just silently ignored in non-strict.
+```smart header="Սխալները հայտնվում են միայն խիստ ռեժիմում (strict mode)"
+Ոչ խիստ ռեժիմում (non-strict mode) սխալներ չեն երևում, երբ արժեվորում ենք անգրառելի և նմանատիպ հատկությունները։ Բայց գործողությունը, այնուամենայնիվ, չի հաջողվի: Դրոշակների կանոնները խախտող գործողությունները պարզապես լուռ անտեսվում են ոչ խիստ ռեժիմում:
 ```
 
-Here's the same example, but the property is created from scratch:
+Ահա նույն օրինակը, բայց հատկությունը ստեղծվում է զրոյից․
 
 ```js run
 let user = { };
@@ -134,7 +134,7 @@ let user = { };
 Object.defineProperty(user, "name", {
 *!*
   value: "John",
-  // for new properties we need to explicitly list what's true
+  // նոր հատկությունների համար պետք է հստակ թվարկենք, թե որն է true
   enumerable: true,
   configurable: true
 */!*
@@ -144,11 +144,11 @@ alert(user.name); // John
 user.name = "Pete"; // Error
 ```
 
-## Non-enumerable
+## Անթվարկելի
 
-Now let's add a custom `toString` to `user`.
+Հիմա եկեք առանձին `toString` ավելացնենք `user`-ին։
 
-Normally, a built-in `toString` for objects is non-enumerable, it does not show up in `for..in`. But if we add a `toString` of our own, then by default it shows up in `for..in`, like this:
+Սովորաբար, օբյեկտների համար ներկառուցված `toString`-ը թվարկելի չէ, այն չի երևում `for..in`-ում: Բայց եթե մենք ավելացնենք մեր սեփական `toString`-ը, ապա լռելյայնորեն այն կհայտնվի `for..in`-ում, այսպես.
 
 ```js run
 let user = {
@@ -158,11 +158,11 @@ let user = {
   }
 };
 
-// By default, both our properties are listed:
+// Լռելյայնորեն, մեր երկու հատկություններն էլ նշված են.
 for (let key in user) alert(key); // name, toString
 ```
 
-If we don't like it, then we can set `enumerable:false`. Then it won't appear in a `for..in` loop, just like the built-in one:
+Եթե դա մեզ չի գոհացնում, ապա մենք կարող ենք սահմանել `enumerable:false`։ Այնուհետև այն չի հայտնվի `for..in` ցիկլում այնպես, ինչպես ներկառուցվածը.
 
 ```js run
 let user = {
@@ -179,12 +179,12 @@ Object.defineProperty(user, "toString", {
 });
 
 *!*
-// Now our toString disappears:
+// Այժմ մեր toString-ը անհետանում է.
 */!*
 for (let key in user) alert(key); // name
 ```
 
-Non-enumerable properties are also excluded from `Object.keys`:
+Անթվարկելի հատկությունները նաև բացառվում են `Object.keys`-ից․
 
 ```js
 alert(Object.keys(user)); // name
