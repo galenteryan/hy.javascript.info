@@ -1,7 +1,7 @@
 
 # Հատկության դրոշակներ և նկարագրիչներ
 
-Ինչպես գիտենք, օբյեկտները կարող են պահել հատկություներ:
+Ինչպես գիտենք, օբյեկտները կարող են պահել հատկություններ:
 
 Մինչև հիմա հատկությունը պարզ «բանալի-արժեք» զույգ էր մեզ համար: Բայց օբյեկտի հատկությունն իրականում ավելի ճկուն և հզոր բան է:
 
@@ -320,11 +320,11 @@ for (let key in user) {
 
 Մեկ այլ տարբերությունն այն է, որ `for..in`-ն անտեսում է սիմվոլիկ և անթվարկելի հատկությունները, բայց `Object.getOwnPropertyDescriptors`-ը վերադարձնում է հատկության *բոլոր* նկարագրիչները՝ ներառյալ սիմվոլիկ և անթվարկելի հատկությունները։
 
-## Sealing an object globally
+## Օբյեկտի գլոբալ կնքումը
 
-Property descriptors work at the level of individual properties.
+Հատկության նկարագրիչները աշխատում են առանձին հատկությունների մակարդակով:
 
-There are also methods that limit access to the *whole* object:
+Կան նաև մեթոդներ, որոնք սահմանափակում են մուտքը դեպի *ամբողջ* օբյեկտ.
 
 [Object.preventExtensions(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/preventExtensions)
 : Forbids the addition of new properties to the object.
