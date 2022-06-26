@@ -116,7 +116,7 @@ Object.defineProperty(user, "name", {
 });
 
 *!*
-user.name = "Pete"; // Error: Cannot assign to read only property 'name'
+user.name = "Pete"; // Ախալ․ հնարավոր չէ նշանակել միայն ընթեռնելի հատկությունը՝ name
 */!*
 ```
 
@@ -190,13 +190,13 @@ for (let key in user) alert(key); // name
 alert(Object.keys(user)); // name
 ```
 
-## Non-configurable
+## Անկարգավորելի
 
-The non-configurable flag (`configurable:false`) is sometimes preset for built-in objects and properties.
+Անկարգավորելի դրոշակը (`configurable:false`) երբեմն նախադրված է ներկառուցված օբյեկտների և հատկությունների համար։
 
-A non-configurable property can't be deleted, its attributes can't be modified.
+Չկարգավորվող հատկությունը չի կարող ջնջվել, դրա ատրիբուտները չեն կարող փոփոխվել:
 
-For instance, `Math.PI` is non-writable, non-enumerable and non-configurable:
+Օրինակ՝ `Math.PI`-ն անգրառելի, անթվարկելի և անկարգավորելի է․
 
 ```js run
 let descriptor = Object.getOwnPropertyDescriptor(Math, 'PI');
@@ -211,28 +211,28 @@ alert( JSON.stringify(descriptor, null, 2 ) );
 }
 */
 ```
-So, a programmer is unable to change the value of `Math.PI` or overwrite it.
+Այսպիսով, ծրագրավորողը չի կարող փոխել `Math.PI`-ի արժեքը կամ վերագրել այն:
 
 ```js run
-Math.PI = 3; // Error, because it has writable: false
+Math.PI = 3; // Սխալ, քանի որ այն ունի writable: false
 
-// delete Math.PI won't work either
+// ջնջել Math.PI-ն նույնպես չի հաջողվի
 ```
 
-We also can't change `Math.PI` to be `writable` again:
+Մենք նաև չենք կարող `Math.PI`-ն կրկին `writable` դարձնել.
 
 ```js run
-// Error, because of configurable: false
+// Սխալ, որովհետև՝ configurable: false
 Object.defineProperty(Math, "PI", { writable: true });
 ```
 
-There's absolutely nothing we can do with `Math.PI`.
+Մենք բացարձակապես ոչինչ չենք կարող անել `Math.PI`-ի հետ:
 
-Making a property non-configurable is a one-way road. We cannot change it back with `defineProperty`.
+Հատկությունը անկարգավորելի դարձնելը միակողմանի ճանապարհ է: Մենք չենք կարող այն ետ փոխել `defineProperty`-ով:
 
-**Please note: `configurable: false` prevents changes of property flags and its deletion, while allowing to change its value.**
+**Նկատի ունեցեք․ `configurable: false`-ը կանխում է հատկության դրոշակների փոփոխությունը և դրա ջնջումը՝ միաժամանակ թույլ տալով փոխել դրա արժեքը:**
 
-Here `user.name` is non-configurable, but we can still change it (as it's writable):
+Այստեղ `user.name`-ը անկարգավորելի է, բայց մենք դեռ կարող ենք փոփոխել այն (քանի որ այն գրառելի է)․
 
 ```js run
 let user = {
@@ -243,11 +243,11 @@ Object.defineProperty(user, "name", {
   configurable: false
 });
 
-user.name = "Pete"; // works fine
-delete user.name; // Error
+user.name = "Pete"; // աշխատում է լավ
+delete user.name; // սխալ
 ```
 
-And here we make `user.name` a "forever sealed" constant, just like the built-in `Math.PI`:
+Իսկ այտեղ `user.name`-ը դարձնում ենք «ընդմիշտ կնքված» հաստատուն, ճիշտ այնպես, ինչպես ներկառուցված `Math.PI`-ն․
 
 ```js run
 let user = {
@@ -259,17 +259,17 @@ Object.defineProperty(user, "name", {
   configurable: false
 });
 
-// won't be able to change user.name or its flags
-// all this won't work:
+// հնարավոր չի լինի փոփոխել user.name-ը կամ դրա դրոշակները
+// այս ամենը չի աշխատի.
 user.name = "Pete";
 delete user.name;
 Object.defineProperty(user, "name", { value: "Pete" });
 ```
 
-```smart header="The only attribute change possible: writable true -> false"
-There's a minor exception about changing flags.
+```smart header="Միակ ատրիբուտը, որի փոփոխությունը հնարավոր է․ writable true -> false"
+Դրոշակները փոփոխելու հարցում մի փոքր բացառություն կա:
 
-We can change `writable: true` to `false` for a non-configurable property, thus preventing its value modification (to add another layer of protection). Not the other way around though.
+Անկարգավորելի հատկության համար կարող ենք փոփոխել `writable: true`-ն `false`-ով՝ այդպիսով կանխելով դրա արժեքի փոփոխությունը (պաշտպանության ևս մեկ շերտ ավելացնելու համար)։ Սակայն ոչ հակառակը:
 ```
 
 ## Object.defineProperties
