@@ -1,14 +1,14 @@
-# Prototypal inheritance
+# Նախատիպային ժառանգություն
 
-In programming, we often want to take something and extend it.
+Ծրագրավորման մեջ մենք հաճախ ցանկանում ենք ինչ-որ բան վերցնել և ընդլայնել այն:
 
-For instance, we have a `user` object with its properties and methods, and want to make `admin` and `guest` as slightly modified variants of it. We'd like to reuse what we have in `user`, not copy/reimplement its methods, just build a new object on top of it.
+Օրինակի համար, ունենք `user` օբյեկտ իր հատկություններով և մեթոդներով, նաև ցանկանում ենք `admin` և `guest` օբյեկտներ՝ որպես դրա մի փոքր փոփոխված տարբերակներ։ Մենք կցանկանայինք նորից օգտագործել այն, ինչ ունենք `user`-ում և պարզապես դրա վրա կառուցել նոր օբյեկտ, այլ ոչ թե պատճենել/վերաիրականացնել դրա մեթոդները:
 
-*Prototypal inheritance* is a language feature that helps in that.
+*Նախատիպային ժառանգությունը* լեզվական հատկանիշ է, որն օգնում է դրան:
 
 ## [[Prototype]]
 
-In JavaScript, objects have a special hidden property `[[Prototype]]` (as named in the specification), that is either `null` or references another object. That object is called "a prototype":
+JavaScript-ում օբյեկտներն ունեն հատուկ թաքնված հատկություն՝ `[[Prototype]]` (ինչպես նշված է հատկավորման մեջ), որը `null` է կամ հղում է կատարում մեկ այլ օբյեկտի։ Այդ օբյեկտը կոչվում է «նախատիպ»:
 
 ![prototype](object-prototype-empty.svg)
 
