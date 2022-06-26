@@ -140,7 +140,7 @@ for(let key in user) alert(key); // name, surname
 
 ```js run
 *!*
-// Error: Invalid property descriptor.
+// Սխալ․ հատկության անվավեր նկարագրիչ
 */!*
 Object.defineProperty({}, 'prop', {
   get() {
