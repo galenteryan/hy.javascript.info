@@ -322,18 +322,18 @@ for(let prop in rabbit) {
 Պատասխանը պարզ է․ այն թվարկելի չէ։ Ինչպես `Object.prototype`-ի մյուս հատկությունները, սա էլ ունի `enumerable:false` դրոշակ։
 Իսկ `for..in`-ը միայն թվարկում է թվարկելի հատկությունները։ Դա է պատճառը, որ այս և մնացած `Object.prototype`-ի հատկությունները թվարկված չեն:
 
-```smart header="Almost all other key/value-getting methods ignore inherited properties"
-Almost all other key/value-getting methods, such as `Object.keys`, `Object.values` and so on ignore inherited properties.
+```smart header="Գրեթե բոլոր մյուս բանալի/արժեք ստացող մեթոդները անտեսում են ժառանգված հատկությունները"
+Գրեթե բոլոր մյուս բանալի/արժեք ստացող մեթոդները, ինչպիսիք են `Object.keys`, `Object.values` և այլն, անտեսում են ժառանգված հատկությունները:
 
-They only operate on the object itself. Properties from the prototype are *not* taken into account.
+Նրանք ազդում են միայն բուն օբյեկտի վրա: Նախատիպի հատկությունները հաշվի *չեն* առնվում:
 ```
 
-## Summary
+## Ամփոփում
 
-- In JavaScript, all objects have a hidden `[[Prototype]]` property that's either another object or `null`.
-- We can use `obj.__proto__` to access it (a historical getter/setter, there are other ways, to be covered soon).
-- The object referenced by `[[Prototype]]` is called a "prototype".
-- If we want to read a property of `obj` or call a method, and it doesn't exist, then JavaScript tries to find it in the prototype.
-- Write/delete operations act directly on the object, they don't use the prototype (assuming it's a data property, not a setter).
-- If we call `obj.method()`, and the `method` is taken from the prototype, `this` still references `obj`. So methods always work with the current object even if they are inherited.
-- The `for..in` loop iterates over both its own and its inherited properties. All other key/value-getting methods only operate on the object itself.
+- JavaScript-ում բոլոր օբյեկտներն ունեն թաքնված `[[Prototype]]` հատկություն, որը կամ այլ օբյեկտ է, կամ `null`:
+- Մուտք ունենալու համար մենք կարող ենք օգտագործել `obj.__proto__` (պատմական գեթթեր/սեթթեր, կան նաև այլ ճանապարհներ, որոնք շուտով կլուսաբանվեն)։
+- `[[Prototype]]`-ի կողմից հղված օբյեկտը կոչվում է «նախատիպ»:
+- Եթե ցանկանում ենք ընթերցել `obj`-ի հատկությունը կամ կանչել մեթոդը, իսկ այն գոյություն չունի, ապա JavaScript-ը փորձում է գտնել այն նախատիպում։
+- Գրառման/ջնջելու գործողությունները ազդում են անմիջապես օբյեկտի վրա, նրանք չեն օգտագործում նախատիպը (ենթադրելով, որ դա տվյալային հատկություն է, այլ ոչ թե սեթթեր)։
+- Եթե մենք կանչենք `obj.method()`, իսկ `method`-ը վերցված լինի նախատիպից, `this`-ը միևնույնն է, հղում է անում `obj`-ին։ Այսպիսով, մեթոդները միշտ աշխատում են ընթացիկ օբյեկտի հետ, նույնիսկ եթե դրանք ժառանգված են:
+- `for..in` ցիկլը կրկնվում է ինչպես իր սեփական, այնպես էլ ժառանգված հատկությունների համար: Մյուս բոլոր բանալի/արժեք ստանալու մեթոդները գործում են միայն բուն օբյեկտի համար:
