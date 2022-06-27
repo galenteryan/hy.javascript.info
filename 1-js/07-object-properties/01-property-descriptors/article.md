@@ -335,7 +335,7 @@ for (let key in user) {
 [Object.freeze(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze)
 : Արգելում է հատկությունների ավելացում/հեռացում/փոփոխում։ Բոլոր գոյություն ունեցող հատկությունների համար սահմանում է `configurable: false, writable: false`:
 
-And also there are tests for them:
+Նրանց համար կան նաև թեստեր.
 
 [Object.isExtensible(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isExtensible)
 : Վերադարձնում է `false`, եթե հատկությունների ավելացումն արգելվում է, այլապես՝ `true`:
