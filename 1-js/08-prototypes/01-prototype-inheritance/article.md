@@ -212,26 +212,26 @@ alert(user.fullName); // Մեսրոպ Մաշտոց, user-ի վիճակը պաշ�
 
 ## «this»-ի արժեքը
 
-An interesting question may arise in the example above: what's the value of `this` inside `set fullName(value)`? Where are the properties `this.name` and `this.surname` written: into `user` or `admin`?
+Հետաքրքիր հարց կարող է ծագել վերը նշված օրինակում. ո՞րն է `this`-ի արժեքը `set fullName(value)`-ի ներսում: Որտե՞ղ են `this.name` և `this.surname` հատկությունները գրված՝ `user`-ո՞ւմ, թե՞ `admin`-ում:
 
-The answer is simple: `this` is not affected by prototypes at all.
+Պատասխանը պարզ է. `this`-ի վրա նախատիպերն ընդհանրապես չեն ազդում:
 
-**No matter where the method is found: in an object or its prototype. In a method call, `this` is always the object before the dot.**
+**Կարևոր չէ, թե մեթոդը որտեղ է գտնվում՝ օբյեկտում, թե դրա նախատիպում: Մեթոդի կանչում `this`-ը միշտ օբյեկտ է կետից առաջ:**
 
-So, the setter call `admin.fullName=` uses `admin` as `this`, not `user`.
+Այսպիսով, սեթթերի կանչն `admin.fullName=` օգտագործում է `admin`-ը որպես `this`, այլ ոչ `user`-ը։
 
-That is actually a super-important thing, because we may have a big object with many methods, and have objects that inherit from it. And when the inheriting objects run the inherited methods, they will modify only their own states, not the state of the big object.
+Դա իրականում գերկարևոր բան է, քանի որ մենք կարող ենք ունենալ մեծ օբյեկտ՝ բազմաթիվ մեթոդներով, և ունենալ օբյեկտներ, որոնք ժառանգում են դրանից։ Եվ երբ ժառանգական օբյեկտները գործարկեն ժառանգված մեթոդները, նրանք կփոփոխեն միայն իրենց վիճակը, այլ ոչ թե մեծ օբյեկտի վիճակը:
 
-For instance, here `animal` represents a "method storage", and `rabbit` makes use of it.
+For instance, here `animal` represents a "method storage", and `rabbit` makes use of it. Օրինակի համար, այստեղ `animal`-ը ներկայացնում է «մեթոդների պահեստ», իսկ `rabbit`-ն օգտվում է դրանից:
 
-The call `rabbit.sleep()` sets `this.isSleeping` on the `rabbit` object:
+Այս `rabbit.sleep()` կանչը տեղադրում է `this.isSleeping` մեր `rabbit` օբյեկտում․
 
 ```js run
-// animal has methods
+// animal-ն ունի մեթոդներ
 let animal = {
   walk() {
     if (!this.isSleeping) {
-      alert(`I walk`);
+      alert(`Ես քայլում եմ`);
     }
   },
   sleep() {
@@ -240,30 +240,30 @@ let animal = {
 };
 
 let rabbit = {
-  name: "White Rabbit",
+  name: "Սպիտակ Նապաստակ",
   __proto__: animal
 };
 
-// modifies rabbit.isSleeping
+// փոփոխում է rabbit.isSleeping-ը
 rabbit.sleep();
 
 alert(rabbit.isSleeping); // true
-alert(animal.isSleeping); // undefined (no such property in the prototype)
+alert(animal.isSleeping); // undefined (նախատիպում նման հատկություն չկա)
 ```
 
-The resulting picture:
+Արդյունքում ստացված պատկերը.
 
 ![](proto-animal-rabbit-walk-3.svg)
 
-If we had other objects, like `bird`, `snake`, etc., inheriting from `animal`, they would also gain access to methods of `animal`. But `this` in each method call would be the corresponding object, evaluated at the call-time (before dot), not `animal`. So when we write data into `this`, it is stored into these objects.
+Եթե մենք ունենայինք այլ օբյեկտներ, օրինակ՝ `bird`, `snake` և այլն, որոնք ժառանգեին `animal`-ից, նրանք նույնպես հասանելիություն կունենային `animal`-ի մեթոդներին: Բայց `this`-ը յուրաքանչյուր մեթոդի կանչում կլինի համապատասխան օբյեկտը (կետից առաջ), որի համար տեղի է ունենում կանչը, այլ ոչ `animal`-ը: Այսպիսով, երբ տվյալները գրում ենք `this`-ի մեջ, դրանք պահվում են այդ օբյեկտներում:
 
-As a result, methods are shared, but the object state is not.
+Արդյունքում, մեթոդները համօգտագործվող են, իսկ օբյեկտի վիճակը՝ ոչ:
 
-## for..in loop
+## for..in ցիկլ
 
-The `for..in` loop iterates over inherited properties too.
+`for..in` ցիկլը ժառանգված հատկությունների համար նույնպես կրկնվում է:
 
-For instance:
+Օրինակ․
 
 ```js run
 let animal = {
@@ -276,13 +276,13 @@ let rabbit = {
 };
 
 *!*
-// Object.keys only returns own keys
+// Object.keys-ը վերադարձնում է միայն սեփական բանալիները
 alert(Object.keys(rabbit)); // jumps
 */!*
 
 *!*
-// for..in loops over both own and inherited keys
-for(let prop in rabbit) alert(prop); // jumps, then eats
+// for..in-ը կրկնվում է թե՛ սեփական, թե՛ ժառանգված բանալիներ համար
+for(let prop in rabbit) alert(prop); // jumps, հետո eats
 */!*
 ```
 
