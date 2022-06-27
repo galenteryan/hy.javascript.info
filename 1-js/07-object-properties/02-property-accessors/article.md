@@ -29,17 +29,17 @@ let obj = {
 
 ```js
 let user = {
-  name: "John",
-  surname: "Smith"
+  name: "Մեսրոպ",
+  surname: "Մաշտոց"
 };
 ```
 
-Այժմ ցանկանում ենք ավելացնել `fullName` հատկությունը, որը պետք է լինի `«John Smith»`: Իհարկե, մենք չենք ցանկանում կլոնավորել առկա ինֆորմացիան, այնպես որ կարող ենք իրագործել այն որպես մուտքային մեթոդ․
+Այժմ ցանկանում ենք ավելացնել `fullName` հատկությունը, որը պետք է լինի `«Մեսրոպ Մաշտոց»`: Իհարկե, մենք չենք ցանկանում կլոնավորել առկա ինֆորմացիան, այնպես որ կարող ենք իրագործել այն որպես մուտքային մեթոդ․
 
 ```js run
 let user = {
-  name: "John",
-  surname: "Smith",
+  name: "Մեսրոպ",
+  surname: "Մաշտոց",
 
 *!*
   get fullName() {
@@ -49,7 +49,7 @@ let user = {
 };
 
 *!*
-alert(user.fullName); // John Smith
+alert(user.fullName); // Մեսրոպ Մաշտոց
 */!*
 ```
 
@@ -73,8 +73,8 @@ user.fullName = "Թեստ"; // Սխալ (հատկությունն ունի մի�
 
 ```js run
 let user = {
-  name: "John",
-  surname: "Smith",
+  name: "Մեսրոպ",
+  surname: "Մաշտոց",
 
   get fullName() {
     return `${this.name} ${this.surname}`;
@@ -87,7 +87,7 @@ let user = {
 */!*
 };
 
-// set fullName կատարվում է տրված արժեքով
+// set fullName-ը կատարվում է տրված արժեքով
 user.fullName = "Գասպար Գալենտերյան";
 
 alert(user.name); // Գասպար
@@ -113,8 +113,8 @@ alert(user.surname); // Գալենտերյան
 
 ```js run
 let user = {
-  name: "John",
-  surname: "Smith"
+  name: "Մեսրոպ",
+  surname: "Մաշտոց"
 };
 
 *!*
@@ -129,7 +129,7 @@ Object.defineProperty(user, 'fullName', {
 */!*
 });
 
-alert(user.fullName); // John Smith
+alert(user.fullName); // Մեսրոպ Մաշտոց
 
 for(let key in user) alert(key); // name, surname
 ```
@@ -172,8 +172,8 @@ let user = {
   }
 };
 
-user.name = "Պողոս";
-alert(user.name); // Պողոս
+user.name = "Գասպար";
+alert(user.name); // Գասպար
 
 user.name = ""; // Անունը շատ կարճ է...
 ```
@@ -195,7 +195,7 @@ function User(name, age) {
   this.age = age;
 }
 
-let john = new User("John", 25);
+let john = new User("Ջոն", 25);
 
 alert( john.age ); // 25
 ```
@@ -208,7 +208,7 @@ function User(name, birthday) {
   this.birthday = birthday;
 }
 
-let john = new User("John", new Date(1992, 6, 1));
+let john = new User("Ջոն", new Date(1992, 6, 1));
 ```
 
 Հիմա ի՞նչ անել հին կոդի հետ, որը դեռ օգտագործում է `age` հատկությունը:
@@ -235,7 +235,7 @@ function User(name, birthday) {
 */!*
 }
 
-let john = new User("John", new Date(1992, 6, 1));
+let john = new User("Ջոն", new Date(1992, 6, 1));
 
 alert( john.birthday ); // ծննդյան օրը հասանելի է
 alert( john.age );      // ...ինչպես նաև տարիքը
