@@ -281,14 +281,14 @@ alert(Object.keys(rabbit)); // jumps
 */!*
 
 *!*
-// for..in-ը կրկնվում է թե՛ սեփական, թե՛ ժառանգված բանալիներ համար
+// for..in-ը կրկնվում է թե՛ սեփական, թե՛ ժառանգված բանալիների համար
 for(let prop in rabbit) alert(prop); // jumps, հետո eats
 */!*
 ```
 
-If that's not what we want, and we'd like to exclude inherited properties, there's a built-in method [obj.hasOwnProperty(key)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty): it returns `true` if `obj` has its own (not inherited) property named `key`.
+Եթե դա այն չէ, ինչ մենք ուզում ենք և ցանկանում ենք բացառել ժառանգական հատկությունները, ապա կա ներկառուցված մեթոդ՝ [obj.hasOwnProperty(key)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty), այն վերադարձնում է `true`, եթե `obj`-ն ունի իր սեփական (չժառանգված) հատկությունը՝ `key` անվանումով։
 
-So we can filter out inherited properties (or do something else with them):
+Այսպիսով, մենք կարող ենք զտել ժառանգված հատկությունները (կամ որևէ այլ գործողություն անել դրանց հետ).
 
 ```js run
 let animal = {
@@ -304,22 +304,23 @@ for(let prop in rabbit) {
   let isOwn = rabbit.hasOwnProperty(prop);
 
   if (isOwn) {
-    alert(`Our: ${prop}`); // Our: jumps
+    alert(`Սեփական՝ ${prop}`); // Սեփական՝ jumps
   } else {
-    alert(`Inherited: ${prop}`); // Inherited: eats
+    alert(`Ժառանգված՝ ${prop}`); // Ժառանգված՝ eats
   }
 }
 ```
 
-Here we have the following inheritance chain: `rabbit` inherits from `animal`, that inherits from `Object.prototype` (because `animal` is a literal object `{...}`, so it's by default), and then `null` above it:
+Այստեղ մենք ունենք հետևյալ ժառանգական շղթան. `rabbit`-ը ժառանգում է `animal`-ից, որը ժառանգում է `Object.prototype`-ից (քանի որ `animal`-ը բառացի օբյեկտ է `{...}`, ուստի դա լռելյայն է), այնուհետև `null` է դրա վերևում․
 
 ![](rabbit-animal-object.svg)
 
-Note, there's one funny thing. Where is the method `rabbit.hasOwnProperty` coming from? We did not define it. Looking at the chain we can see that the method is provided by `Object.prototype.hasOwnProperty`. In other words, it's inherited.
+Նկատի ունեցեք, կա մի ծիծաղելի բան. որտեղի՞ց է գալիս `rabbit.hasOwnProperty` մեթոդը: Մենք այն չենք սահմանել։ Նայելով շղթային՝ կարող ենք տեսնել, որ մեթոդը տրամադրվում է `Object.prototype.hasOwnProperty`-ի կողմից: Այլ կերպ ասած, դա ժառանգական է:
 
-...But why does `hasOwnProperty` not appear in the `for..in` loop like `eats` and `jumps` do, if `for..in` lists inherited properties?
+...Բայց ինչո՞ւ `hasOwnProperty`-ն չի հայտնվում `for..in` ցիկլում՝ ինչպես `eats`-ը և `jumps`-ը, եթե `for..in`-ը թվարկում է նաև ժառանգված հատկությունները:
 
-The answer is simple: it's not enumerable. Just like all other properties of `Object.prototype`, it has `enumerable:false` flag. And `for..in` only lists enumerable properties. That's why it and the rest of the `Object.prototype` properties are not listed.
+Պատասխանը պարզ է․ այն թվարկելի չէ։ Ինչպես `Object.prototype`-ի մյուս հատկությունները, սա էլ ունի `enumerable:false` դրոշակ։
+Իսկ `for..in`-ը միայն թվարկում է թվարկելի հատկությունները։ Դա է պատճառը, որ այս և մնացած `Object.prototype`-ի հատկությունները թվարկված չեն:
 
 ```smart header="Almost all other key/value-getting methods ignore inherited properties"
 Almost all other key/value-getting methods, such as `Object.keys`, `Object.values` and so on ignore inherited properties.
