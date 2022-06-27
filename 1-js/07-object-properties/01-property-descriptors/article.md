@@ -38,7 +38,7 @@ let descriptor = Object.getOwnPropertyDescriptor(obj, propertyName);
 
 ```js run
 let user = {
-  name: "John"
+  name: "Մեսրոպ"
 };
 
 let descriptor = Object.getOwnPropertyDescriptor(user, 'name');
@@ -46,7 +46,7 @@ let descriptor = Object.getOwnPropertyDescriptor(user, 'name');
 alert( JSON.stringify(descriptor, null, 2 ) );
 /* հատկության նկարագրիչ.
 {
-  "value": "John",
+  "value": "Մեսրոպ",
   "writable": true,
   "enumerable": true,
   "configurable": true
@@ -77,7 +77,7 @@ let user = {};
 
 *!*
 Object.defineProperty(user, "name", {
-  value: "John"
+  value: "Մեսրոպ"
 });
 */!*
 
@@ -86,7 +86,7 @@ let descriptor = Object.getOwnPropertyDescriptor(user, 'name');
 alert( JSON.stringify(descriptor, null, 2 ) );
 /*
 {
-  "value": "John",
+  "value": "Մեսրոպ",
 *!*
   "writable": false,
   "enumerable": false,
@@ -106,7 +106,7 @@ alert( JSON.stringify(descriptor, null, 2 ) );
 
 ```js run
 let user = {
-  name: "John"
+  name: "Մեսրոպ"
 };
 
 Object.defineProperty(user, "name", {
@@ -116,7 +116,7 @@ Object.defineProperty(user, "name", {
 });
 
 *!*
-user.name = "Pete"; // Ախալ․ հնարավոր չէ նշանակել միայն ընթեռնելի հատկությունը՝ name
+user.name = "Պողոս"; // Ախալ․ հնարավոր չէ նշանակել միայն ընթեռնելի հատկությունը՝ name
 */!*
 ```
 
@@ -133,15 +133,15 @@ let user = { };
 
 Object.defineProperty(user, "name", {
 *!*
-  value: "John",
+  value: "Մեսրոպ",
   // նոր հատկությունների համար պետք է հստակ թվարկենք, թե որն է true
   enumerable: true,
   configurable: true
 */!*
 });
 
-alert(user.name); // John
-user.name = "Pete"; // Error
+alert(user.name); // Մեսրոպ
+user.name = "Պողոս"; // Error
 ```
 
 ## Անթվարկելի
@@ -152,7 +152,7 @@ user.name = "Pete"; // Error
 
 ```js run
 let user = {
-  name: "John",
+  name: "Մեսրոպ",
   toString() {
     return this.name;
   }
@@ -166,7 +166,7 @@ for (let key in user) alert(key); // name, toString
 
 ```js run
 let user = {
-  name: "John",
+  name: "Մեսրոպ",
   toString() {
     return this.name;
   }
@@ -236,14 +236,14 @@ Object.defineProperty(Math, "PI", { writable: true });
 
 ```js run
 let user = {
-  name: "John"
+  name: "Մեսրոպ"
 };
 
 Object.defineProperty(user, "name", {
   configurable: false
 });
 
-user.name = "Pete"; // աշխատում է լավ
+user.name = "Պողոս"; // աշխատում է լավ
 delete user.name; // սխալ
 ```
 
@@ -251,7 +251,7 @@ delete user.name; // սխալ
 
 ```js run
 let user = {
-  name: "John"
+  name: "Մեսրոպ"
 };
 
 Object.defineProperty(user, "name", {
@@ -261,9 +261,9 @@ Object.defineProperty(user, "name", {
 
 // հնարավոր չի լինի փոփոխել user.name-ը կամ դրա դրոշակները
 // այս ամենը չի աշխատի.
-user.name = "Pete";
+user.name = "Պողոս";
 delete user.name;
-Object.defineProperty(user, "name", { value: "Pete" });
+Object.defineProperty(user, "name", { value: "Պողոս" });
 ```
 
 ```smart header="Միակ ատրիբուտը, որի փոփոխությունը հնարավոր է․ writable true -> false"
@@ -290,8 +290,8 @@ Object.defineProperties(obj, {
 
 ```js
 Object.defineProperties(user, {
-  name: { value: "John", writable: false },
-  surname: { value: "Smith", writable: false },
+  name: { value: "Մեսրոպ", writable: false },
+  surname: { value: "Մաշտոց", writable: false },
   // ...
 });
 ```
