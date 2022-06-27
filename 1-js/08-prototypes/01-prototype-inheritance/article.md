@@ -8,7 +8,7 @@
 
 ## [[Prototype]]
 
-JavaScript-ում օբյեկտներն ունեն հատուկ թաքնված հատկություն՝ `[[Prototype]]` (ինչպես նշված է հատկավորման մեջ), որը կամ `null` է կամ հղում է կատարում մեկ այլ օբյեկտի։ Այդ օբյեկտը կոչվում է «նախատիպ»:
+JavaScript-ում օբյեկտներն ունեն հատուկ թաքնված հատկություն՝ `[[Prototype]]` (ինչպես նշված է հատկորոշման (specification) մեջ), որը կամ `null` է կամ հղում է կատարում մեկ այլ օբյեկտի։ Այդ օբյեկտը կոչվում է «նախատիպ»:
 
 ![prototype](object-prototype-empty.svg)
 
@@ -131,31 +131,31 @@ alert(longEar.jumps); // true (rabbit-ից)
 
 Նաև դա ակնհայտ է, բայց այնուամենայնիվ. կարող է լինել միայն մեկ `[[Prototype]]`: Օբյեկտը չի կարող ժառանգվել երկու տարբեր օբյեկտներից:
 
-```smart header="`__proto__` is a historical getter/setter for `[[Prototype]]`"
-It's a common mistake of novice developers not to know the difference between these two.
+```smart header="`__proto__`-ն պատմական գեթթեր/սեթթեր է `[[Prototype]]`-ի համար"
+Այս երկուսի տարբերության մասին չիմանալը տարածված սխալ է սկսնակ ծրագրավորողների մոտ:
 
-Please note that `__proto__` is *not the same* as the internal `[[Prototype]]` property. It's a getter/setter for `[[Prototype]]`. Later we'll see situations where it matters, for now let's just keep it in mind, as we build our understanding of JavaScript language.
+Նկատի ունեցեք, որ `__proto__`-ն *նույնը չէ*, ինչ ներքին `[[Prototype]]` հատկությունը: Այն գեթթեր/սեթթեր է `[[Prototype]]`-ի համար: Ավելի ուշ մենք կտեսնենք իրավիճակներ, որտեղ դա կարևոր է, առայժմ եկեք պարզապես հիշենք այն, քանի որ զարգացնում ենք JavaScript լեզվի մեր ըմբռնումը:
 
-The `__proto__` property is a bit outdated. It exists for historical reasons, modern JavaScript suggests that we should use `Object.getPrototypeOf/Object.setPrototypeOf` functions instead that get/set the prototype. We'll also cover these functions later.
+`__proto__` հատկությունը մի փոքր հնացած է և այն գոյություն ունի պատմական պատճառներով։ Ժամանակակից JavaScript-ը առաջարկում է, որ մենք պետք է նախատիպը ստանալու/տեղադրելու փոխարեն օգտագործենք `Object.getPrototypeOf/Object.setPrototypeOf` ֆունկցիաները: Ավելի ուշ այս ֆունկցիաներին ևս կանդրադառնանք:
 
-By the specification, `__proto__` must only be supported by browsers. In fact though, all environments including server-side support `__proto__`, so we're quite safe using it.
+Ըստ հատկորոշման `__proto__`-ն պետք է սպասարկվի միայն բրաուզերների կողմից: Այնուամենայնիվ, իրականում բոլոր միջավայրերը, ներառյալ սերվերի կողմը, սպասարկում են `__proto__`-ն, այնպես որ մենք բավականին ապահով ենք այն օգտագործելու հարցում:
 
-As the `__proto__` notation is a bit more intuitively obvious, we use it in the examples.
+Քանի որ `__proto__` նշանագրությունը մի փոքր ավելի ինտուիտիվորեն ակնհայտ է, մենք այն օգտագործում ենք օրինակներում:
 ```
 
-## Writing doesn't use prototype
+## Գրառման գործողությունը չի օգտագործում նախատիպ
 
-The prototype is only used for reading properties.
+Նախատիպը օգտագործվում է միայն հատկություններն ընթերցելու համար:
 
-Write/delete operations work directly with the object.
+Գրելու/ջնջելու գործողությունները ուղղակիորեն աշխատում են օբյեկտի հետ:
 
-In the example below, we assign its own `walk` method to `rabbit`:
+Ստորև բերված օրինակում մենք վերագրում ենք իր `walk` մեթոդը `rabbit`-ին.
 
 ```js run
 let animal = {
   eats: true,
   walk() {
-    /* this method won't be used by rabbit */  
+    /* այս մեթոդը չի օգտագործվի rabbit-ում */  
   }
 };
 
@@ -172,18 +172,18 @@ rabbit.walk = function() {
 rabbit.walk(); // Rabbit! Bounce-bounce!
 ```
 
-From now on, `rabbit.walk()` call finds the method immediately in the object and executes it, without using the prototype:
+Այսուհետ, `rabbit.walk()` կանչը գտնում է մեթոդն անմիջապես օբյեկտում և կատարում այն՝ առանց նախատիպի օգտագործման.
 
 ![](proto-animal-rabbit-walk-2.svg)
 
-Accessor properties are an exception, as assignment is handled by a setter function. So writing to such a property is actually the same as calling a function.
+Մուտքային հատկությունները բացառություն են, քանի որ նշանակումը իրագործվում է տեղադրող (սեթթեր) ֆունկցիայի միջոցով։ Այսպիսով, նման հատկություն գրելը իրականում նույնն է, ինչ ֆունկցիա կանչելը:
 
-For that reason `admin.fullName` works correctly in the code below:
+Այդ պատճառով `admin.fullName`-ը ճիշտ է աշխատում ստորև նշված կոդում.
 
 ```js run
 let user = {
-  name: "John",
-  surname: "Smith",
+  name: "Մեսրոպ",
+  surname: "Մաշտոց",
 
   set fullName(value) {
     [this.name, this.surname] = value.split(" ");
@@ -199,18 +199,18 @@ let admin = {
   isAdmin: true
 };
 
-alert(admin.fullName); // John Smith (*)
+alert(admin.fullName); // Մեսրոպ Մաշտոց (*)
 
-// setter triggers!
-admin.fullName = "Alice Cooper"; // (**)
+// աշխատում է սեթթերը
+admin.fullName = "Գասպար Գալենտերյան"; // (**)
 
-alert(admin.fullName); // Alice Cooper, state of admin modified
-alert(user.fullName); // John Smith, state of user protected
+alert(admin.fullName); // Գասպար Գալենտերյան, admin-ի վիճակը փոփոխվել է
+alert(user.fullName); // Մեսրոպ Մաշտոց, user-ի վիճակը պաշտպանված է
 ```
 
-Here in the line `(*)` the property `admin.fullName` has a getter in the prototype `user`, so it is called. And in the line `(**)` the property has a setter in the prototype, so it is called.
+Այստեղ `(*)` տողում `admin.fullName` հատկությունը `user` նախատիպի մեջ ունի գեթթեր, ուստի այն կանչվում է:
 
-## The value of "this"
+## «this»-ի արժեքը
 
 An interesting question may arise in the example above: what's the value of `this` inside `set fullName(value)`? Where are the properties `this.name` and `this.surname` written: into `user` or `admin`?
 
