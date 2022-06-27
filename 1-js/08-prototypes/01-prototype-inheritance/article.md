@@ -12,11 +12,11 @@ JavaScript-ում օբյեկտներն ունեն հատուկ թաքնված հ
 
 ![prototype](object-prototype-empty.svg)
 
-When we read a property from `object`, and it's missing, JavaScript automatically takes it from the prototype. In programming, this is called "prototypal inheritance". And soon we'll study many examples of such inheritance, as well as cooler language features built upon it.
+Երբ ընթերցում ենք որևէ հատկություն `object`-ից, իսկ այն բացակայում է, JavaScript-ն այն ավտոմատ կերպով վերցնում է նախատիպից: Ծրագրավորման մեջ դա կոչվում է «նախատիպային ժառանգություն»: Եվ շուտով մենք կուսումնասիրենք այդպիսի ժառանգության բազմաթիվ օրինակներ, ինչպես նաև դրա վրա կառուցված ավելի ընդլայնված լեզվական առանձնահատկություններ:
 
-The property `[[Prototype]]` is internal and hidden, but there are many ways to set it.
+`[[Prototype]]`-ը ներքին և թաքնված հատկություն է, բայց այն սահմանելու համար կան բազմաթիվ եղանակներ:
 
-One of them is to use the special name `__proto__`, like this:
+Դրանցից մեկը `__proto__` հատուկ անունն օգտագործելն է, այսպես.
 
 ```js run
 let animal = {
@@ -27,13 +27,13 @@ let rabbit = {
 };
 
 *!*
-rabbit.__proto__ = animal; // sets rabbit.[[Prototype]] = animal
+rabbit.__proto__ = animal; // սահմանում է rabbit.[[Prototype]] = animal
 */!*
 ```
 
-Now if we read a property from `rabbit`, and it's missing, JavaScript will automatically take it from `animal`.
+Այժմ, եթե մենք կարդում ենք հատկությունը `rabbit`-ից, և այն բացակայում է, JavaScript-ն այն ավտոմատ կերպով կվերցնի `animal`-ից:
 
-For instance:
+Օրինակ․
 
 ```js
 let animal = {
@@ -47,24 +47,24 @@ let rabbit = {
 rabbit.__proto__ = animal; // (*)
 */!*
 
-// we can find both properties in rabbit now:
+// Այժմ rabbit-ի մեջ մենք կարող ենք գտնել երկու հատկություն.
 *!*
 alert( rabbit.eats ); // true (**)
 */!*
 alert( rabbit.jumps ); // true
 ```
 
-Here the line `(*)` sets `animal` to be the prototype of `rabbit`.
+Այստեղ `(*)` տողը սահմանում է `animal`-ը որպես `rabbit`-ի նախատիպ:
 
-Then, when `alert` tries to read property `rabbit.eats` `(**)`, it's not in `rabbit`, so JavaScript follows the `[[Prototype]]` reference and finds it in `animal` (look from the bottom up):
+Այնուհետև, երբ `alert`-ը փորձում է ընթերցել `rabbit.eats` հատկությունը՝ `(**)`, այն բացակայում է `rabbit`-ից, ուստի JavaScript-ը հետևում է `[[Prototype]]` հղմանը և գտնում այն `animal`-ում (նայեք ներքևից վերև):
 
 ![](proto-animal-rabbit.svg)
 
-Here we can say that "`animal` is the prototype of `rabbit`" or "`rabbit` prototypically inherits from `animal`".
+Այստեղ կարելի է ասել, որ «`animal`-ը `rabbit`-ի նախատիպն է» կամ «`rabbit`-ը նախատիպային ժառանգություն է ստանում `animal`-ից»:
 
-So if `animal` has a lot of useful properties and methods, then they become automatically available in `rabbit`. Such properties are called "inherited".
+Այսպիսով, եթե `animal`-ն ունի շատ օգտակար հատկություններ և մեթոդներ, ապա դրանք ավտոմատ կերպով հասանելի են դառնում `rabbit`-ում: Նման հատկությունները կոչվում են «ժառանգված»:
 
-If we have a method in `animal`, it can be called on `rabbit`:
+Եթե մենք ունենք մեթոդ `animal`-ում, այն կարող է կանչվել `rabbit`-ում.
 
 ```js run
 let animal = {
@@ -81,17 +81,17 @@ let rabbit = {
   __proto__: animal
 };
 
-// walk is taken from the prototype
+// walk-ը վերցված է նախատիպից
 *!*
 rabbit.walk(); // Animal walk
 */!*
 ```
 
-The method is automatically taken from the prototype, like this:
+Մեթոդն ավտոմատ կերպով վերցված է նախատիպից, այսպես.
 
 ![](proto-animal-rabbit-walk.svg)
 
-The prototype chain can be longer:
+Նախատիպային շղթան կարող է լինել ավելի երկար.
 
 ```js run
 let animal = {
@@ -115,21 +115,21 @@ let longEar = {
 */!*
 };
 
-// walk is taken from the prototype chain
+// walk-ը վերցված է նախատիպային շղթայից
 longEar.walk(); // Animal walk
-alert(longEar.jumps); // true (from rabbit)
+alert(longEar.jumps); // true (rabbit-ից)
 ```
 
 ![](proto-animal-rabbit-chain.svg)
 
-Now if we read something from `longEar`, and it's missing, JavaScript will look for it in `rabbit`, and then in `animal`.
+Այժմ, եթե մենք ինչ-որ բան կարդում ենք `longEar`-ից, իսկ այն բացակայում է, ապա JavaScript-ը այն կփնտրի `rabbit`-ում, այնուհետև `animal`-ում:
 
-There are only two limitations:
+Միայն երկու սահմանափակում կա.
 
-1. The references can't go in circles. JavaScript will throw an error if we try to assign `__proto__` in a circle.
-2. The value of `__proto__` can be either an object or `null`. Other types are ignored.
+1. Հղումները չեն կարող շրջանաձև շրջվել: JavaScript-ը սխալ կթողարկի, եթե փորձենք վերագրել `__proto__`-ն շրջանաձև:
+2. `__proto__`-ի արժեքը կարող է լինել կամ օբյեկտ կամ `null`: Մյուս տեսակներն անտեսվում են:
 
-Also it may be obvious, but still: there can be only one `[[Prototype]]`. An object may not inherit from two others.
+Նաև դա ակնհայտ է, բայց այնուամենայնիվ. կարող է լինել միայն մեկ `[[Prototype]]`: Օբյեկտը չի կարող ժառանգվել երկու տարբեր օբյեկտներից:
 
 ```smart header="`__proto__` is a historical getter/setter for `[[Prototype]]`"
 It's a common mistake of novice developers not to know the difference between these two.
