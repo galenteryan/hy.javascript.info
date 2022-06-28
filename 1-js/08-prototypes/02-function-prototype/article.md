@@ -105,7 +105,6 @@ let rabbit2 = new rabbit.constructor("Սև Ճագար");
 */!*
 ```
 
-That's handy when we have an object, don't know which constructor was used for it (e.g. it comes from a 3rd party library), and we need to create another one of the same kind.
 Դա հարմար է, երբ մենք ունենք օբյեկտ, բայց չգիտենք, թե որ կոնստրուկտորն է օգտագործվել դրա համար (օրինակ՝ այն ստեղծվել է կողմնակի գրադարանից), իսկ մենք պետք է ստեղծել նույն տեսակի ևս մեկը:
 
 Բայց `«constructor»`-ի մասին, հավանաբար, ամենակարևորն այն է, որ...
