@@ -1,18 +1,18 @@
 # F.prototype
 
-Remember, new objects can be created with a constructor function, like `new F()`.
+Հեշեք, նոր օբյեկտներ կարող են ստեղծվել կոնստրուկտոր ֆունկցիայով, այսպես՝ `new F()`։
 
-If `F.prototype` is an object, then the `new` operator uses it to set `[[Prototype]]` for the new object.
+Եթե `F.prototype`-ը օբյեկտ է, ապա `new` օպերատորն այն օգտագործում է նոր օբյեկտի համար `[[Prototype]]` տեղադրելու համար։
 
 ```smart
-JavaScript had prototypal inheritance from the beginning. It was one of the core features of the language.
+JavaScript-ն ի սկզբանե ուներ նախատիպային ժառանգություն: Դա լեզվի առանցքային առանձնահատկություններից մեկն էր:
 
-But in the old times, there was no direct access to it. The only thing that worked reliably was a `"prototype"` property of the constructor function, described in this chapter. So there are many scripts that still use it.
+Բայց հին ժամանակներում դրան անմիջական մուտք չկար։ Միակ բանը, որն աշխատում էր հուսալիորեն, այս գլխում նկարագրված կոնստրուկտոր ֆունկցիայի `«prototype»` հատկությունն էր: Այնպես որ, շատ սքրիփթներ կան, որտեղ դեռ օգտագործվում է այն:
 ```
 
-Please note that `F.prototype` here means a regular property named `"prototype"` on `F`. It sounds something similar to the term "prototype", but here we really mean a regular property with this name.
+Նկատի ունեցեք, որ `F.prototype`-ը այստեղ նշանակում է `«prototype»` անվանումով սովորական հատկություն `F`-ի համար. Այն հնչում է որպես «prototype» տերմինի նման մի բան, բայց այստեղ մենք իսկապես նկատի ունենք այս անվանումով սովորական հատկություն:
 
-Here's the example:
+Ահա օրինակը.
 
 ```js run
 let animal = {
@@ -27,70 +27,70 @@ function Rabbit(name) {
 Rabbit.prototype = animal;
 */!*
 
-let rabbit = new Rabbit("White Rabbit"); //  rabbit.__proto__ == animal
+let rabbit = new Rabbit("Սպիտակ Նապաստակ"); //  rabbit.__proto__ == animal
 
 alert( rabbit.eats ); // true
 ```
 
-Setting `Rabbit.prototype = animal` literally states the following: "When a `new Rabbit` is created, assign its `[[Prototype]]` to `animal`".
+`Rabbit.prototype = animal` կարգավորումը բառացիորեն նշում է հետևյալը. «երբ `new Rabbit` ստեղծվի, նրա `[[Prototype]]`-ը նշանակել `animal`-ին»։
 
-That's the resulting picture:
+Ստացված պատկերն այսպիսին է.
 
 ![](proto-constructor-animal-rabbit.svg)
 
-On the picture, `"prototype"` is a horizontal arrow, meaning a regular property, and `[[Prototype]]` is vertical, meaning the inheritance of `rabbit` from `animal`.
+Նկարում `«prototype»`-ը հորիզոնական սլաք է, որը նշանակում է կանոնավոր հատկություն, իսկ `[[Prototype]]`-ը ուղղահայաց է՝ նշանակում է `rabbit`-ի ժառանգությունը `animal`-ից:
 
-```smart header="`F.prototype` only used at `new F` time"
-`F.prototype` property is only used when `new F` is called, it assigns `[[Prototype]]` of the new object.
+```smart header="`F.prototype`-ը միայն օգտագործվում է `new F`-ի ժամանակ"
+`F.prototype` հատկությունն օգտագործվում է միայն այն դեպքում, երբ `new F` է կանչվում, այն նշանակում է `[[Prototype]]` նոր օբյեկտին։
 
-If, after the creation, `F.prototype` property changes (`F.prototype = <another object>`), then new objects created by `new F` will have another object as `[[Prototype]]`, but already existing objects keep the old one.
+Եթե ստեղծելուց հետո `F.prototype` հատկությունը փոփոխվի (`F.prototype = <այլ օբյեկտ>`), ապա `new F`-ի կողմից ստեղծված նոր օբյեկտները կունենան մեկ այլ օբյեկտ որպես `[[Prototype]]`, բայց արդեն գոյություն ունեցող օբյեկտները կպահպանեն հինը։
 ```
 
-## Default F.prototype, constructor property
+## Կանխադրված F.prototype, constructor հատկություն
 
-Every function has the `"prototype"` property even if we don't supply it.
+Յուրաքանչյուր ֆունկցիա ունի `«prototype»` հատկություն, նույնիսկ եթե մենք այն չտրամադրենք:
 
-The default `"prototype"` is an object with the only property `constructor` that points back to the function itself.
+Կանխադրված `«prototype»`-ն օբյեկտ է, որն ունի միայն մեկ հատկություն՝ `constructor`, որն էլ իր հերթին հղում է կատարում բուն ֆունկցիային։
 
-Like this:
+Այսպես.
 
 ```js
 function Rabbit() {}
 
-/* default prototype
+/* կանխադրված prototype-ը
 Rabbit.prototype = { constructor: Rabbit };
 */
 ```
 
 ![](function-prototype-constructor.svg)
 
-We can check it:
+Մենք կարող ենք ստուգել այն.
 
 ```js run
 function Rabbit() {}
-// by default:
+// կանխադրված․
 // Rabbit.prototype = { constructor: Rabbit }
 
 alert( Rabbit.prototype.constructor == Rabbit ); // true
 ```
 
-Naturally, if we do nothing, the `constructor` property is available to all rabbits through  `[[Prototype]]`:
+Բնականաբար, եթե մենք ոչինչ չանենք, `constructor` հատկությունը հասանելի կլինի բոլոր ճագարներին `[[Prototype]]`-ի միջոցով.
 
 ```js run
 function Rabbit() {}
-// by default:
+// կանխադրված․
 // Rabbit.prototype = { constructor: Rabbit }
 
-let rabbit = new Rabbit(); // inherits from {constructor: Rabbit}
+let rabbit = new Rabbit(); // ժառանգում է {constructor: Rabbit}-ից
 
-alert(rabbit.constructor == Rabbit); // true (from prototype)
+alert(rabbit.constructor == Rabbit); // true (prototype-ից)
 ```
 
 ![](rabbit-prototype-constructor.svg)
 
-We can use `constructor` property to create a new object using the same constructor as the existing one.
+Մենք կարող ենք օգտագործել արդեն իսկ գոյություն ունեցող օբյեկտի `constructor` հատկությունը՝ նորը ստեղծելու համար։
 
-Like here:
+Ինչպես այստեղ․
 
 ```js run
 function Rabbit(name) {
@@ -98,10 +98,10 @@ function Rabbit(name) {
   alert(name);
 }
 
-let rabbit = new Rabbit("White Rabbit");
+let rabbit = new Rabbit("Սպիտակ Ճագար");
 
 *!*
-let rabbit2 = new rabbit.constructor("Black Rabbit");
+let rabbit2 = new rabbit.constructor("Սև Ճագար");
 */!*
 ```
 
