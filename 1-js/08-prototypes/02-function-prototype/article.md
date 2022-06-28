@@ -106,16 +106,17 @@ let rabbit2 = new rabbit.constructor("Սև Ճագար");
 ```
 
 That's handy when we have an object, don't know which constructor was used for it (e.g. it comes from a 3rd party library), and we need to create another one of the same kind.
+Դա հարմար է, երբ մենք ունենք օբյեկտ, բայց չգիտենք, թե որ կոնստրուկտորն է օգտագործվել դրա համար (օրինակ՝ այն ստեղծվել է կողմնակի գրադարանից), իսկ մենք պետք է ստեղծել նույն տեսակի ևս մեկը:
 
-But probably the most important thing about `"constructor"` is that...
+Բայց `«constructor»`-ի մասին, հավանաբար, ամենակարևորն այն է, որ...
 
-**...JavaScript itself does not ensure the right `"constructor"` value.**
+**...JavaScript-ն ինքնին չի ապահովում `«constructor»`-ի ճշգրիտ արժեքը։**
 
-Yes, it exists in the default `"prototype"` for functions, but that's all. What happens with it later -- is totally on us.
+Այո, այն գոյություն ունի ֆունկցիաների կանխադրված `«prototype»`-ում, բայց միայն այդքանը։ Այն, ինչ տեղի կունենա դրա հետ հետագայում, ամբողջովին մերզանից է կախված:
 
-In particular, if we replace the default prototype as a whole, then there will be no `"constructor"` in it.
+Մասնավորապես, եթե մենք ամբողջությամբ փոխարինենք կանխադրված նախատիպը, ապա դրանում `«constructor»` չի լինի:
 
-For instance:
+Օրինակ․
 
 ```js run
 function Rabbit() {}
@@ -129,18 +130,18 @@ alert(rabbit.constructor === Rabbit); // false
 */!*
 ```
 
-So, to keep the right `"constructor"` we can choose to add/remove properties to the default `"prototype"` instead of overwriting it as a whole:
+Այսպիսով, ճշգրիտ `«constructor»`-ը պահելու համար մենք կարող ենք ավելացնել/հեռացնել հատկություններ կանխադրված `«prototype»`-ում՝ այն ամբողջությամբ վերագրելու փոխարեն.
 
 ```js
 function Rabbit() {}
 
-// Not overwrite Rabbit.prototype totally
-// just add to it
+// Չենք վերագրում Rabbit.prototype-ն ամբողջությամբ
+// ավելացնում ենք նրանում
 Rabbit.prototype.jumps = true
-// the default Rabbit.prototype.constructor is preserved
+// կանխադրված Rabbit.prototype.constructor-ը պահպանված է
 ```
 
-Or, alternatively, recreate the `constructor` property manually:
+Կամ, որպես այլընտրանք, հենց մենք վերստեղծեք `constructor` հատկությունը.
 
 ```js
 Rabbit.prototype = {
@@ -150,26 +151,27 @@ Rabbit.prototype = {
 */!*
 };
 
-// now constructor is also correct, because we added it
+// այժմ կոնստրուկտորը նույնպես ճշգրիտ է, քանի որ մենք այն ավելացրեցինք
 ```
 
 
-## Summary
+## Ամփոփում
 
-In this chapter we briefly described the way of setting a `[[Prototype]]` for objects created via a constructor function. Later we'll see more advanced programming patterns that rely on it.
+Այս գլխում մենք հակիրճ նկարագրեցինք `[[Prototype]]` սահմանելու եղանակը կոնստրուկտոր ֆունկցիայի միջոցով ստեղծված օբյեկտների համար:
+Ավելի ուշ մենք կծանոթանանք ծրագրավորման ավելի ընդլայնված օրինաչափություններին, որոնք հիմնված են դրա վրա:
 
-Everything is quite simple, just a few notes to make things clear:
+Ամեն ինչ բավականին պարզ է, ընդամենը մի քանի նշում՝ ամեն ինչ էլ ավելի պարզ դարձնելու համար.
 
-- The `F.prototype` property (don't mistake it for `[[Prototype]]`) sets `[[Prototype]]` of new objects when `new F()` is called.
-- The value of `F.prototype` should be either an object or `null`: other values won't work.
--  The `"prototype"` property only has such a special effect when set on a constructor function, and invoked with `new`.
+- `F.prototype` հատկությունը (մի շփոթեք այն `[[Prototype]]`-ի հետ) նոր օբյեկտների համար `[[Prototype]]` է սահմանում, երբ կանչվում է `new F()`-ը։
+- `F.prototype`-ի արժեքը պետք է լինի կամ օբյեկտ կամ `null`. մյուս արժեքները չեն աշխատի:
+-  `«prototype»` հատկությունը հատուկ էֆեկտ է ունենում միայն այն դեպքում, երբ տեղադրված է կոնստրուկտոր ֆունկցիայի համար, որը գործարկվում է `new`-ով։
 
-On regular objects the `prototype` is nothing special:
+Սովորական օբյեկտների համար `prototype`-ը առանձնահատուկ բան չէ.
 ```js
 let user = {
   name: "John",
-  prototype: "Bla-bla" // no magic at all
+  prototype: "Bla-bla" // ոչ մի կախարդանք
 };
 ```
 
-By default all functions have `F.prototype = { constructor: F }`, so we can get the constructor of an object by accessing its `"constructor"` property.
+Կանխադրված կերպով բոլոր ֆունկցիաներն ունեն `F.prototype = { constructor: F }`, այնպես որ մենք կարող ենք ստանալ օբյեկտի կոնստրուկտորը՝ մուտք գործելով նրա `«constructor»` հատկությանը։
