@@ -240,7 +240,7 @@ let animal = {
 };
 
 let rabbit = {
-  name: "Սպիտակ Նապաստակ",
+  name: "Սպիտակ Ճագար",
   __proto__: animal
 };
 
