@@ -27,7 +27,7 @@ function Rabbit(name) {
 Rabbit.prototype = animal;
 */!*
 
-let rabbit = new Rabbit("Սպիտակ Նապաստակ"); //  rabbit.__proto__ == animal
+let rabbit = new Rabbit("Սպիտակ Ճագար"); //  rabbit.__proto__ == animal
 
 alert( rabbit.eats ); // true
 ```
