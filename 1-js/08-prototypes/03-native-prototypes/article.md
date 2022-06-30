@@ -1,33 +1,34 @@
-# Native prototypes
+# Բնիկ նախատիպեր
 
-The `"prototype"` property is widely used by the core of JavaScript itself. All built-in constructor functions use it.
+Այս `«prototype»` հատկությունը լայնորեն օգտագործվում է հենց JavaScript-ի միջուկի կողմից: Բոլոր ներկառուցված կոնստրուկտոր ֆունկցիաներն օգտագործում են այն:
 
 First we'll see at the details, and then how to use it for adding new capabilities to built-in objects.
+Սկզբում մենք կդիտարկենք մանրամասները, իսկ հետո՝ ինչպես օգտագործել այն ներկառուցված օբյեկտներին նոր հնարավորություններ ավելացնելու համար:
 
 ## Object.prototype
 
-Let's say we output an empty object:
+Ենթադրենք, մենք դատարկ օբյեկտ ենք արտատպում.
 
 ```js run
 let obj = {};
 alert( obj ); // "[object Object]" ?
 ```
 
-Where's the code that generates the string `"[object Object]"`? That's a built-in `toString` method, but where is it? The `obj` is empty!
+Որտե՞ղ է `«[object Object]»` տողը ստեղծող կոդը: Սա ներկառուցված `toString` մեթոդ է, բայց որտե?ղ է այն, `obj`-ն դատարկ է․․․
 
-...But the short notation `obj = {}` is the same as `obj = new Object()`, where `Object` is a built-in object constructor function, with its own `prototype` referencing a huge object with `toString` and other methods.
+...Սակայն `obj = {}` հակիրճ նշումը նույնն է, ինչ `obj = new Object()`, որտեղ `Object`-ը ներկառուցված օբյեկտի կոնստրուկտոր ֆունկցիա է՝ իր սեփական `prototype`-ով, որը հղում է անում հսկայական օբյեկտին՝ իր `toString` և այլ մեթոդներով:
 
-Here's what's going on:
+Ահա թե ինչ է կատարվում.
 
 ![](object-prototype.svg)
 
-When `new Object()` is called (or a literal object `{...}` is created), the `[[Prototype]]` of it is set to `Object.prototype` according to the rule that we discussed in the previous chapter:
+Երբ `new Object()` է կանչվում (կամ բառացիորեն ստեղծվում է օբյեկտ՝ `{...}`, դրա `[[Prototype]]`-ը լինում է `Object.prototype`՝ համաձայն նախորդ գլխում մեր քննարկած կանոնի:
 
 ![](object-prototype-1.svg)
 
-So then when `obj.toString()` is called the method is taken from `Object.prototype`.
+Այսպիսով, երբ `obj.toString()` է կանչվում, մեթոդը վերցվում է `Object.prototype`-ից:
 
-We can check it like this:
+Մենք կարող ենք ստուգել այն այսպես.
 
 ```js run
 let obj = {};
@@ -38,13 +39,13 @@ alert(obj.toString === obj.__proto__.toString); //true
 alert(obj.toString === Object.prototype.toString); //true
 ```
 
-Please note that there is no more `[[Prototype]]` in the chain above `Object.prototype`:
+Նկատի ունեցեք, որ `Object.prototype`-ի վերին շղթայում այլևս չկա `[[Prototype]]`․
 
 ```js run
 alert(Object.prototype.__proto__); // null
 ```
 
-## Other built-in prototypes
+## Այլ ներկառուցված նախատիպեր
 
 Other built-in objects such as `Array`, `Date`, `Function` and others also keep methods in prototypes.
 
