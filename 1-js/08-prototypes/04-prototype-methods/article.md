@@ -1,26 +1,26 @@
 
-# Prototype methods, objects without __proto__
+# Նախատիպի մեթոդներ, օբյեկտներ առանց __proto__
 
-In the first chapter of this section, we mentioned that there are modern methods to setup a prototype.
+Այս բաժնի առաջին գլխում մենք նշեցինք, որ կան նախատիպի կարգավորման ժամանակակից մեթոդներ:
 
-The `__proto__` is considered outdated and somewhat deprecated (in browser-only part of the JavaScript standard).
+`__proto__`-ն որոշ չափով համարվում է հնացած (սպասարկվում է JavaScript ստանդարտի միայն բրաուզերային հատվածում):
 
-The modern methods are:
+Ժամանակակից մեթոդներն են.
 
-- [Object.create(proto, [descriptors])](mdn:js/Object/create) -- creates an empty object with given `proto` as `[[Prototype]]` and optional property descriptors.
-- [Object.getPrototypeOf(obj)](mdn:js/Object/getPrototypeOf) -- returns the `[[Prototype]]` of `obj`.
-- [Object.setPrototypeOf(obj, proto)](mdn:js/Object/setPrototypeOf) -- sets the `[[Prototype]]` of `obj` to `proto`.
+- [Object.create(proto, [descriptors])](mdn:js/Object/create) -- տրված `proto`-ով ստեղծում է դատարկ օբյեկտ՝ որպես `[[Prototype]]` և կամընտիր հատկությունների նկարագրիչներ:
+- [Object.getPrototypeOf(obj)](mdn:js/Object/getPrototypeOf) -- վերադարձնում է `obj`-ի `[[Prototype]]`-ը։
+- [Object.setPrototypeOf(obj, proto)](mdn:js/Object/setPrototypeOf) -- տեղադրում է `obj`-ի `[[Prototype]]`-ը որպես `proto`։
 
-These should be used instead of `__proto__`.
+Սրանք պետք է օգտագործվեն `__proto__`-ի փոխարեն:
 
-For instance:
+Օրինակ․
 
 ```js run
 let animal = {
   eats: true
 };
 
-// create a new object with animal as a prototype
+// ստեղծել նոր օբյեկտ, որի նախատիպը animal-ն է
 *!*
 let rabbit = Object.create(animal);
 */!*
@@ -32,11 +32,11 @@ alert(Object.getPrototypeOf(rabbit) === animal); // true
 */!*
 
 *!*
-Object.setPrototypeOf(rabbit, {}); // change the prototype of rabbit to {}
+Object.setPrototypeOf(rabbit, {}); // rabbit-ի նախատիպը փոփոխել {}-ի
 */!*
 ```
 
-`Object.create` has an optional second argument: property descriptors. We can provide additional properties to the new object there, like this:
+`Object.create`-ն ունի կամընտիր երկրորդ արգումենտ՝ հատկության նկարագրիչներ: Այնտեղ մենք կարող ենք լրացուցիչ հատկություններ տրամադրել նոր օբյեկտին հետևյալ եղանակով.
 
 ```js run
 let animal = {
@@ -52,17 +52,18 @@ let rabbit = Object.create(animal, {
 alert(rabbit.jumps); // true
 ```
 
-The descriptors are in the same format as described in the chapter <info:property-descriptors>.
+Նկարագրիչները նույն ձևաչափով են, ինչպես նկարագրված է <info:property-descriptors> գլխում:
 
 We can use `Object.create` to perform an object cloning more powerful than copying properties in `for..in`:
+Մենք կարող ենք օգտագործել `Object.create`՝ օբյեկտի կլոնավորումն ավելի հզոր ձևով իրականացնելու համար, քան `for..in`-ով հատկություններ պատճենելն է․
 
 ```js
 let clone = Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj));
 ```
 
-This call makes a truly exact copy of `obj`, including all properties: enumerable and non-enumerable, data properties and setters/getters -- everything, and with the right `[[Prototype]]`.
+Այս կանչը ստեղծում է `obj`-ի համար իսկապես ճշգրիտ պատճեն՝ ներառյալ բոլոր հատկությունները. թվարկելի և անթվարկելի հատկությունները, տվյալային հատկություններն ու սեթթերներ/գեթթերները՝ ամեն ինչ, ու ճշգրիտ `[[Prototype]]`-ով:
 
-## Brief history
+## Համառոտ պատմություն
 
 If we count all the ways to manage `[[Prototype]]`, there are a lot! Many ways to do the same thing!
 
