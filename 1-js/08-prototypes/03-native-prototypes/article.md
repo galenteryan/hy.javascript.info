@@ -47,58 +47,58 @@ alert(Object.prototype.__proto__); // null
 
 ## Այլ ներկառուցված նախատիպեր
 
-Other built-in objects such as `Array`, `Date`, `Function` and others also keep methods in prototypes.
+Այլ ներկառուցված օբյեկտներ, ինչպիսիք են `Array`, `Date`, `Function` և այլն, նույնպես պահում են մեթոդները նախատիպերում:
 
-For instance, when we create an array `[1, 2, 3]`, the default `new Array()` constructor is used internally. So `Array.prototype` becomes its prototype and provides methods. That's very memory-efficient.
+Օրինակ՝ երբ մենք ստեղծում ենք `[1, 2, 3]` զանգված, ապա ներսից օգտագործվում է կանխադրված `new Array()` կոնստրուկտորը: Այսպիսով, `Array.prototype`-ը դառնում է դրա նախատիպը և տրամադրում է մեթոդներ: Դա շատ արդյունավետ է հիշողության օգտագործման համար:
 
-By specification, all of the built-in prototypes have `Object.prototype` on the top. That's why some people say that "everything inherits from objects".
+Ըստ հատկորոշման, բոլոր ներկառուցված նախատիպերն ունեն `Object.prototype` վերևում: Դրա համար ոմանք ասում են, որ «ամեն ինչ ժառանգվում է օբյեկտներից»։
 
-Here's the overall picture (for 3 built-ins to fit):
+Ահա ընդհանուր պատկերը (3 ներկառուցված օբյեկտների համար).
 
 ![](native-prototypes-classes.svg)
 
-Let's check the prototypes manually:
+Եկեք ստուգենք նախատիպերը.
 
 ```js run
 let arr = [1, 2, 3];
 
-// it inherits from Array.prototype?
+// արդյո՞ք այն ժառանգում է Array.prototype-ից
 alert( arr.__proto__ === Array.prototype ); // true
 
-// then from Object.prototype?
+// այնուհետև ստուգենք՝ Object.prototype-ի՞ց
 alert( arr.__proto__.__proto__ === Object.prototype ); // true
 
-// and null on the top.
+// և null ամենավերևում
 alert( arr.__proto__.__proto__.__proto__ ); // null
 ```
 
-Some methods in prototypes may overlap, for instance, `Array.prototype` has its own `toString` that lists comma-delimited elements:
+Նախատիպերի որոշ մեթոդներ կարող են համընկնել, օրինակ՝ `Array.prototype`-ն ունի իր սեփական `toString`-ը, որը թվարկում է տարրերը՝ սահմանազատված ստորակետերով.
 
 ```js run
 let arr = [1, 2, 3]
-alert(arr); // 1,2,3 <-- the result of Array.prototype.toString
+alert(arr); // 1,2,3 <-- Array.prototype.toString-ի արդյունքը
 ```
 
-As we've seen before, `Object.prototype` has `toString` as well, but `Array.prototype` is closer in the chain, so the array variant is used.
+Ինչպես նախկինում տեսանք, `Object.prototype`-ը նույնպես ունի `toString`, բայց `Array.prototype`-ը շղթայում ավելի մոտ է, ուստի զանգվածի տարբերակն է օգտագործվում:
 
 
 ![](native-prototypes-array-tostring.svg)
 
 
-In-browser tools like Chrome developer console also show inheritance (`console.dir` may need to be used for built-in objects):
+Բրաուզերի գործիքները, ինչպիսին է Chrome-ի developer console-ը, ժառանգականությունը նույնպես ցուցադրում են (ներկառուցված օբյեկտների համար կարող է պետք գա օգտագործել `console.dir`-ը).
 
 ![](console_dir_array.png)
 
-Other built-in objects also work the same way. Even functions -- they are objects of a built-in `Function` constructor, and their methods (`call`/`apply` and others) are taken from `Function.prototype`. Functions have their own `toString` too.
+Այլ ներկառուցված օբյեկտները նույնպես աշխատում են նույն կերպ: Նույնիսկ ֆունկցիաները. դրանք ներկառուցված `Function` կոնստրուկտորի օբյեկտներ են, և դրանց մեթոդները (`call`/`apply` և այլն) վերցված են `Function.prototype`-ից: Ֆունկցիաները նույնպես ունեն իրենց սեփական `toString`-ը:
 
 ```js run
 function f() {}
 
 alert(f.__proto__ == Function.prototype); // true
-alert(f.__proto__.__proto__ == Object.prototype); // true, inherit from objects
+alert(f.__proto__.__proto__ == Object.prototype); // true, ժառանգում է օբյեկտից
 ```
 
-## Primitives
+## Պրիմիտիվներ
 
 The most intricate thing happens with strings, numbers and booleans.
 
