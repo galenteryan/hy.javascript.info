@@ -1,4 +1,4 @@
-# Բնիկ նախատիպեր
+# Հարազատ նախատիպեր
 
 Այս `«prototype»` հատկությունը լայնորեն օգտագործվում է հենց JavaScript-ի միջուկի կողմից: Բոլոր ներկառուցված կոնստրուկտոր ֆունկցիաներն օգտագործում են այն:
 
@@ -100,19 +100,19 @@ alert(f.__proto__.__proto__ == Object.prototype); // true, ժառանգում է
 
 ## Պրիմիտիվներ
 
-The most intricate thing happens with strings, numbers and booleans.
+Ամենաբարդ բանը տեղի է ունենում տողերի, թվերի և բուլյանների հետ:
 
-As we remember, they are not objects. But if we try to access their properties, temporary wrapper objects are created using built-in constructors `String`, `Number` and `Boolean`. They provide the methods and disappear.
+Ինչպես հիշում ենք, դրանք օբյեկտներ չեն։ Բայց եթե փորձենք մուտք գործել դեպի դրանց հատկություններ, ապա ներկառուցված `String`, `Number` և `Boolean` կոնստրուկտորների միջոցով կստեղծվեն ժամանակավոր օբյեկտներ-պատյաններ: Տրամադրում են մեթոդներն ու անհետանում։
 
-These objects are created invisibly to us and most engines optimize them out, but the specification describes it exactly this way. Methods of these objects also reside in prototypes, available as `String.prototype`, `Number.prototype` and `Boolean.prototype`.
+Այս օբյեկտները ստեղծվում են մեզ համար անտեսանելի կերպով, իսկ շարժիչների մեծ մասն օպտիմիզացնում են դրանք, բայց տեխնիկական հատկորոշիչները դա նկարագրում են հենց այսպես․ այս օբյեկտների մեթոդները նաև նախատիպերում են գտնվում, որոնք հասանելի են որպես `String.prototype`, `Number.prototype` և `Boolean.prototype`:
 
-```warn header="Values `null` and `undefined` have no object wrappers"
-Special values `null` and `undefined` stand apart. They have no object wrappers, so methods and properties are not available for them. And there are no corresponding prototypes either.
+```warn header="`null` և `undefined` արժեքները չունեն պատյան-օբյեկտներ"
+Այս հատուկ արժեքները՝ `null` և `undefined`, առանձնանում են: Դրանք չունեն օբյեկտ-փաթաթաններ, ուստի դրանց համար չկան մեթոդներ և հատկություններ: Չկան նաև համապատասխան նախատիպեր։
 ```
 
-## Changing native prototypes [#native-prototype-change]
+## Հարազատ նախատիպերի փոփոխություն [#native-prototype-change]
 
-Native prototypes can be modified. For instance, if we add a method to `String.prototype`,  it becomes available to all strings:
+Հարազատ նախատիպերը կարող են փոփոխվել: Օրինակի համար, եթե մենք մեթոդ ավելացնենք `String.prototype`-ին, այն հասանելի է դառնում բոլոր տողերի (string) համար.
 
 ```js run
 String.prototype.show = function() {
@@ -122,41 +122,41 @@ String.prototype.show = function() {
 "BOOM!".show(); // BOOM!
 ```
 
-During the process of development, we may have ideas for new built-in methods we'd like to have, and we may be tempted to add them to native prototypes. But that is generally a bad idea.
+Շրագրավորման ընթացքում մեզ մոտ կարող է միտք ձևավորվել նոր ներկառուցված մեթոդների հետ կապված, որոնք կցանկանայինք ունենալ, և մեզ մոտ կարող է գայթակղություն առաջանալ՝ ավելացնել դրանք հարազատ նախատիպերում: Բայց դա ընդհանուր առմամբ վատ գաղափար է:
 
 ```warn
-Prototypes are global, so it's easy to get a conflict. If two libraries add a method `String.prototype.show`, then one of them will be overwriting the method of the other.
+Նախատիպերը գլոբալ են, ուստի հեշտությամբ կարող է կոնֆլիկտ առաջանալ: Եթե երկու գրադարան ավելացնեն `String.prototype.show` մեթոդը, ապա դրանցից մեկը կվերագրի մյուսի մեթոդը:
 
-So, generally, modifying a native prototype is considered a bad idea.
+Այսպիսով, ընդհանուր առմամբ, հարազատ նախատիպի փոփոխումը վատ գաղափար է համարվում:
 ```
 
-**In modern programming, there is only one case where modifying native prototypes is approved. That's polyfilling.**
+**Ժամանակակից ծրագրավորման մեջ կա միայն մի դեպք, երբ արդարացվում է հարազատ նախատիպերի փոփոխումը։ Դա պոլիֆիլինգն (polyfilling) է։**
 
-Polyfilling is a term for making a substitute for a method that exists in the JavaScript specification, but is not yet supported by a particular JavaScript engine.
+Պոլիֆիլինգը տերմին է, որը կարող է փոխարինել մի մեթոդի, որը գոյություն ունի JavaScript-ի հատկորոշման մեջ, բայց դեռ չի սպասարկվում այս կամ այն JavaScript շարժիչի կողմից:
 
-We may then implement it manually and populate the built-in prototype with it.
+Այնուհետև մենք կարող ենք դա իրագործել և դրանով համալրել ներկառուցված նախատիպը:
 
-For instance:
+Օրինակ․
 
 ```js run
-if (!String.prototype.repeat) { // if there's no such method
-  // add it to the prototype
+if (!String.prototype.repeat) { // եթե այդպիսի մեթոդ չկա
+  // ավելացնել այն նախատիպում
 
   String.prototype.repeat = function(n) {
-    // repeat the string n times
+    // կրկնել տողը n անգամ
 
-    // actually, the code should be a little bit more complex than that
-    // (the full algorithm is in the specification)
-    // but even an imperfect polyfill is often considered good enough
+    // իրականում կոդը պետք է լինի մի փոքր ավելի բարդ, քան սա
+    // (ամբողջական ալգորիթմը նշված է հատկորոշման մեջ)
+    // բայց նույնիսկ անկատար պոլիֆիլը հաճախ բավականին լավ է համարվում
     return new Array(n + 1).join(this);
   };
 }
 
-alert( "La".repeat(3) ); // LaLaLa
+alert( "Լա".repeat(3) ); // ԼաԼաԼա
 ```
 
 
-## Borrowing from prototypes
+## Փոխառություն նախատիպերից
 
 In the chapter <info:call-apply-decorators#method-borrowing> we talked about method borrowing.
 
