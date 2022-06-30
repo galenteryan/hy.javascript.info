@@ -158,15 +158,16 @@ alert( "Լա".repeat(3) ); // ԼաԼաԼա
 
 ## Փոխառություն նախատիպերից
 
-In the chapter <info:call-apply-decorators#method-borrowing> we talked about method borrowing.
+<info:call-apply-decorators#method-borrowing> գլխում մենք խոսեցինք փոխառության մեթոդի մասին:
 
-That's when we take a method from one object and copy it into another.
+Դա այն է, երբ մենք մեթոդ ենք վերցնում մի օբյեկտից և պատճենում այն մյուսի մեջ:
 
-Some methods of native prototypes are often borrowed.
+Հարազատ նախատիպերի որոշ մեթոդներ հաճախ փոխառվում են:
 
 For instance, if we're making an array-like object, we may want to copy some `Array` methods to it.
+Օրինակի համար, եթե մենք զանգվածին նման (array-like) օբյեկտ ենք ստեղծում, մենք կարող է ցանկանանք պատճենել դրա մեջ `Array`-ի որոշ մեթոդներ:
 
-E.g.
+Օրինակ․
 
 ```js run
 let obj = {
@@ -182,18 +183,19 @@ obj.join = Array.prototype.join;
 alert( obj.join(',') ); // Hello,world!
 ```
 
-It works because the internal algorithm of the built-in `join` method only cares about the correct indexes and the `length` property. It doesn't check if the object is indeed an array. Many built-in methods are like that.
+Այն աշխատում է, քանի որ ներկառուցված `join` մեթոդի ներկառուցված ալգորիթմը հեգ է տանում միայն ճշգրիտ ինդեքսների և `length` հատկության մասին: Այն չի ստուգում, թե արդյոք օբյեկտն իսկապես զանգված է: Շատ ներկառուցված մեթոդներ նման կերպով են աշխատում:
 
-Another possibility is to inherit by setting `obj.__proto__` to `Array.prototype`, so all `Array` methods are automatically available in `obj`.
+Մեկ այլ հնարավորություն է ժառանգել՝ `obj.__proto__`-ն տեղադրելով `Array.prototype`-ում, որպեսզի `Array`-ի բոլոր մեթոդները ավտոմատ կերպով հասանելի լինեն `obj`-ում:
 
-But that's impossible if `obj` already inherits from another object. Remember, we only can inherit from one object at a time.
+Բայց դա անհնար է, եթե `obj`-ն արդեն ժառանգում է մեկ այլ օբյեկտից: Հիշեք, որ մենք միաժամանակ կարող ենք ժառանգել միայն մեկ օբյեկտից:
 
 Borrowing methods is flexible, it allows to mix functionalities from different objects if needed.
+Փոխառության մեթոդները ճկուն են, դա թույլ է տալիս անհրաժեշտության դեպքում խառնել տարբեր օբյեկտների ֆունկցիոնալությունը:
 
-## Summary
+## Ամփոփում
 
-- All built-in objects follow the same pattern:
-    - The methods are stored in the prototype (`Array.prototype`, `Object.prototype`, `Date.prototype`, etc.)
-    - The object itself stores only the data (array items, object properties, the date)
-- Primitives also store methods in prototypes of wrapper objects: `Number.prototype`, `String.prototype` and `Boolean.prototype`. Only `undefined` and `null` do not have wrapper objects
-- Built-in prototypes can be modified or populated with new methods. But it's not recommended to change them. The only allowable case is probably when we add-in a new standard, but it's not yet supported by the JavaScript engine
+- Բոլոր ներկառուցված օբյեկտները հետևում են նույն օրինաչափությանը.
+    - Մեթոդները պահվում են նախատիպում (`Array.prototype`, `Object.prototype`, `Date.prototype` և այլն)։
+    - Օբյեկտն ինքն պահում է միայն տվյալները (զանգվածի տարրեր, օբյեկտի հատկություններ, ամսաթիվը)։
+- Պրիմիտիվները պահպանում են մեթոդները նաև պատյանային օբյեկտների նախատիպերում՝ `Number.prototype`, `String.prototype` և `Boolean.prototype`: Միայն `undefined`-ը և `null`-ը չունեն պատյանային օբյեկտներ:
+- Ներկառուցված նախատիպերը կարող են փոփոխվել կամ համալրվել նոր մեթոդներով: Բայց խորհուրդ չի տրվում փոփոխել դրանք: Միակ թույլատրելի դեպքը հավանաբար այն է, երբ մենք ավելացնում ենք նոր ստանդարտ, բայց այն դեռ չի սպասարկվում JavaScript շարժիչի կողմից:
