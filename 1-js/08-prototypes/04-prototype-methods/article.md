@@ -65,19 +65,19 @@ let clone = Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescr
 
 ## Համառոտ պատմություն
 
-If we count all the ways to manage `[[Prototype]]`, there are a lot! Many ways to do the same thing!
+Եթե հաշվենք `[[Prototype]]`-ը կառավարելու բոլոր եղանակները՝ դրանք շատ են: Նույն բանն անելու համար բազմաթիվ եղանակներ կան:
 
-Why?
+Ինչո՞ւ։
 
-That's for historical reasons.
+Պատմական պատճառներով է այդպես։
 
-- The `"prototype"` property of a constructor function has worked since very ancient times.
-- Later, in the year 2012, `Object.create` appeared in the standard. It gave the ability to create objects with a given prototype, but did not provide the ability to get/set it. So browsers implemented the non-standard `__proto__` accessor that allowed the user to get/set a prototype at any time.
-- Later, in the year 2015, `Object.setPrototypeOf` and `Object.getPrototypeOf` were added to the standard, to perform the same functionality as `__proto__`. As `__proto__` was de-facto implemented everywhere, it was kind-of deprecated and made its way to the Annex B of the standard, that is: optional for non-browser environments.
+- Կոնստրուկտոր ֆունկցիայի `«prototype»` հատկությունը գործել է շատ հին ժամանակներից:
+- Ավելի ուշ՝ 2012 թվականին, ստանդարտում հայտնվեց `Object.create`-ը: Այն նշված նախատիպով օբյեկտներ ստեղծելու հնարավորություն էր տալիս, սակայն ստանալու/տեղադրելու հնարավորություն չէր տալիս։ Այսպիսով, բրաուզերները ներդրեցին ոչ ստանդարտ `__proto__` աքսեսորը (accessor), որn օգտվողին թույլ էր տալիս ցանկացած պահի ստանալ/տեղադրել նախատիպ:
+- Ավելի ուշ՝ 2015 թվականին, ստանդարտում ավելացվեցին `Object.setPrototypeOf`-ը և `Object.getPrototypeOf`-ը, որպեսզի կատարեն նույն գործառույթը, ինչ `__proto__`-ն է կատարում: Քանի որ `__proto__`-ը դե-ֆակտո ներդրվել էր ամենուր և այն մի տեսակ հնացած էր, իր ճանապարհը մտավ ստանդարտի B Հավելված, այսինքն՝ կամընտիր դարձավ ոչ բրաուզերային միջավայրերի համար:
 
-As of now we have all these ways at our disposal.
+Այս պահի դրությամբ մեր տրամադրության տակ են այս բոլոր տարբերակները։
 
-Why was `__proto__` replaced by the functions `getPrototypeOf/setPrototypeOf`? That's an interesting question, requiring us to understand why `__proto__` is bad. Read on to get the answer.
+Ինչո՞ւ `__proto__`-ն փոխարինվեց `getPrototypeOf/setPrototypeOf` ֆունկցիաներով: Սա հետաքրքիր հարց է, որը պահանջում է հասկանալ, թե ինչու է `__proto__`-ն վատ: Պատասխանը ստանալու համար շարունակեք ընթերցել։
 
 ```warn header="Don't change `[[Prototype]]` on existing objects if speed matters"
 Technically, we can get/set `[[Prototype]]` at any time. But usually we only set it once at the object creation time and don't modify it anymore: `rabbit` inherits from `animal`, and that is not going to change.
