@@ -1,12 +1,12 @@
-importance: 5
+Կարևորություն՝ 5
 
 ---
 
-# Changing "prototype"
+# «Նախատիպի» փոփոխություն
 
-In the code below we create `new Rabbit`, and then try to modify its prototype.
+Ստորև գտնվող կոդում մենք ստեղծում ենք `new Rabbit`, այնուհետև փորձում ենք փոփոխել դրա նախատիպը:
 
-In the start, we have this code:
+Սկզբում մենք ունենք այս կոդը.
 
 ```js run
 function Rabbit() {}
@@ -20,7 +20,7 @@ alert( rabbit.eats ); // true
 ```
 
 
-1. We added one more string (emphasized). What will `alert` show now?
+1. Ավելացրեցինք ևս մեկ տող (ընդգծված է): Ի՞նչ ցույց կտա `alert`-ը հիմա։
 
     ```js
     function Rabbit() {}
@@ -37,7 +37,7 @@ alert( rabbit.eats ); // true
     alert( rabbit.eats ); // ?
     ```
 
-2. ...And if the code is like this (replaced one line)?
+2. ...Իսկ եթե կոդը այսպիսի՞ն է (մեկ տող փոխարինված է).
 
     ```js
     function Rabbit() {}
@@ -54,7 +54,7 @@ alert( rabbit.eats ); // true
     alert( rabbit.eats ); // ?
     ```
 
-3. And like this (replaced one line)?
+3. Իսկ այսպե՞ս (մեկ տող փոխարինված է):
 
     ```js
     function Rabbit() {}
@@ -71,7 +71,7 @@ alert( rabbit.eats ); // true
     alert( rabbit.eats ); // ?
     ```
 
-4. The last variant:
+4. Վերջին տարբերակը.
 
     ```js
     function Rabbit() {}
