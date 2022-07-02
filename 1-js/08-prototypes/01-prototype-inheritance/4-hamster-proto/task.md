@@ -1,12 +1,12 @@
-importance: 5
+Կարևորություն՝ 5
 
 ---
 
-# Why are both hamsters full?
+# Ինչո՞ւ են երկու համստերներն էլ լիքը:
 
-We have two hamsters: `speedy` and `lazy` inheriting from the general `hamster` object. 
+Ունենք երկու համստեր՝ `speedy` և `lazy`, որոնք ժառանգում են գլխավոր `hamster` օբյեկտից։ 
 
-When we feed one of them, the other one is also full. Why? How can we fix it?
+Երբ նրանցից մեկին կերակրում ենք, մյուսն էլ է կշտանում։ Ինչո՞ւ։ Ինչպե՞ս կարող ենք շտկել այն:
 
 ```js run
 let hamster = {
@@ -25,11 +25,11 @@ let lazy = {
   __proto__: hamster
 };
 
-// This one found the food
-speedy.eat("apple");
-alert( speedy.stomach ); // apple
+// Այս մեկը գտավ ուտելիք
+speedy.eat("խնձոր");
+alert( speedy.stomach ); // խնձոր
 
-// This one also has it, why? fix please.
-alert( lazy.stomach ); // apple
+// Այս մեկն էլ ունի, ինչո՞ւ։ ՈՒղղեք խնդրում եմ:
+alert( lazy.stomach ); // խնձոր
 ```
 
