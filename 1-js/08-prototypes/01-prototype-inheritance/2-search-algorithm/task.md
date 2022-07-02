@@ -1,12 +1,12 @@
-importance: 5
+Կարևորություն՝ 5
 
 ---
 
-# Searching algorithm
+# Որոնման ալգորիթմ
 
-The task has two parts.
+Առաջադրանքը բաղկացած է երկու մասից։
 
-Given the following objects:
+Ունենք հետևյալ օբյեկտները.
 
 ```js
 let head = {
@@ -27,5 +27,5 @@ let pockets = {
 };
 ```
 
-1. Use `__proto__` to assign prototypes in a way that any property lookup will follow the path: `pockets` -> `bed` -> `table` -> `head`. For instance, `pockets.pen` should be `3` (found in `table`), and `bed.glasses` should be `1` (found in `head`).
-2. Answer the question: is it faster to get `glasses` as `pockets.glasses` or `head.glasses`? Benchmark if needed.
+1. Նախատիպերը նշանակելու համար օգտագործեք `__proto__`-ն այնպես, որ ցանկացած հատկության որոնում ունենա `pockets` -> `bed` -> `table` -> `head` ուղին: Օրինակ՝ `pockets.pen`-ը պետք է լինի `3` (գտնվել է `table`-ում), իսկ `bed.glasses`-ը պետք է լինի `1` (գտնվել է `head`-ում):
+2. Պատասխանեք հարցին․ ավելի արագ է `glasses`-ը ստանալ որպես `pockets.glasses`, թե՞ `head.glasses`: Անհրաժեշտության դեպքում համեմատեք:
