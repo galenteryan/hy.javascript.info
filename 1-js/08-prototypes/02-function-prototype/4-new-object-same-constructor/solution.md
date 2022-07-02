@@ -1,6 +1,6 @@
-We can use such approach if we are sure that `"constructor"` property has the correct value.
+Մենք կարող ենք նման մոտեցում կիրառել, եթե վստահ լինենք, որ `«constructor»` հատկությունը ճշգրիտ արժեք ունի:
 
-For instance, if we don't touch the default `"prototype"`, then this code works for sure:
+Օրինակ՝ եթե մենք չդիպչենք կանխադրված `«prototype»`-ին, ապա այս կոդը հաստատ կաշխատի.
 
 ```js run
 function User(name) {
@@ -10,14 +10,14 @@ function User(name) {
 let user = new User('John');
 let user2 = new user.constructor('Pete');
 
-alert( user2.name ); // Pete (worked!)
+alert( user2.name ); // Pete (աշխատեց)
 ```
 
-It worked, because `User.prototype.constructor == User`.
+Այն աշխատեց, քանի որ `User.prototype.constructor == User`:
 
-..But if someone, so to speak, overwrites `User.prototype` and forgets to recreate `constructor` to reference `User`, then it would fail.
+..Բայց եթե ինչ-որ մեկը, այսպես ասած, վերագրի `User.prototype`-ը և մոռանա վերստեղծել `constructor`-ը՝ հղում անելով `User`-ին, ապա այն կձախողվի:
 
-For instance:
+Օրինակ․
 
 ```js run
 function User(name) {
@@ -33,17 +33,17 @@ let user2 = new user.constructor('Pete');
 alert( user2.name ); // undefined
 ```
 
-Why `user2.name` is `undefined`?
+Ինչո՞ւ է `user2.name`-ը `undefined`։
 
-Here's how `new user.constructor('Pete')` works:
+Ահա, թե ինչպես է աշխատում `new user.constructor('Pete')`-ը․
 
-1. First, it looks for `constructor` in `user`. Nothing.
-2. Then it follows the prototype chain. The prototype of `user` is `User.prototype`, and it also has no `constructor` (because we "forgot" to set it right!).
-3. Going further up the chain, `User.prototype` is a plain object, its prototype is the built-in `Object.prototype`. 
-4. Finally, for the built-in `Object.prototype`, there's a built-in `Object.prototype.constructor == Object`. So it is used.
+1. Նախ, այն `user`-ում փնտրում է `constructor`: Ոչինչ չկա։
+2. Այնուհետև այն հետևում է նախատիպի շղթային: `user`-ի նախատիպը `User.prototype`-ն է, իսկ այն նաև `constructor` չունի (քանի որ մենք «մոռացել» ենք այն ճիշտ կարգավորել):
+3. Շղթայով ավելի վեր բարձրանալով նկատվում է, որ `User.prototype`-ը պարզ օբյեկտ է, իսկ դրա նախատիպը ներկառուցված `Object.prototype`-ն է:
+4. Վերջապես, ներկառուցված `Object.prototype`-ի համար կա ներկառուցված `Object.prototype.constructor == Object`: Հետևաբար դա է օգտագործվում:
 
-Finally, at the end, we have `let user2 = new Object('Pete')`. 
+Ի վերջո, ամենավերջում մենք ունենք `let user2 = new Object('Pete')`:
 
-Probably, that's not what we want. We'd like to create `new User`, not `new Object`. That's the outcome of the missing `constructor`.
+Հավանաբար, դա այն չէ, ինչ մեզ պետք է։ Մեզ անհրաժեշտ է ստեղծել `new User`, այլ ոչ թե `new Object`: Դա բացակայող `constructor`-ի հետևանքն է:
 
-(Just in case you're curious, the `new Object(...)` call converts its argument to an object. That's a theoretical thing, in practice no one calls `new Object` with a value, and generally we don't use `new Object` to make objects at all).
+(Պարզապես այն դեպքում, երբ դուք հետաքրքրված եք, `new Object(...)`-ի կանչն իր արգումենտը փոխակերպում է օբյեկտի: Դա տեսական երևույթ է, գործնականում ոչ ոք արժեքով չի կանչում `new Object`, և, առհասարակ, մենք օբյեկտներ ստեղծելու համար ընդհանրապես չենք օգտագործում `new Object`):
