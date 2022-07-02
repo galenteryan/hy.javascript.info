@@ -1,12 +1,12 @@
-importance: 5
+Կարևորություն՝ 5
 
 ---
 
-# Where does it write?
+# Որտեղ է այն գրում:
 
-We have `rabbit` inheriting from `animal`.
+Մենք ունենք `rabbit`, որը ժառանգում է `animal`-ից:
 
-If we call `rabbit.eat()`, which object receives the `full` property: `animal` or `rabbit`? 
+Եթե կանչենք `rabbit.eat()`-ը, ապա ո՞ր օբյեկտն է ստանում `full` հատկությունը՝ `animal` թե՞ `rabbit`:
 
 ```js
 let animal = {
