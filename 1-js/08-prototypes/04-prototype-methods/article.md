@@ -7,9 +7,9 @@
 
 Ժամանակակից մեթոդներն են.
 
-- [Object.create(proto, [descriptors])](mdn:js/Object/create) -- տրված `proto`-ով ստեղծում է դատարկ օբյեկտ՝ որպես `[[Prototype]]` և կամընտիր հատկությունների նկարագրիչներ:
-- [Object.getPrototypeOf(obj)](mdn:js/Object/getPrototypeOf) -- վերադարձնում է `obj`-ի `[[Prototype]]`-ը։
-- [Object.setPrototypeOf(obj, proto)](mdn:js/Object/setPrototypeOf) -- տեղադրում է `obj`-ի `[[Prototype]]`-ը որպես `proto`։
+- [Object.create(proto, [descriptors])](mdn:js/Object/create)՝ տրված `proto`-ով ստեղծում է դատարկ օբյեկտ՝ որպես `[[Prototype]]` և կամընտիր հատկությունների նկարագրիչներ:
+- [Object.getPrototypeOf(obj)](mdn:js/Object/getPrototypeOf)՝ վերադարձնում է `obj`-ի `[[Prototype]]`-ը։
+- [Object.setPrototypeOf(obj, proto)](mdn:js/Object/setPrototypeOf)՝ տեղադրում է `obj`-ի `[[Prototype]]`-ը որպես `proto`։
 
 Սրանք պետք է օգտագործվեն `__proto__`-ի փոխարեն:
 
