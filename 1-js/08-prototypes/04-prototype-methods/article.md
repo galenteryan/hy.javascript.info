@@ -72,96 +72,96 @@ let clone = Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescr
 Պատմական պատճառներով է այդպես։
 
 - Կոնստրուկտոր ֆունկցիայի `«prototype»` հատկությունը գործել է շատ հին ժամանակներից:
-- Ավելի ուշ՝ 2012 թվականին, ստանդարտում հայտնվեց `Object.create`-ը: Այն նշված նախատիպով օբյեկտներ ստեղծելու հնարավորություն էր տալիս, սակայն ստանալու/տեղադրելու հնարավորություն չէր տալիս։ Այսպիսով, բրաուզերները ներդրեցին ոչ ստանդարտ `__proto__` աքսեսորը (accessor), որn օգտվողին թույլ էր տալիս ցանկացած պահի ստանալ/տեղադրել նախատիպ:
+- Ավելի ուշ՝ 2012 թվականին, ստանդարտում հայտնվեց `Object.create`-ը: Այն նշված նախատիպով օբյեկտներ ստեղծելու հնարավորություն էր տալիս, սակայն ստանալու/տեղադրելու հնարավորություն չէր տալիս։ Այսպիսով, բրաուզերները ներդրեցին ոչ ստանդարտ `__proto__` մուտքայինը (accessor), որն օգտվողին թույլ էր տալիս ցանկացած պահի ստանալ/տեղադրել նախատիպ:
 - Ավելի ուշ՝ 2015 թվականին, ստանդարտում ավելացվեցին `Object.setPrototypeOf`-ը և `Object.getPrototypeOf`-ը, որպեսզի կատարեն նույն գործառույթը, ինչ `__proto__`-ն է կատարում: Քանի որ `__proto__`-ն դե-ֆակտո ներդրվել էր ամենուր և այն մի տեսակ հնացած էր, իր ճանապարհը անցավ ստանդարտի Annex B, այսինքն՝ կամընտիր դարձավ ոչ բրաուզերային միջավայրերի համար:
 
 Այս պահի դրությամբ մեր տրամադրության տակ են այս բոլոր տարբերակները։
 
 Ինչո՞ւ `__proto__`-ն փոխարինվեց `getPrototypeOf/setPrototypeOf` ֆունկցիաներով: Սա հետաքրքիր հարց է, որը պահանջում է հասկանալ, թե ինչու է `__proto__`-ն վատ: Պատասխանը ստանալու համար շարունակեք ընթերցել։
 
-```warn header="Don't change `[[Prototype]]` on existing objects if speed matters"
-Technically, we can get/set `[[Prototype]]` at any time. But usually we only set it once at the object creation time and don't modify it anymore: `rabbit` inherits from `animal`, and that is not going to change.
+```warn header="Մի փոխեք գոյություն ունեցող օբյեկտների `[[Prototype]]`-ը, եթե արագությունը կարևոր է"
+Տեխնիկապես մենք կարող ենք ցանկացած պահի ստանալ/տեղադրել `[[Prototype]]`։ Բայց սովորաբար մենք այն տեղադրում ենք միայն մեկ անգամ օբյեկտի ստեղծման ժամանակ և այլևս չենք փոփոխում. `rabbit`-ը ժառանգում է `animal`-ից և դա չենք փոխում:
 
-And JavaScript engines are highly optimized for this. Changing a prototype "on-the-fly" with `Object.setPrototypeOf` or `obj.__proto__=` is a very slow operation as it breaks internal optimizations for object property access operations. So avoid it unless you know what you're doing, or JavaScript speed totally doesn't matter for you.
+Նաև JavaScript-ի շարժիչներն են դրա համար շատ օպտիմիզացված: նախատիպը «ոտքի վրա» փոխելը `Object.setPrototypeOf`-ի կամ `obj.__proto__=`-ի միջոցով շատ դանդաղ գործընթաց է, քանի որ խախտում է օբյեկտների հատկության հասանելիության գործառնությունների ներքին օպտիմիզացումը: Այսպիսով, խուսափեք դրանից, քանի դեռ չգիտեք, թե ինչ եք անում, կամ, եթե JavaScript-ի արագությունը բացարձակապես կարևոր չէ Ձեզ համար:
 ```
 
-## "Very plain" objects [#very-plain]
+## «Շատ պարզ» օբյեկտներ [#very-plain]
 
-As we know, objects can be used as associative arrays to store key/value pairs.
+Ինչպես գիտենք, օբյեկտները կարող են օգտագործվել որպես ասոցիատիվ զանգվածներ՝ բանալի-արժեք զույգեր պահելու համար։
 
-...But if we try to store *user-provided* keys in it (for instance, a user-entered dictionary), we can see an interesting glitch: all keys work fine except `"__proto__"`.
+...Բայց եթե մենք փորձենք դրանում պահել *օգտագործողի կողմից տրամադրված* բանալիներ (օրինակ՝ օգտագործողի կողմից մուտքագրված բառարան), ապա կարող ենք տեսնել մի հետաքրքիր անսարքություն. բոլոր բանալիները լավ են աշխատում, բացառությամբ `«__proto__»`-ից:
 
-Check out the example:
+Դիտեք օրինակը.
 
 ```js run
 let obj = {};
 
-let key = prompt("What's the key?", "__proto__");
-obj[key] = "some value";
+let key = prompt("Ո՞րն է բանալին։", "__proto__");
+obj[key] = "ինչ-որ արժեք";
 
-alert(obj[key]); // [object Object], not "some value"!
+alert(obj[key]); // [object Object], այլ ոչ "ինչ-որ արժեք"!
 ```
 
-Here, if the user types in `__proto__`, the assignment is ignored!
+Այստեղ, եթե օգտվողը մուտքագրում է `__proto__`, նշանակումն անտեսվում է:
 
-That shouldn't surprise us. The `__proto__` property is special: it must be either an object or `null`. A string can not become a prototype.
+Դա մեզ չպետք է զարմացնի: `__proto__` հատկությունը հատուկ է. այն պետք է լինի կամ օբյեկտ կամ `null`: Տողը (string) չի կարող նախատիպ դառնալ:
 
-But we didn't *intend* to implement such behavior, right? We want to store key/value pairs, and the key named `"__proto__"` was not properly saved. So that's a bug!
+Բայց մենք *միտք չունեինք* իրականացնել նման սցենար, չէ՞։ Մենք ցանկանում ենք պահել բանալի-արժեք զույգեր, և `«__proto__»` անվանումով բանալին ճիշտ չի պահպանվել: Այսպիսով, դա վրիպակ է (bug):
 
-Here the consequences are not terrible. But in other cases we may be assigning object values, and then the prototype may indeed be changed. As a result, the execution will go wrong in totally unexpected ways.
+Այստեղ հետևանքները սարսափելի չեն։ Բայց այլ դեպքերում մենք կարող ենք օբյեկտի տեսքով արժեքներ նշանակել, իսկ հետո նախատիպը իսկապես կարող է փոխվել: Արդյունքում, կատարումը սխալ կլինի՝ բոլորովին անսպասելի ձևերով:
 
-What's worse -- usually developers do not think about such possibility at all. That makes such bugs hard to notice and even turn them into vulnerabilities, especially when JavaScript is used on server-side.
+Ի՞նչն է ավելի վատ. սովորաբար ծրագրավորողներն ընդհանրապես չեն մտածում նման հնարավորության մասին: Դա դժվարացնում է նմանատիպ սխալներ նկատելը և նույնիսկ դրանք վերածվում են խոցելիության, հատկապես, երբ JavaScript-ն օգտագործվում է սերվերի հատվածում:
 
-Unexpected things also may happen when assigning to `toString`, which is a function by default, and to other built-in methods.
+Անսպասելի բաներ կարող են պատահել նաև `toString`-ին, որը լռելյայն ֆունկցիա է, և այլ ներկառուցված մեթոդներին վերագրելիս:
 
-How can we avoid this problem?
+Ինչպե՞ս կարող ենք խուսափել այս խնդրից:
 
-First, we can just switch to using `Map` for storage instead of plain objects, then everything's fine.
+Նախ, մենք կարող ենք պարզապես անցնել `Map`-ի օգտագործմանը պահեստավորման համար՝ սովորական օբյեկտների փոխարեն, որից հետո ամեն ինչ կարգին կլինի:
 
-But `Object` can also serve us well here, because language creators gave thought to that problem long ago.
+Բայց `Object`-ը կարող է նաև մեզ լավ ծառայել այստեղ, քանի որ լեզվի ստեղծողները վաղուց են մտածել այդ խնդրի մասին:
 
-`__proto__` is not a property of an object, but an accessor property of `Object.prototype`:
+`__proto__`-ն օբյեկտի հատկություն չէ, այլ `Object.prototype`-ի մուտքային հատկություն է.
 
 ![](object-prototype-2.svg)
 
-So, if `obj.__proto__` is read or set, the corresponding getter/setter is called from its prototype, and it gets/sets `[[Prototype]]`.
+Այսպիսով, եթե `obj.__proto__`-ն ընթերցվում կամ դրվում է, ապա դրա նախատիպից կանչվում է համապատասխան գեթթերը/սեթթերը, և այն ստանում/տեղադրում է `[[Prototype]]`:
 
-As it was said in the beginning of this tutorial section: `__proto__` is a way to access `[[Prototype]]`, it is not `[[Prototype]]` itself.
+Ինչպես ասվեց այս ձեռնարկի սկզբում. `__proto__`-ն `[[Prototype]]`-ին մուտք ունենալու միջոց է, դա ինքնին `[[Prototype]]` չէ:
 
-Now, if we intend to use an object as an associative array and be free of such problems, we can do it with a little trick:
+Այժմ, եթե մենք մտադիր ենք օգտագործել օբյեկտը որպես ասոցիատիվ զանգված և զերծ մնալ նման խնդիրներից, կարող ենք դա անել մի փոքր հնարքով.
 
 ```js run
 *!*
 let obj = Object.create(null);
 */!*
 
-let key = prompt("What's the key?", "__proto__");
-obj[key] = "some value";
+let key = prompt("Ո՞րն է բանալին։", "__proto__");
+obj[key] = "ինչ-որ արժեք";
 
-alert(obj[key]); // "some value"
+alert(obj[key]); // "ինչ-որ արժեք"
 ```
 
-`Object.create(null)` creates an empty object without a prototype (`[[Prototype]]` is `null`):
+`Object.create(null)`-ը ստեղծում է դատարկ օբյեկտ առանց նախատիպի (`[[Prototype]]`-ը `null` է):
 
 ![](object-prototype-null.svg)
 
-So, there is no inherited getter/setter for `__proto__`. Now it is processed as a regular data property, so the example above works right.
+Այսպիսով, `__proto__`-ի համար ժառանգական գեթթեր/սեթթեր չկա: Այժմ այն մշակվում է որպես սովորական տվյալային հատկություն, ուստի վերը նշված օրինակը ճիշտ է աշխատում:
 
-We can call such objects "very plain" or "pure dictionary" objects, because they are even simpler than the regular plain object `{...}`.
+Նման օբյեկտները կարող ենք անվանել «շատ պարզ» կամ «մաքուր բառարանով» օբյեկտներ, քանի որ դրանք նույնիսկ ավելի պարզ են, քան սովորական պարզ օբյեկտը՝ `{...}`:
 
-A downside is that such objects lack any built-in object methods, e.g. `toString`:
+Բացասական կողմն այն է, որ նման օբյեկտները չունեն որևէ ներկառուցված մեթոդներ, օրինակ՝ `toString`․
 
 ```js run
 *!*
 let obj = Object.create(null);
 */!*
 
-alert(obj); // Error (no toString)
+alert(obj); // Error (չկա toString)
 ```
 
-...But that's usually fine for associative arrays.
+...Բայց դա սովորաբար լավ է ասոցիատիվ զանգվածների համար:
 
-Note that most object-related methods are `Object.something(...)`, like `Object.keys(obj)` -- they are not in the prototype, so they will keep working on such objects:
+Նկատի ունեցեք, որ օբյեկտների հետ կապված մեթոդներից շատերը `Object.something(...)` են, ինչպես `Object.keys(obj)`-ն. դրանք նախատիպում չեն, ուստի կշարունակեն աշխատել նմանատիպ օբյեկտների համար.
 
 
 ```js run
@@ -172,34 +172,35 @@ chineseDictionary.bye = "再见";
 alert(Object.keys(chineseDictionary)); // hello,bye
 ```
 
-## Summary
+## Ամփոփում
 
-Modern methods to set up and directly access the prototype are:
+Նախատիպը կարգավորելու և դրանց ուղղակիորեն մուտք գործելու ժամանակակից մեթոդներն են.
 
-- [Object.create(proto, [descriptors])](mdn:js/Object/create) -- creates an empty object with a given `proto` as `[[Prototype]]` (can be `null`) and optional property descriptors.
-- [Object.getPrototypeOf(obj)](mdn:js/Object/getPrototypeOf) -- returns the `[[Prototype]]` of `obj` (same as `__proto__` getter).
-- [Object.setPrototypeOf(obj, proto)](mdn:js/Object/setPrototypeOf) -- sets the `[[Prototype]]` of `obj` to `proto` (same as `__proto__` setter).
+- [Object.create(proto, [descriptors])](mdn:js/Object/create) -- ստեղծում է դատարկ օբյեկտ տրված `proto`-ով որպես `[[Prototype]]` (կարող է լինել `null`) և կամընտիր հատկությունների նկարագրիչներ:
+- [Object.getPrototypeOf(obj)](mdn:js/Object/getPrototypeOf) -- վերադարձնում է `obj`-ի `[[Prototype]]`-ը (նույնն է, ինչ `__proto__`-ի գեթթերը):
+- [Object.setPrototypeOf(obj, proto)](mdn:js/Object/setPrototypeOf) -- `obj`-ի `[[Prototype]]`-ը դնում է `proto` (նույնը, ինչ `proto`-ի սեթթերը):
 
-The built-in `__proto__` getter/setter is unsafe if we'd want to put user-generated keys into an object. Just because a user may enter `"__proto__"` as the key, and there'll be an error, with hopefully light, but generally unpredictable consequences.
+Ներկառուցված `__proto__`-ի գեթթերը/սեթթերը անվտանգ չէ, եթե մենք ցանկանում ենք օբյեկտի մեջ տեղադրել օգտվողի կողմից ստեղծված բանալիներ: Պարզապես այն պատճառով, որ օգտատերը կարող է մուտքագրել `«__proto__»`՝ որպես բանալի, և սխալ կլինի, հուսանք՝ թեթև, բայց ընդհանուր առմամբ անկանխատեսելի հետևանքներով:
 
-So we can either use `Object.create(null)` to create a "very plain" object without `__proto__`, or stick to `Map` objects for that.
+Այսպիսով, մենք կարող ենք կամ օգտագործել `Object.create(null)`՝ առանց `__proto__`-ի «շատ պարզ» օբյեկտ ստեղծելու համար, կամ օգտագործել `Map` օբյեկտներ:
 
-Also, `Object.create` provides an easy way to shallow-copy an object with all descriptors:
+Նաև, `Object.create`-ն ապահովում է օբյեկտի մակերեսային պատճենման հեշտ միջոց իր բոլոր նկարագրիչներով.
 
 ```js
 let clone = Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj));
 ```
 
-We also made it clear that `__proto__` is a getter/setter for `[[Prototype]]` and resides in `Object.prototype`, just like other methods.
+Մենք նաև պարզ դարձրեցինք, որ `__proto__`-ն `[[Prototype]]`-ի գեթթեր/սեթթեր է և գտնվում է `Object.prototype`-ում, ինչպես մյուս մեթոդները:
 
-We can create an object without a prototype by `Object.create(null)`. Such objects are used as "pure dictionaries", they have no issues with `"__proto__"` as the key.
+Such objects are used as "pure dictionaries", they have no issues with `"__proto__"` as the key.
+Մենք `Object.create(null)`-ով կարող ենք օբյեկտ ստեղծել առանց նախատիպի: Նման օբյեկտները օգտագործվում են որպես «մաքուր բառարաններ», դրանք `«__proto__»`-ի՝ որպես բանալիի հետ, խնդիրներ չունեն:
 
-Other methods:
+Այլ մեթոդներ.
 
-- [Object.keys(obj)](mdn:js/Object/keys) / [Object.values(obj)](mdn:js/Object/values) / [Object.entries(obj)](mdn:js/Object/entries) -- returns an array of enumerable own string property names/values/key-value pairs.
-- [Object.getOwnPropertySymbols(obj)](mdn:js/Object/getOwnPropertySymbols) -- returns an array of all own symbolic keys.
-- [Object.getOwnPropertyNames(obj)](mdn:js/Object/getOwnPropertyNames) -- returns an array of all own string keys.
-- [Reflect.ownKeys(obj)](mdn:js/Reflect/ownKeys) -- returns an array of all own keys.
-- [obj.hasOwnProperty(key)](mdn:js/Object/hasOwnProperty): returns `true` if `obj` has its own (not inherited) key named `key`.
+- [Object.keys(obj)](mdn:js/Object/keys) / [Object.values(obj)](mdn:js/Object/values) / [Object.entries(obj)](mdn:js/Object/entries)՝ վերադարձնում է սեփական թվարկելի տողային հատկության անուններից/արժեքներից/բանալի-արժեք զույգերից բաղկացած զանգված:
+- [Object.getOwnPropertySymbols(obj)](mdn:js/Object/getOwnPropertySymbols)՝ վերադարձնում է բոլոր սեփական սիմվոլային բանալիների զանգվածը:
+- [Object.getOwnPropertyNames(obj)](mdn:js/Object/getOwnPropertyNames)՝ վերադարձնում է բոլոր սեփական տողային բանալիների զանգվածը:
+- [Reflect.ownKeys(obj)](mdn:js/Reflect/ownKeys)՝ վերադարձնում է բոլոր սեփական բանալիների զանգվածը:
+- [obj.hasOwnProperty(key)](mdn:js/Object/hasOwnProperty)՝ վերադարձնում է `true`, եթե `obj`-ն ունի իր սեփական (չժառանգված) բանալին՝ `key` անվանումով:
 
-All methods that return object properties (like `Object.keys` and others) -- return "own" properties. If we want inherited ones, we can use `for..in`.
+Բոլոր մեթոդները, որոնք վերադարձնում են օբյեկտի հատկությունները (օրինակ՝ `Object.keys`-ը և այլն), վերադարձնում են «սեփական» հատկություններ: Եթե պետք են նաև ժառանգականները, կարող ենք օգտագործել `for..in`-ը:
