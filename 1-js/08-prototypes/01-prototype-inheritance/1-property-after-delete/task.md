@@ -1,12 +1,12 @@
-importance: 5
+Կարևորություն՝ 5
 
 ---
 
-# Working with prototype
+# Աշխատանք նախատիպի հետ
 
-Here's the code that creates a pair of objects, then modifies them.
+Ահա կոդը, որը ստեղծում է զույգ օբյեկտներ, այնուհետև փոփոխում դրանք:
 
-Which values are shown in the process?
+Ի՞նչ արժեքներ են ցուցադրվում ընթացքում:
 
 ```js
 let animal = {
@@ -28,4 +28,4 @@ delete animal.jumps;
 alert( rabbit.jumps ); // ? (3)
 ```
 
-There should be 3 answers.
+Պետք է լինի 3 պատասխան։
