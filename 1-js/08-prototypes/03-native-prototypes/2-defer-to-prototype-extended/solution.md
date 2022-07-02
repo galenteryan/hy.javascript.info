@@ -8,17 +8,17 @@ Function.prototype.defer = function(ms) {
   }
 };
 
-// check it
+// ստուգենք այն
 function f(a, b) {
   alert( a + b );
 }
 
-f.defer(1000)(1, 2); // shows 3 after 1 sec
+f.defer(1000)(1, 2); // 1 վրկ հետո ցուցադրում է 3
 ```
 
-Please note: we use `this` in `f.apply` to make our decoration work for object methods.
+Նկատի ունեցեք. մենք `this` ենք օգտագործում `f.apply`-ում, որպեսզի մեր դեկորացիան աշխատի օբյեկտների մեթոդների համար:
 
-So if the wrapper function is called as an object method, then `this` is passed to the original method `f`.
+Այսպիսով, եթե պատյան ֆունկցիան կանչվում է որպես օբյեկտի մեթոդ, ապա `this`-ը փոխանցվում է սկզբնական `f` մեթոդին:
 
 ```js run
 Function.prototype.defer = function(ms) {
