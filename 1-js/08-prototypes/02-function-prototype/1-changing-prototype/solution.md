@@ -1,20 +1,20 @@
 
-Answers:
+Պատասխաններ՝
 
 1. `true`. 
 
-    The assignment to `Rabbit.prototype` sets up `[[Prototype]]` for new objects, but it does not affect the existing ones. 
+    `Rabbit.prototype`-ի նշանակումը սահմանում է `[[Prototype]]` նոր օբյեկտների համար, բայց դա չի ազդում գոյություն ունեցողների վրա:
 
 2. `false`. 
 
-    Objects are assigned by reference. The object from `Rabbit.prototype` is not duplicated, it's still a single object referenced both by `Rabbit.prototype` and by the `[[Prototype]]` of `rabbit`. 
+    Օբյեկտները նշանակվում են հղմամբ: `Rabbit.prototype`-ի օբյեկտը կրկնօրինակված չէ, այն դեռևս մեկ օբյեկտ է, որին հղում են անում ինչպես `Rabbit.prototype`-ը, այնպես էլ `rabbit`-ի `[[Prototype]]`-ը:
 
-    So when we change its content through one reference, it is visible through the other one.
+    Այսպիսով, երբ մենք փոխում ենք դրա բովանդակությունը մի հղման միջոցով, այն տեսանելի է մյուսի միջոցով:
 
 3. `true`.
 
-    All `delete` operations are applied directly to the object. Here `delete rabbit.eats` tries to remove `eats` property from `rabbit`, but it doesn't have it. So the operation won't have any effect.
+    Բոլոր `delete` գործողությունները կիրառվում են անմիջապես օբյեկտի համար: Այստեղ `delete rabbit.eats`-ը փորձում է հեռացնել `eats` հատկությունը `rabbit`-ից, սակայն չկա այդպիսի հատկություն: Այսպիսով, գործողությունը ոչ մի ազդեցություն չի ունենա:
 
 4. `undefined`.
 
-    The property `eats` is deleted from the prototype, it doesn't exist any more.
+    `eats` հատկությունը ջնջված է նախատիպից, այն այլևս գոյություն չունի:
