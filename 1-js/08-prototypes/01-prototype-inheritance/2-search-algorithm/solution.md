@@ -1,5 +1,5 @@
 
-1. Let's add `__proto__`:
+1. Եկեք ավելացնենք `__proto__`.
 
     ```js run
     let head = {
@@ -27,6 +27,6 @@
     alert( table.money ); // undefined
     ```
 
-2. In modern engines, performance-wise, there's no difference whether we take a property from an object or its prototype. They remember where the property was found and reuse it in the next request.
+2. Ժամանակակից շարժիչներում կատարողականի առումով տարբերություն չկա՝ մենք ինչ-որ հատկություն օբյեկտից ենք վերցնում, թե դրա նախատիպից: Նրանք հիշում են, թե որտեղ է գտնվել հատկությունը և այն նորից օգտագործում են հաջորդ հարցման ժամանակ:
 
-    For instance, for `pockets.glasses` they remember where they found `glasses` (in `head`), and next time will search right there. They are also smart enough to update internal caches if something changes, so that optimization is safe.
+    Օրինակ՝ `pockets.glasses`-ի համար հիշում են, թե որտեղ են գտել `glasses`-ը (`head`-ում), իսկ հաջորդ անգամ կփնտրեն հենց այնտեղ: Նաև բավականաչափ «խելացի» են և թարմացնում են ներքին քեշերը, եթե ինչ-որ բան փոխվի, որպեսզի օպտիմալացումը ապահով լինի:
