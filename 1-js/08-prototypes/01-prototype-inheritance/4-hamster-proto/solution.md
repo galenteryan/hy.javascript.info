@@ -1,18 +1,18 @@
-Let's look carefully at what's going on in the call `speedy.eat("apple")`.
+Եկեք ուշադիր նայենք, թե ինչ է կատարվում `speedy.eat("խնձոր")` կանչի ժամանակ:
 
-1. The method `speedy.eat` is found in the prototype (`=hamster`), then executed with `this=speedy` (the object before the dot).
+1. `speedy.eat` մեթոդը գտնվում է նախատիպում (`=hamster`), այնուհետև կատարվում է `this=speedy` (օբյեկտը կետից առաջ):
 
-2. Then `this.stomach.push()` needs to find `stomach` property and call `push` on it. It looks for `stomach` in `this` (`=speedy`), but nothing found.
+2. Այնուհետև `this.stomach.push()`-ը պետք է գտնի `stomach` հատկությունը և դրա համար կանչի `push`-ը: `this`-ում այն փնտրում է `stomach` (`=speedy`), բայց ոչինչ չի գտնում:
 
-3. Then it follows the prototype chain and finds `stomach` in `hamster`.
+3. Այնուհետև այն հետևում է նախատիպային շղթային և `hamster`-ի մեջ է գտնում `stomach`-ը:
 
-4. Then it calls `push` on it, adding the food into *the stomach of the prototype*.
+4. Այնուհետև կանչում է `push`-ը՝ ավելացնելով սնունդը *նախատիպի ստամոքսում*:
 
-So all hamsters share a single stomach!
+Այսպիսով, բոլոր համստերները կիսում են մեկ ստամոքս:
 
-Both for `lazy.stomach.push(...)` and `speedy.stomach.push()`, the property `stomach` is found in the prototype (as it's not in the object itself), then the new data is pushed into it.
+Եվ `lazy.stomach.push(...)`-ի և `speedy.stomach.push()`-ի համար, `stomach` հատկությունը գտնվում է նախատիպում (քանի որ այն բուն օբյեկտում չկա), հետևաբար նոր տվյալները ավելացվում են դրա մեջ:
 
-Please note that such thing doesn't happen in case of a simple assignment `this.stomach=`:
+Նկատի ունեցեք, որ նման բան չի լինում `this.stomach=`-ի պարզ նշանակման դեպքում.
 
 ```js run
 let hamster = {
@@ -20,7 +20,7 @@ let hamster = {
 
   eat(food) {
 *!*
-    // assign to this.stomach instead of this.stomach.push
+    // նշել this.stomach՝ this.stomach.push-ի փոխարեն
     this.stomach = [food];
 */!*
   }
@@ -34,17 +34,17 @@ let lazy = {
   __proto__: hamster
 };
 
-// Speedy one found the food
-speedy.eat("apple");
-alert( speedy.stomach ); // apple
+// Speedy-ն գտավ սնունդը
+speedy.eat("խնձոր");
+alert( speedy.stomach ); // խնձոր
 
-// Lazy one's stomach is empty
-alert( lazy.stomach ); // <nothing>
+// Lazy-ի ստամոքսը դատարկ է
+alert( lazy.stomach ); // <ոչինչ>
 ```
 
-Now all works fine, because `this.stomach=` does not perform a lookup of `stomach`. The value is written directly into `this` object.
+Այժմ ամեն ինչ ճշգրիտ է աշխատում, քանի որ `this.stomach=`-ը չի կատարում `stomach`-ի որոնում: Արժեքը ուղղակիորեն գրված է `this` օբյեկտի մեջ:
 
-Also we can totally avoid the problem by making sure that each hamster has their own stomach:
+Նաև մենք կարող ենք լիովին խուսափել խնդրից՝ համոզվելով, որ յուրաքանչյուր համստեր ունի իր ստամոքսը.
 
 ```js run
 let hamster = {
@@ -69,12 +69,12 @@ let lazy = {
 */!*
 };
 
-// Speedy one found the food
-speedy.eat("apple");
-alert( speedy.stomach ); // apple
+// Speedy-ն գտավ սնունդը
+speedy.eat("խնձոր");
+alert( speedy.stomach ); // խնձոր
 
-// Lazy one's stomach is empty
-alert( lazy.stomach ); // <nothing>
+// Lazy-ի ստամոքսը դատարկ է
+alert( lazy.stomach ); // <ոչինչ>
 ```
 
-As a common solution, all properties that describe the state of a particular object, like `stomach` above, should be written into that object. That prevents such problems.
+Որպես ընդհանուր լուծում, բոլոր հատկությունները, որոնք նկարագրում են որոշակի օբյեկտի վիճակը, ինչպես վերը նշված `stomach`-ը, պետք է գրվեն այդ օբյեկտի մեջ: Դա կանխում է նմանատիպ խնդիրները։
