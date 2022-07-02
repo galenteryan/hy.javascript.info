@@ -1,4 +1,4 @@
 
-1. `true`, taken from `rabbit`.
-2. `null`, taken from `animal`.
-3. `undefined`, there's no such property any more.
+1. `true`, վերցված է `rabbit`-ից։
+2. `null`, վերցված է `animal`-ից։
+3. `undefined`, այլևս չկա նման հատկություն:
