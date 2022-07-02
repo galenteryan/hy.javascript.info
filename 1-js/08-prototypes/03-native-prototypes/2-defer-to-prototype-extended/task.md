@@ -1,19 +1,19 @@
-importance: 4
+Կարևորություն՝ 4
 
 ---
 
-# Add the decorating "defer()" to functions
+# Ֆունկցիաներին ավելացրեք դեկորատիվ «defer()»-ը
 
-Add to the prototype of all functions the method `defer(ms)`, that returns a wrapper, delaying the call by `ms` milliseconds.
+Բոլոր ֆունկցիաների նախատիպին ավելացրեք `defer(ms)` մեթոդը, որը վերադարձնում է պատյան՝ հետաձգելով կանչը `ms` միլիվայրկյաններով:
 
-Here's an example of how it should work:
+Ահա մի օրինակ, թե ինչպես պետք է այն աշխատի.
 
 ```js
 function f(a, b) {
   alert( a + b );
 }
 
-f.defer(1000)(1, 2); // shows 3 after 1 second
+f.defer(1000)(1, 2); // 1 վայրկյան հետո ցուցադրում է 3
 ```
 
-Please note that the arguments should be passed to the original function.
+Նկատի ունեցեք, որ արգումենտները պետք է փոխանցվեն բնօրինակ ֆունկցիային:
