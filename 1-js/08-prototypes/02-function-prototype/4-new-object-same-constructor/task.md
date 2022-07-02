@@ -1,15 +1,15 @@
-importance: 5
+Կարևորություն՝ 5
 
 ---
 
-# Create an object with the same constructor
+# Ստեղծեք օբյեկտ միևնույն կոնստրուկտորով
 
-Imagine, we have an arbitrary object `obj`, created by a constructor function -- we don't know which one, but we'd like to create a new object using it.
+Պատկերացրեք, մենք ունենք կամայական `obj` օբյեկտ, որը ստեղծվել է կոնստրուկտոր ֆունկցիայի կողմից. մենք չգիտենք, թե որն է, բայց մեզ անհրաժեշտ է ստեղծել նոր օբյեկտ՝ օգտագործելով այդ կոնստրուկտորը:
 
-Can we do it like that?
+Կարո՞ղ ենք այսպես անել:
 
 ```js
 let obj2 = new obj.constructor();
 ```
 
-Give an example of a constructor function for `obj` which lets such code work right. And an example that makes it work wrong.
+Բերեք `obj`-ի կոնստրուկտոր ֆունկցիայի օրինակ, որը թույլ է տալիս նման կոդի ճշգրիտ աշխատանքը: Եվ օրինակ, որը ստիպում է սխալ աշխատել:
