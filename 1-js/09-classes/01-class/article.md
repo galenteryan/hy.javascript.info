@@ -87,7 +87,7 @@ alert(typeof User); // function
 Այն, ինչ իրականում անում է `class User {...}` կոնստրուկցիան, հետևյալն է.
 
 1. Ստեղծում է `User` անունով ֆունկցիա, որը դառնում է class-ի հայտարարագրման արդյունք: Ֆունկցիայի կոդը վերցված է `constructor` մեթոդից (եթե նման մեթոդ չգրենք, համարվում է դատարկ):
-2. Class-ի մեթոդները, ինչպիսին է `sayHi`-ը, պահպանում է `User.prototype`-ում:
+2. Class-ի մեթոդները, ինչպիսին է `sayHi`-ը, պահպանվում են `User.prototype`-ում:
 
 `new User` օբյեկտի ստեղծումից հետո, երբ մենք կանչում ենք դրա մեթոդը, այն վերցվում է նախատիպից, ինչպես նկարագրված է <info:function-prototype> գլխում: Այսպիսով, օբյեկտն ունի հասանելիություն class-ի մեթոդներին:
 
@@ -118,24 +118,24 @@ alert(Object.getOwnPropertyNames(User.prototype)); // constructor, sayHi
 
 ## Ոչ միայն շարահյուսական շաքար
 
-Sometimes people say that `class` is a "syntactic sugar" (syntax that is designed to make things easier to read, but doesn't introduce anything new), because we could actually declare the same thing without using the `class` keyword at all:
+Երբեմն մարդիկ ասում են, որ `class`-ը «շարահյուսական շաքար» է (շարահյուսություն, որը նախատեսված է իրերն ավելի հեշտ ընթեռնելու համար, բայց ոչ մի նոր բան չի ներկայացնում իրենից), քանի որ մենք իրականում կարող ենք նույն բանը հայտարարել առանց `class` հիմնաբառի օգտագործման:
 
 ```js run
-// rewriting class User in pure functions
+// User class-ը վերաշարադրենք մաքուր ֆունկցիաներով
 
-// 1. Create constructor function
+// 1. Ստեղծենք կոնստրուկտոր ֆունկցիա
 function User(name) {
   this.name = name;
 }
-// a function prototype has "constructor" property by default,
-// so we don't need to create it
+// ֆունկցիայի նախատիպը լռելյայն ունի «կոնստրուկտոր» հատկություն,
+// այնպես որ, մենք այն ստեղծելու կարիք չունենք
 
-// 2. Add the method to prototype
+// 2. Ավելացնենք մեթոդը նախատիպում
 User.prototype.sayHi = function() {
   alert(this.name);
 };
 
-// Usage:
+// Օգտագործում․
 let user = new User("John");
 user.sayHi();
 ```
