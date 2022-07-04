@@ -290,17 +290,17 @@ new User().sayHi();
 
 Նմանատիպ առանձնահատկությունները հեշտ է հիշել, քանի որ դրանք նման են բառացի օբյեկտներին։
 
-## Class fields
+## Class-ի դաշտեր
 
-```warn header="Old browsers may need a polyfill"
-Class fields are a recent addition to the language.
+```warn header="Հին բրաուզերներին կարող է անհրաժեշտ լինել պոլիֆիլ"
+Class-ի դաշտերը լեզվի վերջին հավելումներից են:
 ```
 
-Previously, our classes only had methods.
+Նախկինում մեր class-ները միայն մեթոդներ ունեին։
 
-"Class fields" is a syntax that allows to add any properties.
+«Class-ի դաշտերը» շարահյուսություն է, որը թույլ է տալիս ավելացնել ցանկացած հատկություն:
 
-For instance, let's add `name` property to `class User`:
+Օրինակ՝ եկեք `class User`-ում ավելացնենք `name` հատկությունը.
 
 ```js run
 class User {
@@ -316,9 +316,9 @@ class User {
 new User().sayHi(); // Hello, John!
 ```
 
-So, we just write "<property name> = <value>" in the declaration, and that's it.
+Այսպիսով, մենք պարզապես հայտարարագրում նշում ենք «<հատկության անվանում> = <արժեք>» և վերջ։
 
-The important difference of class fields is that they are set on individual objects, not `User.prototype`:
+Class-ի դաշտերի կարևոր տարբերությունն այն է, որ դրանք տեղադրվում են առանձին օբյեկտներում, այլ ոչ թե `User.prototype`-ում․
 
 ```js run
 class User {
@@ -332,7 +332,7 @@ alert(user.name); // John
 alert(User.prototype.name); // undefined
 ```
 
-We can also assign values using more complex expressions and function calls:
+Մենք կարող ենք նաև արժեքներ նշանակել՝ օգտագործելով ավելի բարդ արտահայտություններ և ֆունկցիաների կանչեր.
 
 ```js run
 class User {
@@ -346,13 +346,13 @@ alert(user.name); // John
 ```
 
 
-### Making bound methods with class fields
+### Class-ի դաշտերի հետ կապված մեթոդների պատրաստում
 
-As demonstrated in the chapter <info:bind> functions in JavaScript have a dynamic `this`. It depends on the context of the call.
+Ինչպես ցույց է տրված <info:bind> գլխում, JavaScript-ում ֆունկցիաներն ունեն դինամիկ `this`: Դա կախված է kan9i համատեքստից:
 
-So if an object method is passed around and called in another context, `this` won't be a reference to its object any more.
+Այսպիսով, եթե օբյեկտի մեթոդը փոխանցվի և կանչվի այլ համատեքստում, `this`-ն այլևս հղում չի անի իր օբյեկտին:
 
-For instance, this code will show `undefined`:
+Օրինակի համար, այս կոդը կցուցադրի `undefined`․
 
 ```js run
 class Button {
@@ -372,14 +372,14 @@ setTimeout(button.click, 1000); // undefined
 */!*
 ```
 
-The problem is called "losing `this`".
+Խնդիրը կոչվում է «`this`-ի կորուստ»:
 
-There are two approaches to fixing it, as discussed in the chapter <info:bind>:
+Այն շտկելու երկու մոտեցում կա՝ ինչպես քննարկվել է <info:bind> գլխում․
 
-1. Pass a wrapper-function, such as `setTimeout(() => button.click(), 1000)`.
-2. Bind the method to object, e.g. in the constructor.
+1. Փոխանցել կաղապար-ֆունկցիան, օրինակ՝ `setTimeout(() => button.click(), 1000)`։
+2. Մեթոդը կապեք օբյեկտին, օրինակ՝ կոնստրուկտորում։
 
-Class fields provide another, quite elegant syntax:
+Class-ի դաշտերը տրամադրում են մեկ այլ շարահյուսություն, որը բավականին էլեգանտ տեսք ունի.
 
 ```js run
 class Button {
@@ -398,11 +398,12 @@ let button = new Button("hello");
 setTimeout(button.click, 1000); // hello
 ```
 
-The class field `click = () => {...}` is created on a per-object basis, there's a separate function for each `Button` object, with `this` inside it referencing that object. We can pass `button.click` around anywhere, and the value of `this` will always be correct.
+`click = () => {...}` class-ի դաշտը ստեղծվում է յուրաքանչյուր օբյեկտի հիման վրա, հետևաբար յուրաքանչյուր `Button` օբյեկտի համար կա առանձին ֆունկցիա, որի ներսում `this`-ը հղում է անում այդ օբյեկտին: Մենք կարող ենք `button.click`-ը փոխանցել ցանկացած վայրում, և `this`-ի արժեքը միշտ ճշգրիտ կլինի:
 
 That's especially useful in browser environment, for event listeners.
+Դա մասնավորապես օգտակար է բրաուզերային միջավայրում՝ իրադարձությունների ունկնդիրների համար:
 
-## Summary
+## Ամփոփում
 
 The basic class syntax looks like this:
 
