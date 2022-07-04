@@ -405,26 +405,26 @@ That's especially useful in browser environment, for event listeners.
 
 ## Ամփոփում
 
-The basic class syntax looks like this:
+Class-ի hիմնական շարահյուսությունը հետևյալն է.
 
 ```js
 class MyClass {
-  prop = value; // property
+  prop = value; // հատկություն
 
-  constructor(...) { // constructor
+  constructor(...) { // կոնստրուկտոր
     // ...
   }
 
-  method(...) {} // method
+  method(...) {} // մեթոդ
 
-  get something(...) {} // getter method
-  set something(...) {} // setter method
+  get something(...) {} // գեթթեր մեթոդ
+  set something(...) {} // սեթթեր մեթոդ
 
-  [Symbol.iterator]() {} // method with computed name (symbol here)
+  [Symbol.iterator]() {} // հաշվարկված անվանումով մեթոդ (այստեղ՝ նիշով)
   // ...
 }
 ```
 
-`MyClass` is technically a function (the one that we provide as `constructor`), while methods, getters and setters are written to `MyClass.prototype`.
+`MyClass`-ը տեխնիկապես ֆունկցիա է (այն, ինչ մենք տրամադրում ենք որպես `constructor`), մինչդեռ մեթոդները, գեթթերներն ու սեթթերները գրառվում են `MyClass.prototype`-ում:
 
-In the next chapters we'll learn more about classes, including inheritance and other features.
+Հաջորդ գլուխներում մենք ավելին կիմանանք class-ների՝ ներառյալ ժառանգության և այլ առանձնահատկությունների, մասին:
