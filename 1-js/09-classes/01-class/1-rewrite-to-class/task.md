@@ -1,9 +1,9 @@
-importance: 5
+Կարևորություն՝ 5
 
 ---
 
-# Rewrite to class
+# Վերաշարադրել class-ով
 
-The `Clock` class (see the sandbox) is written in functional style. Rewrite it in the "class" syntax.
+`Clock` class-ը (տես sandbox-ը) գրված է ֆունկցիոնալ ոճով: Վերաշարադրեք այն «class» շարահյուսությամբ։
 
-P.S. The clock ticks in the console, open it to see.
+Նշում. ժամացույցը տկտկում է console-ում, տեսնելու համար բացեք այն:
