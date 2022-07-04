@@ -5,14 +5,13 @@
 Օբյեկտ-կողմնորոշված ծրագրավորման մեջ *class*-ը ընդարձակվող ծրագրային կոդի նմուշ է՝ օբյեկտներ ստեղծելու համար, որը տրամադրում է նախնական արժեքներ կարգավիճակի (անդամ փոփոխականներ) և պահելաձևի իրականացման համար (անդամ ֆունկցիաներ կամ մեթոդներ):
 ```
 
-In practice, we often need to create many objects of the same kind, like users, or goods or whatever.
 Գործնականում մենք հաճախ նույն տեսակի բազմաթիվ օբյեկտներ ստեղծելու կարիք ենք ունենում, օրինակ՝ օգտատերեր, ապրանքներ կամ որևէ այլ բան:
 
 Ինչպես արդեն գիտենք <info:constructor-new> գլխից, `new function`-ը կարող է օգնել այդ հարցում:
 
-Սակայն ժամանակակից JavaScript-ում կա ավելի առաջադեմ «class» կառուցվածք, որը ներկայացնում է հիանալի նոր հնարավորություններ, որոնք օգտակար են օբյեկտ-կողմնորոշված ծրագրավորման համար:
+Սակայն ժամանակակից JavaScript-ում կա ավելի առաջադեմ «class» կոնստրուկցիա, որը ներկայացնում է հիանալի նոր հնարավորություններ, որոնք օգտակար են օբյեկտ-կողմնորոշված ծրագրավորման համար:
 
-## «class»-ի շարահյուսությունը
+## «Class»-ի շարահյուսությունը
 
 Պարզ շարահյուսությունը հետևյալն է․
 ```js
@@ -63,15 +62,15 @@ user.sayHi();
 Այստեղի նշումը չպետք է շփոթել օբյեկտի գրելաձևի հետ: Ստորակետեր չեն պահանջվում class-ում:
 ```
 
-## What is a class?
+## Ի՞նչ է class-ը։
 
-So, what exactly is a `class`? That's not an entirely new language-level entity, as one might think.
+Այսպիսով, ի՞նչ է իրականում `class`-ը: Դա բոլորովին նոր լեզվական մակարդակ չէ, ինչպես կարող է թվալ:
 
-Let's unveil any magic and see what a class really is. That'll help in understanding many complex aspects.
+Եկեք բացահայտենք ցանկացած մոգություն և տեսնենք, թե իրականում ինչ է class-ը: Դա կօգնի հասկանալ բազմաթիվ բարդ ասպեկտներ:
 
-In JavaScript, a class is a kind of function.
+JavaScript-ում class-ը ֆունկցիայի տեսակ է:
 
-Here, take a look:
+Ահա, տեսեք.
 
 ```js run
 class User {
@@ -79,24 +78,24 @@ class User {
   sayHi() { alert(this.name); }
 }
 
-// proof: User is a function
+// ապացույց՝ User-ը ֆունկցիա է
 *!*
 alert(typeof User); // function
 */!*
 ```
 
-What `class User {...}` construct really does is:
+Այն, ինչ իրականում անում է `class User {...}` կոնստրուկցիան, հետևյալն է.
 
-1. Creates a function named `User`, that becomes the result of the class declaration. The function code is taken from the `constructor` method (assumed empty if we don't write such method).
-2. Stores class methods, such as `sayHi`, in `User.prototype`.
+1. Ստեղծում է `User` անունով ֆունկցիա, որը դառնում է class-ի հայտարարագրման արդյունք: Ֆունկցիայի կոդը վերցված է `constructor` մեթոդից (եթե նման մեթոդ չգրենք, համարվում է դատարկ):
+2. Class-ի մեթոդները, ինչպիսին է `sayHi`-ը, պահպանում է `User.prototype`-ում:
 
-After `new User` object is created, when we call its method, it's taken from the prototype, just as described in the chapter <info:function-prototype>. So the object has access to class methods.
+`new User` օբյեկտի ստեղծումից հետո, երբ մենք կանչում ենք դրա մեթոդը, այն վերցվում է նախատիպից, ինչպես նկարագրված է <info:function-prototype> գլխում: Այսպիսով, օբյեկտն ունի հասանելիություն class-ի մեթոդներին:
 
-We can illustrate the result of `class User` declaration as:
+`class User` հայտարարագրի արդյունքը կարող ենք ներկայացնել հետևյալ կերպ.
 
 ![](class-user.svg)
 
-Here's the code to introspect it:
+Ահա կոդ՝ այդ ամենը ներհայեցելու և վերլուծելու համար.
 
 ```js run
 class User {
@@ -104,20 +103,20 @@ class User {
   sayHi() { alert(this.name); }
 }
 
-// class is a function
+// class-ը ֆունկցիա է
 alert(typeof User); // function
 
-// ...or, more precisely, the constructor method
+// ...կամ, ավելի ճիշտ, կոնստրուկտոր մեթոդ է
 alert(User === User.prototype.constructor); // true
 
-// The methods are in User.prototype, e.g:
-alert(User.prototype.sayHi); // the code of the sayHi method
+// Մեթոդները User.prototype-ում են, օր․՝
+alert(User.prototype.sayHi); // sayHi մեթոդի կոդը
 
-// there are exactly two methods in the prototype
+// նախատիպի մեջ կա հենց երկու մեթոդ
 alert(Object.getOwnPropertyNames(User.prototype)); // constructor, sayHi
 ```
 
-## Not just a syntactic sugar
+## Ոչ միայն շարահյուսական շաքար
 
 Sometimes people say that `class` is a "syntactic sugar" (syntax that is designed to make things easier to read, but doesn't introduce anything new), because we could actually declare the same thing without using the `class` keyword at all:
 
