@@ -1,8 +1,8 @@
 
-# Class basic syntax
+# Class․ պարզ շարահյուսություն
 
 ```quote author="Wikipedia"
-In object-oriented programming, a *class* is an extensible program-code-template for creating objects, providing initial values for state (member variables) and implementations of behavior (member functions or methods).
+Օբյեկտ-կողմնորոշված ծրագրավորման մեջ *class*-ը ընդարձակվող ծրագրային կոդի նմուշ է՝ օբյեկտներ ստեղծելու համար, որը տրամադրում է նախնական արժեքներ կարգավիճակի (անդամ փոփոխականներ) և պահելաձևի իրականացման համար (անդամ ֆունկցիաներ կամ մեթոդներ):
 ```
 
 In practice, we often need to create many objects of the same kind, like users, or goods or whatever.
