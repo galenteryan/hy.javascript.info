@@ -118,7 +118,7 @@ alert(Object.getOwnPropertyNames(User.prototype)); // constructor, sayHi
 
 ## Ոչ միայն շարահյուսական շաքար
 
-Երբեմն մարդիկ ասում են, որ `class`-ը «շարահյուսական շաքար» է (շարահյուսություն, որը նախատեսված է իրերն ավելի հեշտ ընթեռնելու համար, բայց ոչ մի նոր բան չի ներկայացնում իրենից), քանի որ մենք իրականում կարող ենք նույն բանը հայտարարել առանց `class` հիմնաբառի օգտագործման:
+Երբեմն մարդիկ ասում են, որ `class`-ը «շարահյուսական շաքար» է (շարահյուսություն, որը նախատեսված է իրերն ավելի հեշտ ընթեռնելու համար, բայց իրենից ոչ մի նոր բան չի ներկայացնում), քանի որ մենք իրականում կարող ենք նույն բանը հայտարարել առանց `class` հիմնաբառի օգտագործման:
 
 ```js run
 // User class-ը վերաշարադրենք մաքուր ֆունկցիաներով
@@ -140,13 +140,13 @@ let user = new User("John");
 user.sayHi();
 ```
 
-The result of this definition is about the same. So, there are indeed reasons why `class` can be considered a syntactic sugar to define a constructor together with its prototype methods.
+Այս սահմանման արդյունքը մոտավորապես նույնն է: Այսպիսով, իսկապես կան պատճառներ, թե ինչու կարելի է `class`-ը համարել շարահյուսական շաքար՝ կոնստրուկտորը իր նախատիպային մեթոդների հետ միասին սահմանելու համար:
 
-Still, there are important differences.
+Այնուամենայնիվ, կան կարևոր տարբերություններ.
 
-1. First, a function created by `class` is labelled by a special internal property `[[IsClassConstructor]]: true`. So it's not entirely the same as creating it manually.
+1. Նախ, `class`-ի կողմից ստեղծված ֆունկցիան պիտակավորված է հատուկ ներքին հատկությամբ՝ `[[IsClassConstructor]]: true`: Այսպիսով, դա ամբողջովին նույնը չէ, ինչ ձեռքով ստեղծելը:
 
-    The language checks for that property in a variety of places. For example, unlike a regular function, it must be called with `new`:
+    Լեզուն ստուգում է այդ հատկությունը տարբեր վայրերում: Օրինակ․ ի տարբերություն սովորական ֆունկցիայի, այն պետք է կանչվի `new`-ով.
 
     ```js run
     class User {
@@ -157,7 +157,7 @@ Still, there are important differences.
     User(); // Error: Class constructor User cannot be invoked without 'new'
     ```
 
-    Also, a string representation of a class constructor in most JavaScript engines starts with the "class..."
+    Նաև JavaScript շարժիչների մեծ մասում class կոնստրուկտորի տողային ներկայացումը սկսվում է class...»-ով:
 
     ```js run
     class User {
@@ -166,23 +166,23 @@ Still, there are important differences.
 
     alert(User); // class User { ... }
     ```
-    There are other differences, we'll see them soon.
+    Կան նաև այլ տարբերություններ, մենք շուտով կդիտարկենք դրանք:
 
-2. Class methods are non-enumerable.
-    A class definition sets `enumerable` flag to `false` for all methods in the `"prototype"`.
+2. Class-ի մեթոդներն անթվարկելի են։
+    Class-ի սահմանումը `«prototype»`-ի բոլոր մեթոդների համար `enumerable` դրոշակը դնում է `false`:
 
-    That's good, because if we `for..in` over an object, we usually don't want its class methods.
+    Դա լավ է, քանի որ, եթե մենք `for..in` ցիկլ կազմենք օբյեկտի համար, մեզ սովորաբար անհրաժեշտ չեն լինում դրա class-ի մեթոդները:
 
-3. Classes always `use strict`.
-    All code inside the class construct is automatically in strict mode.
+3. Class-ները միշտ `use strict` են։
+    Class կոնստրուկցիայի ներսում գտնվող ամբողջ կոդը ավտոմատ կերպով գտնվում է խիստ ռեժիմում:
 
-Besides, `class` syntax brings many other features that we'll explore later.
+Բացի այդ, `class` շարահյուսությունը հանգեցնում է բազմաթիվ այլ առանձնահատկությունների, որոնք մենք հետագայում կուսումնասիրենք:
 
 ## Class Expression
 
-Just like functions, classes can be defined inside another expression, passed around, returned, assigned, etc.
+Ինչպես ֆունկցիաները, այնպես էլ class-ները կարող են սահմանվել մեկ այլ արտահայտության ներսում, փոխանցվել, վերադարձվել, նշանակվել և այլն․․․
 
-Here's an example of a class expression:
+Ահա class-ի արտահայտության օրինակ.
 
 ```js
 let User = class {
@@ -192,29 +192,30 @@ let User = class {
 };
 ```
 
-Similar to Named Function Expressions, class expressions may have a name.
+Անվանված Ֆունկցիոնալ Արտահայտությունների պես, class-ի արտահայտությունները նույնպես կարող են անվանում ունենալ:
 
-If a class expression has a name, it's visible inside the class only:
+Եթե class-ի արտահայտությունն ունի անվանում, այն տեսանելի է միայն class-ի ներսում.
 
 ```js run
 // "Named Class Expression"
-// (no such term in the spec, but that's similar to Named Function Expression)
+// (հատկորոշման մեջ նման տերմին չկա, բայց դա նման է Named Function Expression-ին)
 let User = class *!*MyClass*/!* {
   sayHi() {
-    alert(MyClass); // MyClass name is visible only inside the class
+    alert(MyClass); // MyClass անվանումը տեսանելի է միայն class-ի ներսում
   }
 };
 
-new User().sayHi(); // works, shows MyClass definition
+new User().sayHi(); // աշխատում է, ցույց է տալիս MyClass-ի սահմանումը
 
-alert(MyClass); // error, MyClass name isn't visible outside of the class
+alert(MyClass); // սխալ, MyClass անվանումը տեսանելի չէ class-ից դուրս
 ```
 
 We can even make classes dynamically "on-demand", like this:
+Մենք նույնիսկ կարող ենք class-ները դինամիկ դարձնել՝ «ըստ պահանջի», այսպես.
 
 ```js run
 function makeClass(phrase) {
-  // declare a class and return it
+  // հայտարարենք class և վերադարձնենք այն
   return class {
     sayHi() {
       alert(phrase);
@@ -222,24 +223,24 @@ function makeClass(phrase) {
   };
 }
 
-// Create a new class
+// Ստեղծենք նոր class
 let User = makeClass("Hello");
 
 new User().sayHi(); // Hello
 ```
 
 
-## Getters/setters
+## Գեթթերներ/սեթթերներ
 
-Just like literal objects, classes may include getters/setters, computed properties etc.
+Ինչպես բառացի օբյեկտները, այնպես էլ class-ները կարող են ներառել գեթթերներ/սեթթերներ, հաշվարկված հատկություններ և այլն․․․
 
-Here's an example for `user.name` implemented using `get/set`:
+Ահա `user.name`-ի օրինակ, որն իրականացվել է `get/set`-ի միջոցով.
 
 ```js run
 class User {
 
   constructor(name) {
-    // invokes the setter
+    // կանչում է սեթթերը
     this.name = name;
   }
 
@@ -253,7 +254,7 @@ class User {
   set name(value) {
 */!*
     if (value.length < 4) {
-      alert("Name is too short.");
+      alert("Անունը չափազանց կարճ է:");
       return;
     }
     this._name = value;
@@ -264,14 +265,14 @@ class User {
 let user = new User("John");
 alert(user.name); // John
 
-user = new User(""); // Name is too short.
+user = new User(""); // Անունը չափազանց կարճ է:
 ```
 
-Technically, such class declaration works by creating getters and setters in `User.prototype`.
+Տեխնիկապես, այդպիսի հայտարարագիրը class-ի աշխատում է `User.prototype`-ում գեթթերներ և սեթթերներ ստեղծելով:
 
-## Computed names [...]
+## Հաշվարկված անվանումներ [...]
 
-Here's an example with a computed method name using brackets `[...]`:
+Ահա `[...]` փակագծերի օգտագործմամբ հաշվարկված մեթոդի անվան օրինակ.
 
 ```js run
 class User {
@@ -287,7 +288,7 @@ class User {
 new User().sayHi();
 ```
 
-Such features are easy to remember, as they resemble that of literal objects.
+Նմանատիպ առանձնահատկությունները հեշտ է հիշել, քանի որ դրանք նման են բառացի օբյեկտներին։
 
 ## Class fields
 
