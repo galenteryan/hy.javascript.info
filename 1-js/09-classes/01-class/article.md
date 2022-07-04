@@ -6,17 +6,18 @@
 ```
 
 In practice, we often need to create many objects of the same kind, like users, or goods or whatever.
+Գործնականում մենք հաճախ նույն տեսակի բազմաթիվ օբյեկտներ ստեղծելու կարիք ենք ունենում, օրինակ՝ օգտատերեր, ապրանքներ կամ որևէ այլ բան:
 
-As we already know from the chapter <info:constructor-new>, `new function` can help with that.
+Ինչպես արդեն գիտենք <info:constructor-new> գլխից, `new function`-ը կարող է օգնել այդ հարցում:
 
-But in the modern JavaScript, there's a more advanced "class" construct, that introduces great new features which are useful for object-oriented programming.
+Սակայն ժամանակակից JavaScript-ում կա ավելի առաջադեմ «class» կառուցվածք, որը ներկայացնում է հիանալի նոր հնարավորություններ, որոնք օգտակար են օբյեկտ-կողմնորոշված ծրագրավորման համար:
 
-## The "class" syntax
+## «class»-ի շարահյուսությունը
 
-The basic syntax is:
+Պարզ շարահյուսությունը հետևյալն է․
 ```js
 class MyClass {
-  // class methods
+  // class-ի մեթոդներ
   constructor() { ... }
   method1() { ... }
   method2() { ... }
@@ -25,11 +26,11 @@ class MyClass {
 }
 ```
 
-Then use `new MyClass()` to create a new object with all the listed methods.
+Այնուհետև օգտագործեք `new MyClass()`՝ թվարկված բոլոր մեթոդներով նոր օբյեկտ ստեղծելու համար:
 
-The `constructor()` method is called automatically by `new`, so we can initialize the object there.
+`constructor()` մեթոդը ավտոմատ կերպով կանչվում է `new`-ի կողմից, այնպես որ մենք կարող ենք այնտեղ սկզբնավորել օբյեկտը:
 
-For example:
+Օրինակ․
 
 ```js run
 class User {
@@ -44,22 +45,22 @@ class User {
 
 }
 
-// Usage:
+// Օգտագործում
 let user = new User("John");
 user.sayHi();
 ```
 
-When `new User("John")` is called:
-1. A new object is created.
-2. The `constructor` runs with the given argument and assigns it to `this.name`.
+Երբ `new User("John")`-ը կոչվում է.
+1. Ստեղծվում է նոր օբյեկտ:
+2. `constructor`-ն աշխատում է տրված արգումենտով և վերագրում այն `this.name`-ին:
 
-...Then we can call object methods, such as `user.sayHi()`.
+...Այնուհետև մենք կարող ենք կանչել օբյեկտի մեթոդներ, ինչպիսին `user.sayHi()`-ն է:
 
 
-```warn header="No comma between class methods"
-A common pitfall for novice developers is to put a comma between class methods, which would result in a syntax error.
+```warn header="Ստորակետ չկա class-ի մեթոդների միջև"
+Սկսնակ ծրագրավորողների մոտ տարածված սխալը class-ի մեթոդների միջև ստորակետ դնելն է, ինչը կհանգեցնի շարահյուսական սխալի:
 
-The notation here is not to be confused with object literals. Within the class, no commas are required.
+Այստեղի նշումը չպետք է շփոթել օբյեկտի գրելաձևի հետ: Ստորակետեր չեն պահանջվում class-ում:
 ```
 
 ## What is a class?
