@@ -210,7 +210,6 @@ new User().sayHi(); // աշխատում է, ցույց է տալիս MyClass-ի 
 alert(MyClass); // սխալ, MyClass անվանումը տեսանելի չէ class-ից դուրս
 ```
 
-We can even make classes dynamically "on-demand", like this:
 Մենք նույնիսկ կարող ենք class-ները դինամիկ դարձնել՝ «ըստ պահանջի», այսպես.
 
 ```js run
@@ -400,7 +399,6 @@ setTimeout(button.click, 1000); // hello
 
 `click = () => {...}` class-ի դաշտը ստեղծվում է յուրաքանչյուր օբյեկտի հիման վրա, հետևաբար յուրաքանչյուր `Button` օբյեկտի համար կա առանձին ֆունկցիա, որի ներսում `this`-ը հղում է անում այդ օբյեկտին: Մենք կարող ենք `button.click`-ը փոխանցել ցանկացած վայրում, և `this`-ի արժեքը միշտ ճշգրիտ կլինի:
 
-That's especially useful in browser environment, for event listeners.
 Դա մասնավորապես օգտակար է բրաուզերային միջավայրում՝ իրադարձությունների ունկնդիրների համար:
 
 ## Ամփոփում
