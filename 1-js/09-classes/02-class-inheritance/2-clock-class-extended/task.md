@@ -1,15 +1,15 @@
-importance: 5
+Կարևորություն՝ 5
 
 ---
 
-# Extended clock
+# Ընդլայնված ժամացույց
 
-We've got a `Clock` class. As of now, it prints the time every second.
+Ունենք `Clock` class։ Այս պահի դրությամբ այն ամեն վայրկյան տպում է ժամանակը:
 
 
 [js src="source.view/clock.js"]
 
-Create a new class `ExtendedClock` that inherits from `Clock` and adds the parameter `precision` -- the number of `ms` between "ticks". Should be `1000` (1 second) by default.
+Ստեղծեք նոր class՝ `ExtendedClock`, որը ժառանգում է `Clock`-ից և ավելացնում է `precision` պարամետրը՝ `ms`-ի թիվը «տկտկոցի» ժամանակ: Լռելյայն պետք է լինի `1000` (1 վայրկյան):
 
-- Your code should be in the file `extended-clock.js`
-- Don't modify the original `clock.js`. Extend it.
+- Ձեր կոդը պետք է լինի `extended-clock.js` ֆայլում
+- Մի փոփոխեք `clock.js` բնօրինակը: Ընդլայնեք այն։
