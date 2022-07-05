@@ -1,6 +1,6 @@
-That's because the child constructor must call `super()`.
+Դա պայմանավորված է նրանով, որ երեխայի կոնստրուկտորը պետք է կանչի `super()`:
 
-Here's the corrected code:
+Ահա շտկված կոդը.
 
 ```js run
 class Animal {
