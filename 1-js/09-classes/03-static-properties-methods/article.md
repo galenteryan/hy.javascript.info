@@ -1,9 +1,9 @@
 
-# Static properties and methods
+# Ստատիկ հատկություններ և մեթոդներ
 
-We can also assign a method to the class as a whole. Such methods are called *static*.
+Մենք կարող ենք նաև մեթոդ նշանակել class-ին՝ որպես ամբողջություն: Նման մեթոդները կոչվում են *ստատիկ*։
 
-In a class declaration, they are prepended by `static` keyword, like this:
+Class-ի հայտարարագրում դրանք ամրագրված են `static` հիմնաբառով, այսպես.
 
 ```js run
 class User {
@@ -17,7 +17,7 @@ class User {
 User.staticMethod(); // true
 ```
 
-That actually does the same as assigning it as a property directly:
+Սա իրականում անում է ճիշտ նույն բանը, ինչ անմիջապես հատկության նշանակումը.
 
 ```js run
 class User { }
@@ -29,13 +29,13 @@ User.staticMethod = function() {
 User.staticMethod(); // true
 ```
 
-The value of `this` in `User.staticMethod()` call is the class constructor `User` itself (the "object before dot" rule).
+`this`-ի արժեքը `User.staticMethod()` կանչի մեջ ինքնին `User` class-ի կոնստրուկտորն է («օբյեկտ կետից առաջ» կանոնով):
 
-Usually, static methods are used to implement functions that belong to the class as a whole, but not to any particular object of it.
+Սովորաբար ստատիկ մեթոդներն օգտագործվում են այնպիսի ֆունկցիաներ իրագործելու գամար, որոնք պատկանում են class-ին որպես ամբողջություն, բայց ոչ դրա որևէ կոնկրետ օբյեկտին:
 
-For instance, we have `Article` objects and need a function to compare them.
+Օրինակ՝ մենք ունենք `Article` օբյեկտներ և դրանց համեմատության համար անհրաժեշտ է ֆունկցիա:
 
-A natural solution would be to add `Article.compare` static method:
+Բնական լուծում կլինի, երբ ավելացնենք `Article.compare` ստատիկ մեթոդ.
 
 ```js run
 class Article {
@@ -51,7 +51,7 @@ class Article {
 */!*
 }
 
-// usage
+// կիրառում
 let articles = [
   new Article("HTML", new Date(2019, 1, 1)),
   new Article("CSS", new Date(2019, 0, 1)),
@@ -65,19 +65,19 @@ articles.sort(Article.compare);
 alert( articles[0].title ); // CSS
 ```
 
-Here `Article.compare` method stands "above" articles, as a means to compare them. It's not a method of an article, but rather of the whole class.
+Այստեղ `Article.compare` մեթոդը կանգնած է հոդվածների «վերևում»՝ որպես դրանք համեմատելու միջոց: Դա ոչ թե հոդվածի մեթոդ է, այլ ամբողջ class-ի:
 
-Another example would be a so-called "factory" method.
+Մեկ այլ օրինակ կլինի այսպես կոչված «գործարանային» մեթոդը:
 
-Let's say, we need multiple ways to create an article:
+Ենթադրենք, մեզ անհրաժեշտ են մի քանի եղանակներ հոդված ստեղծելու համար.
 
-1. Create by given parameters (`title`, `date` etc).
-2. Create an empty article with today's date.
-3. ...or else somehow.
+1. Ստեղծել տրված պարամետրերով (`title`, `date` և այլն):
+2. Ստեղծել դատարկ հոդված այսօրվա ամսաթվով:
+3. ...կամ էլ ինչ-որ այլ կերպ:
 
-The first way can be implemented by the constructor. And for the second one we can make a static method of the class.
+Առաջին տարբերակը կարող է իրականացվել կոնստրուկտորի կողմից։ Իսկ երկրորդ տարբերակը՝ մենք կարող ենք class-ի համար ստատիկ մեթոդ ստեղծել:
 
-Such as `Article.createTodays()` here:
+Ինչպիսին է `Article.createTodays()`-ն այստեղ․
 
 ```js run
 class Article {
@@ -88,31 +88,31 @@ class Article {
 
 *!*
   static createTodays() {
-    // remember, this = Article
-    return new this("Today's digest", new Date());
+    // հիշեք, this = Article
+    return new this("Այսօրվա ամփոփագիր", new Date());
   }
 */!*
 }
 
 let article = Article.createTodays();
 
-alert( article.title ); // Today's digest
+alert( article.title ); // Այսօրվա ամփոփագիր
 ```
 
-Now every time we need to create a today's digest, we can call `Article.createTodays()`. Once again, that's not a method of an article, but a method of the whole class.
+Այժմ արդեն, ամեն անգամ, երբ մենք պետք է ստեղծենք այսօրվա ամփոփագիր, մենք կարող ենք կանչել `Article.createTodays()`: Կրկին, դա ոչ թե հոդվածի մեթոդ է, այլ ամբողջ class-ի մեթոդ:
 
-Static methods are also used in database-related classes to search/save/remove entries from the database, like this:
+Ստատիկ մեթոդները օգտագործվում են նաև տվյալների բազայի հետ կապված class-ներում՝ տվյալների բազայից գրառումները որոնելու/պահելու/հեռացնելու համար, այսպես.
 
 ```js
-// assuming Article is a special class for managing articles
-// static method to remove the article by id:
+// ենթադրելով, որ Article-ը հոդվածների կառավարման հատուկ class է
+// id-ի միջոցով հոդվածը հեռացնելու ստատիկ մեթոդ.
 Article.remove({id: 12345});
 ```
 
-````warn header="Static methods aren't available for individual objects"
-Static methods are callable on classes, not on individual objects.
+````warn header="Ստատիկ մեթոդները հասանելի չեն առանձին օբյեկտների համար"
+Ստատիկ մեթոդները կարող են կանչվել class-ների, այլ ոչ թե առանձին օբյեկտների վրա:
 
-E.g. such code won't work:
+Օր.՝ նման կոդը չի աշխատի.
 
 ```js
 // ...
