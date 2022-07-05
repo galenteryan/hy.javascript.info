@@ -463,7 +463,7 @@ longEar.eat(); // Error: Maximum call stack size exceeded
 
 ![](this-super-loop.svg)
 
-1. Inside `longEar.eat()`, the line `(**)` calls `rabbit.eat` providing it with `this=longEar`. `longEar.eat()`-ի ներսում `(**)` տողը կանչում է `rabbit.eat`-ին՝ տրամադրելով `this=longEar`-ը:
+1. `longEar.eat()`-ի ներսում `(**)` տողը կանչում է `rabbit.eat`-ին՝ տրամադրելով `this=longEar`-ը:
     ```js
     // longEar.eat()-ի ներսում մենք ունենք՝ this = longEar
     this.__proto__.eat.call(this) // (**)
@@ -489,13 +489,13 @@ longEar.eat(); // Error: Maximum call stack size exceeded
 
 ### `[[HomeObject]]`
 
-To provide the solution, JavaScript adds one more special internal property for functions: `[[HomeObject]]`.
+Լուծումը ապահովելու համար JavaScript-ն ավելացնում է ևս մեկ հատուկ ներքին հատկություն ֆունկցիաների համար՝ `[[HomeObject]]`:
 
-When a function is specified as a class or object method, its `[[HomeObject]]` property becomes that object.
+Երբ ֆունկցիան նշվում է որպես class-ի կամ օբյեկտի մեթոդ, նրա `[[HomeObject]]` հատկությունը դառնում է այդ օբյեկտը:
 
-Then `super` uses it to resolve the parent prototype and its methods.
+Այնուհետև `super`-ն օգտագործում է այն՝ ծնող նախատիպը և դրա մեթոդները թույլատրելու համար:
 
-Let's see how it works, first with plain objects:
+Տեսնենք, թե ինչպես է այն աշխատում՝ նախ պարզ օբյեկտների հետ.
 
 ```js run
 let animal = {
@@ -527,17 +527,17 @@ longEar.eat();  // Long Ear eats.
 */!*
 ```
 
-It works as intended, due to `[[HomeObject]]` mechanics. A method, such as `longEar.eat`, knows its `[[HomeObject]]` and takes the parent method from its prototype. Without any use of `this`.
+Այն աշխատում է այնպես, ինչպես նախատեսված է՝ `[[HomeObject]]` մեխանիկայի շնորհիվ: Մեթոդը, ինչպիսին է `longEar.eat`-ը, գիտի իր `[[HomeObject]]`-ը և վերցնում է ծնողի մեթոդն իր նախատիպից: Առանց `this`-ի օգտագործման:
 
-### Methods are not "free"
+### Մեթոդներն «ազատ» չեն
 
-As we've known before, generally functions are "free", not bound to objects in JavaScript. So they can be copied between objects and called with another `this`.
+Ինչպես նախկինում գիտեինք, ընդհանուր առմամբ ֆունկցիաները «ազատ» են և կապված չեն JavaScript-ի օբյեկտների հետ: Այսպիսով, դրանք կարող են պատճենվել օբյեկտների միջև և կանչվել մեկ այլ `this`-ով:
 
-The very existence of `[[HomeObject]]` violates that principle, because methods remember their objects. `[[HomeObject]]` can't be changed, so this bond is forever.
+`[[HomeObject]]`-ի գոյությունը խախտում է այդ սկզբունքը, քանի որ մեթոդները հիշում են իրենց օբյեկտներին: `[[HomeObject]]`-ը հնարավոր չէ փոխել, ուստի այս կապը հավերժ է:
 
-The only place in the language where `[[HomeObject]]` is used -- is `super`. So, if a method does not use `super`, then we can still consider it free and copy between objects. But with `super` things may go wrong.
+Միակ տեղը լեզվում, որտեղ օգտագործվում է `[[HomeObject]]`-ը, `super`-ն է: Այսպիսով, եթե մեթոդը չի օգտագործում `super`, ապա մենք դեռ կարող ենք այն համարել ազատ և կրկնօրինակել օբյեկտների միջև: Սակայն `super`-ի դեպքում ինչ-որ բան կարող է թարս գնալ:
 
-Here's the demo of a wrong `super` result after copying:
+Ահա կրկնօրինակումից հետո սխալ `super`-ի արդյունքի ցուցադրությունը.
 
 ```js run
 let animal = {
@@ -573,24 +573,24 @@ tree.sayHi();  // I'm an animal (?!?)
 */!*
 ```
 
-A call to `tree.sayHi()` shows "I'm an animal". Definitely wrong.
+`tree.sayHi()`-ի կանչը ցուցադրում է «I'm an animal»: Միանշանակ սխալ է:
 
-The reason is simple:
-- In the line `(*)`, the method `tree.sayHi` was copied from `rabbit`. Maybe we just wanted to avoid code duplication?
-- Its `[[HomeObject]]` is `rabbit`, as it was created in `rabbit`. There's no way to change `[[HomeObject]]`.
-- The code of `tree.sayHi()` has `super.sayHi()` inside. It goes up from `rabbit` and takes the method from `animal`.
+Պատճառը պարզ է.
+- `(*)` տողում `tree.sayHi` մեթոդը կրկնօրինակվել է `rabbit`-ից: Միգուցե մեզ պարզապես անհրաժեշտ էր խուսափել կոդերի կրկնօրինակումից:
+- Դրա `[[HomeObject]]`-ը `rabbit`-ն է, քանի որ այն ստեղծվել է `rabbit`-ում: `[[HomeObject]]`-ը փոխելու տարբերակ չկա:
+- `tree.sayHi()`-ի կոդն իր ներսում ունի `super.sayHi()`: Այն բարձրանում է `rabbit`-ից և վերցնում մեթոդը `animal`-ից:
 
-Here's the diagram of what happens:
+Ահա պատկերը, թե ինչ է տեղի ունենում.
 
 ![](super-homeobject-wrong.svg)
 
-### Methods, not function properties
+### Մեթոդներ, ոչ թե ֆունկցիայի հատկություններ
 
-`[[HomeObject]]` is defined for methods both in classes and in plain objects. But for objects, methods must be specified exactly as `method()`, not as `"method: function()"`.
+ինչպես class-ներում, այնպես էլ պարզ օբյեկտներում `[[HomeObject]]`-ը սահմանվում է մեթոդների համար: Բայց օբյեկտների համար մեթոդները պետք է հստակորեն նշվեն որպես `method()`, այլ ոչ թե որպես `«method: function()»`:
 
-The difference may be non-essential for us, but it's important for JavaScript.
+Տարբերությունը մեզ համար կարող է էական չլինել, բայց JavaScript-ի համար այն կարևոր է:
 
-In the example below a non-method syntax is used for comparison. `[[HomeObject]]` property is not set and the inheritance doesn't work:
+Ստորև բերված օրինակում համեմատության համար օգտագործվում է ոչ մեթոդական շարահյուսություն: `[[HomeObject]]` հատկությունը սահմանված չէ, և ժառանգությունը չի աշխատում.
 
 ```js run
 let animal = {
@@ -611,17 +611,17 @@ rabbit.eat();  // Error calling super (because there's no [[HomeObject]])
 */!*
 ```
 
-## Summary
+## Ամփոփում
 
-1. To extend a class: `class Child extends Parent`:
-    - That means `Child.prototype.__proto__` will be `Parent.prototype`, so methods are inherited.
-2. When overriding a constructor:
-    - We must call parent constructor as `super()` in `Child` constructor before using `this`.
-3. When overriding another method:
-    - We can use `super.method()` in a `Child` method to call `Parent` method.
-4. Internals:
-    - Methods remember their class/object in the internal `[[HomeObject]]` property. That's how `super` resolves parent methods.
-    - So it's not safe to copy a method with `super` from one object to another.
+1. Class-ն ընդլայնելու համար՝ `class Child extends Parent`․
+    - Դա նշանակում է, որ `Child.prototype.__proto__`-ը կլինի `Parent.prototype`, հետևաբար մեթոդները կժառանգվեն։
+2. Երբ գերակայող կոնստրուկտոր է․
+    - Պետք է մինչև `this`-ի օգտագործումը `Child`-ի կոնստրուկտորում կանչենք ծնող կոնստրուկտորը՝ որպես `super()`։
+3. Երբ գերակայող այլ մեթոդ է․
+    - Կարող ենք `Child`-ի մեթոդում օգտագործել `super.method()`-ը՝ `Parent`-ի մեթոդը կանչելու համար:
+4. Ներքին կառուցվածք․
+    - Ներքին `[[HomeObject]]` հատկության մեջ մեթոդները հիշում են իրենց class-ը/օբյեկտը: Ահա թե ինչպես է `super`-ը թույլատրում ծնողի մեթոդները:
+    - Այսպիսով, անվտանգ չէ մի օբյեկտից մյուսում `super`-ով մեթոդ պատճենել:
 
-Also:
-- Arrow functions don't have their own `this` or `super`, so they transparently fit into the surrounding context.
+Նաև․
+- Սլաքով ֆունկցիաները չունեն իրենց սեփական `this`-ը կամ `super`-ը, ուստի դրանք թափանցիկորեն տեղավորվում են շրջակա համատեքստում:
