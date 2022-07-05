@@ -21,7 +21,7 @@ class Rabbit extends Animal {
 }
 
 *!*
-let rabbit = new Rabbit("White Rabbit"); // ok now
+let rabbit = new Rabbit("Սպիտակ Ճագար"); // այժմ նորմալ է
 */!*
-alert(rabbit.name); // White Rabbit
+alert(rabbit.name); // Սպիտակ Ճագար
 ```
