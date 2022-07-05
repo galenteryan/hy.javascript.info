@@ -1,12 +1,12 @@
-importance: 5
+Կարևորություն՝ 5
 
 ---
 
-# Error creating an instance
+# Նմուշ ստեղծելու սխալ
 
-Here's the code with `Rabbit` extending `Animal`.
+Ահա կոդը, երբ `Rabbit`-ն ընդլայնվում է `Animal`-ից։
 
-Unfortunately, `Rabbit` objects can't be created. What's wrong? Fix it.
+Ցավոք, `Rabbit`-ի օբյեկտները չեն կարող ստեղծվել։ Ի՞նչ խնդիր կա, շտկեք այն։
 ```js run
 class Animal {
 
