@@ -91,7 +91,7 @@ new User().sayHi(); // Hello
 Դա կարող է օգտակար լինել ծրագրավորման առաջադեմ օրինաչափությունների համար, երբ մենք օգտագործում ենք ֆունկցիաներ՝ բազմաթիվ պայմաններից կախված class-ներ ստեղծելու և դրանցից ժառանգելու համար:
 ````
 
-## Մեթոդի անտեսում
+## Գերակայող մեթոդ
 
 Հիմա եկեք առաջ շարժվենք և անտեսենք մի մեթոդ: Կանխադրված կերպով այն մեթոդները, որոնք նշված չեն `class Rabbit`-ում, ուղղակիորեն վերցվում են `class Animal`-ից՝ «Ինչպես որ կա»:
 
@@ -177,17 +177,17 @@ setTimeout(function() { super.stop() }, 1000);
 ```
 ````
 
-## Overriding constructor
+## Գերակայող կոնստրուկտոր
 
-With constructors it gets a little bit tricky.
+Կոնստրուկտորների դեպքում դա մի փոքր բարդանում է:
 
-Until now, `Rabbit` did not have its own `constructor`.
+Մինչ այս `Rabbit`-ը սեփական `constructor` չուներ։
 
-According to the [specification](https://tc39.github.io/ecma262/#sec-runtime-semantics-classdefinitionevaluation), if a class extends another class and has no `constructor`, then the following "empty" `constructor` is generated:
+Համաձայն [հատկանշման](https://tc39.github.io/ecma262/#sec-runtime-semantics-classdefinitionevaluation), եթե class-ը ընդլայնվում է մեկ այլ class-ից և չունի `constructor`, ապա հետևյալ «դատարկ» `constructor`-ն է ստեղծվում.
 
 ```js
 class Rabbit extends Animal {
-  // generated for extending classes without own constructors
+  // ստեղծվում է առանց սեփական կոնստրուկտորով class-ների ընդլայնման համար
 *!*
   constructor(...args) {
     super(...args);
@@ -196,9 +196,9 @@ class Rabbit extends Animal {
 }
 ```
 
-As we can see, it basically calls the parent `constructor` passing it all the arguments. That happens if we don't write a constructor of our own.
+Ինչպես տեսնում ենք, այն հիմնականում կանչում է ծնող `constructor`-ը՝ փոխանցելով նրան բոլոր արգումենտները: Դա տեղի է ունենում, եթե մենք չգրենք մեր սեփական կոնստրուկտորը:
 
-Now let's add a custom constructor to `Rabbit`. It will specify the `earLength` in addition to `name`:
+Հիմա եկեք `Rabbit`-ին ավելացնենք սեփական կոնստրուկտոր: Այն կսահմանի նաև `earLength`-ը՝ ի լրում `name`-ին:
 
 ```js run
 class Animal {
@@ -223,31 +223,31 @@ class Rabbit extends Animal {
 }
 
 *!*
-// Doesn't work!
+// Չի աշխատում
 let rabbit = new Rabbit("White Rabbit", 10); // Error: this is not defined.
 */!*
 ```
 
-Whoops! We've got an error. Now we can't create rabbits. What went wrong?
+Վա՜յ։ Մենք սխալ ունենք: Հիմա մենք չենք կարող ճագարներ ստեղծել: Ի՞նչը սխալ գնաց։
 
-The short answer is:
+Կարճ պատասխանն է.
 
-- **Constructors in inheriting classes must call `super(...)`, and (!) do it before using `this`.**
+- **Ժառանգող class-ների կոնստրուկտորները պետք է կանչեն `super(...)`-ը, և (!) դա պետք է անեն նախքան `this`-ի օգտագործումը:**
 
-...But why? What's going on here? Indeed, the requirement seems strange.
+...Բայց ինչո՞ւ։ Ի՞նչ է այստեղ կատարվում։ Իրոք, պահանջը տարօրինակ է թվում։
 
-Of course, there's an explanation. Let's get into details, so you'll really understand what's going on.
+Իհարկե, բացատրություն կա։ Եկեք մանրամասնենք այնպես, որ իսկապես հասկանալի լինի, թե ինչ է կատարվում:
 
-In JavaScript, there's a distinction between a constructor function of an inheriting class (so-called "derived constructor") and other functions. A derived constructor has a special internal property `[[ConstructorKind]]:"derived"`. That's a special internal label.
+JavaScript-ում ժառանգող class-ի կոնստրուկտոր ֆունկցիայի (այսպես կոչված «ածանցյալ կոնստրուկտոր») և այլ ֆունկցիաների միջև կա տարբերություն: Ստացված կոնստրուկտորն ունի հատուկ ներքին հատկություն՝ `[[ConstructorKind]]:"derived"`: Դա հատուկ ներքին պիտակ է:
 
-That label affects its behavior with `new`.
+Այդ պիտակն ազդում է նրա վարքագծի վրա՝ `new`-ի միջոցով:
 
-- When a regular function is executed with `new`, it creates an empty object and assigns it to `this`.
-- But when a derived constructor runs, it doesn't do this. It expects the parent constructor to do this job.
+- Երբ սովորական ֆունկցիան գործարկվում է `new`-ով, այն ստեղծում է դատարկ օբյեկտ և վերագրում այն `this`-ին:
+- Բայց երբ ածանցյալ կոնստրուկտորն է աշխատում, այն չի անում դա: Այն ակնկալում է, որ ծնող կոնստրուկտորը կանի այդ աշխատանքը:
 
-So a derived constructor must call `super` in order to execute its parent (base) constructor, otherwise the object for `this` won't be created. And we'll get an error.
+Այսպիսով, ածանցյալ կոնստրուկտորը պետք է կանչի `super`՝ իր ծնող (բազային) կոնստրուկտորը գործարկելու համար, հակառակ դեպքում `this`-ի համար օբյեկտ չի ստեղծվի և մենք սխալ կստանանք:
 
-For the `Rabbit` constructor to work, it needs to call `super()` before using `this`, like here:
+Որպեսզի `Rabbit` կոնստրուկտորն աշխատի, այն պետք է կանչի `super()`՝ `this`-ն օգտագործելուց առաջ, ինչպես այստեղ.
 
 ```js run
 class Animal {
@@ -273,7 +273,7 @@ class Rabbit extends Animal {
 }
 
 *!*
-// now fine
+// այժմ հիանալի է
 let rabbit = new Rabbit("White Rabbit", 10);
 alert(rabbit.name); // White Rabbit
 alert(rabbit.earLength); // 10
