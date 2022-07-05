@@ -24,7 +24,7 @@ class Rabbit extends Animal {
 }
 
 *!*
-let rabbit = new Rabbit("White Rabbit"); // Error: this is not defined
+let rabbit = new Rabbit("Սպիտակ Ճագար"); // Error: this is not defined
 */!*
 alert(rabbit.name);
 ```
