@@ -91,29 +91,29 @@ new User().sayHi(); // Hello
 Դա կարող է օգտակար լինել ծրագրավորման առաջադեմ օրինաչափությունների համար, երբ մենք օգտագործում ենք ֆունկցիաներ՝ բազմաթիվ պայմաններից կախված class-ներ ստեղծելու և դրանցից ժառանգելու համար:
 ````
 
-## Overriding a method
+## Մեթոդի անտեսում
 
-Now let's move forward and override a method. By default, all methods that are not specified in `class Rabbit` are taken directly "as is" from `class Animal`.
+Հիմա եկեք առաջ շարժվենք և անտեսենք մի մեթոդ: Կանխադրված կերպով այն մեթոդները, որոնք նշված չեն `class Rabbit`-ում, ուղղակիորեն վերցվում են `class Animal`-ից՝ «Ինչպես որ կա»:
 
-But if we specify our own method in `Rabbit`, such as `stop()` then it will be used instead:
+Բայց, եթե մենք `Rabbit`-ում նշենք մեր սեփական մեթոդը, ինչպիսին է `stop()`-ը, ապա փոխարենը դա կօգտագործվի.
 
 ```js
 class Rabbit extends Animal {
   stop() {
-    // ...now this will be used for rabbit.stop()
-    // instead of stop() from class Animal
+    // ...այժմ սա կօգտագործվի rabbit.stop()-ի համար
+    // Animal class-ի stop()-ի փոխարեն
   }
 }
 ```
 
-Usually, however, we don't want to totally replace a parent method, but rather to build on top of it to tweak or extend its functionality. We do something in our method, but call the parent method before/after it or in the process.
+Այնուամենայնիվ, սովորաբար մենք չենք ցանկանում ամբողջությամբ փոխարինել ծնողի մեթոդը, այլ ավելի շուտ ցանկանում ենք կառուցել դրա վրա՝ փոփոխելով կամ ընդլայնելով ֆունկցիոնալը: Մենք ինչ-որ բան ենք անում մեր մեթոդով, բայց դրանից առաջ/հետո կամ ընթացքում կանչում ենք ծնողի մեթոդը:
 
-Classes provide `"super"` keyword for that.
+Class-ները դրա համար տրամադրում են `«super»` հիմնաբառը:
 
-- `super.method(...)` to call a parent method.
-- `super(...)` to call a parent constructor (inside our constructor only).
+- `super.method(...)` ծնողի մեթոդը կանչելու համար
+- `super(...)` ծնողի կոնստրուկտորը կանչելու համար (միայն մեր կոնստրուկտորի ներսում).
 
-For instance, let our rabbit autohide when stopped:
+Օրինակ՝ թող, որ մեր ճագարը թաքնվի, երբ կանգնում է.
 
 ```js run
 class Animal {
@@ -154,25 +154,25 @@ rabbit.run(5); // White Rabbit runs with speed 5.
 rabbit.stop(); // White Rabbit stands still. White Rabbit hides!
 ```
 
-Now `Rabbit` has the `stop` method that calls the parent `super.stop()` in the process.
+Այժմ `Rabbit`-ն ունի `stop` մեթոդը, որն ընթացքում կանչում է ծնողինը՝ `super.stop()`:
 
-````smart header="Arrow functions have no `super`"
-As was mentioned in the chapter <info:arrow-functions>, arrow functions do not have `super`.
+````smart header="Սլաքով ֆունկցիաները չունեն `super`"
+Ինչպես նշվեց <info:arrow-functions> գլխում, սլաքով ֆունկցիաները չունեն `super`:
 
-If accessed, it's taken from the outer function. For instance:
+Հասանելիության դեպքում այն վերցվում է արտաքին ֆունկցիայից: Օրինակ․
 
 ```js
 class Rabbit extends Animal {
   stop() {
-    setTimeout(() => super.stop(), 1000); // call parent stop after 1sec
+    setTimeout(() => super.stop(), 1000); // կանչում ենք ծնողի stop-ը 1 վրկ անց
   }
 }
 ```
 
-The `super` in the arrow function is the same as in `stop()`, so it works as intended. If we specified a "regular" function here, there would be an error:
+Սլաքով ֆունկցիայում `super`-ը նույնն է, ինչ `stop()`-ում, ուստի այն աշխատում է այնպես, ինչպես նախատեսված է: Եթե այստեղ նշեինք «սովորական» ֆունկցիա, ապա սխալ կլիներ.
 
 ```js
-// Unexpected super
+// Անսպասելի super
 setTimeout(function() { super.stop() }, 1000);
 ```
 ````
