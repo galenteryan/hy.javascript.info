@@ -247,7 +247,7 @@ JavaScript-ում ժառանգող class-ի կոնստրուկտոր ֆունկ�
 
 Այսպիսով, ածանցյալ կոնստրուկտորը պետք է կանչի `super`՝ իր ծնող (բազային) կոնստրուկտորը գործարկելու համար, հակառակ դեպքում `this`-ի համար օբյեկտ չի ստեղծվի և մենք սխալ կստանանք:
 
-Որպեսզի `Rabbit` կոնստրուկտորն աշխատի, այն պետք է կանչի `super()`՝ `this`-ն օգտագործելուց առաջ, ինչպես այստեղ.
+Որպեսզի `Rabbit` կոնստրուկտորն աշխատի, `this`-ն օգտագործելուց առաջ այն պետք է կանչի `super()`-ը, ինչպես այստեղ.
 
 ```js run
 class Animal {
@@ -280,21 +280,21 @@ alert(rabbit.earLength); // 10
 */!*
 ```
 
-### Overriding class fields: a tricky note
+### Գերակայող class-ի դաշտերը. բարդ նշում
 
-```warn header="Advanced note"
-This note assumes you have a certain experience with classes, maybe in other programming languages.
+```warn header="Ընդլայնված նշում"
+Այս նշումը ենթադրում է, որ դուք որոշակի փորձ ունեք class-ների հետ, գուցե այլ ծրագրավորման լեզուներով:
 
-It provides better insight into the language and also explains the behavior that might be a source of bugs (but not very often).
+Այն ավելի լավ պատկերացում է ձևավորում լեզվի մասին, նաև բացատրում է վարքագիծը, որը կարող է սխալների աղբյուր հանդիսանալ (բայց ոչ շատ հաճախ):
 
-If you find it difficult to understand, just go on, continue reading, then return to it some time later.
+Եթե դժվարանում եք հասկանալ, պարզապես շարժվեք առաջ, շարունակեք ընթերցել և որոշ ժամանակ անց կրկին անդրադարձեք այս թեմային:
 ```
 
-We can override not only methods, but also class fields.
+Մենք կարող ենք անտեսել ոչ միայն մեթոդները, այլև class-ի դաշտերը:
 
-Although, there's a tricky behavior when we access an overridden field in parent constructor, quite different from most other programming languages.
+Չնայած, կա մի բարդ վարքագիծ, երբ մենք մուտք ենք գործում գերակայող դաշտ ծնող կոնստրուկտորում, դա բոլորովին տարբերվում է մի շարք ծրագրավորման լեզուներից:
 
-Consider this example:
+Դիտարկենք այս օրինակը.
 
 ```js run
 class Animal {
@@ -315,86 +315,86 @@ new Rabbit(); // animal
 */!*
 ```
 
-Here, class `Rabbit` extends `Animal` and overrides the `name` field with its own value.
+Այստեղ `Rabbit` class-ը ընդլայնվում է `Animal`-ից և անտեսում է `name` դաշտն իր արժեքով:
 
-There's no own constructor in `Rabbit`, so `Animal` constructor is called.
+`Rabbit`-ում սեփական կոնստրուկտոր չկա, ուստի կանչվում է `Animal`-ի կոնստրուկտորը:
 
-What's interesting is that in both cases: `new Animal()` and `new Rabbit()`, the `alert` in the line `(*)` shows `animal`.
+Հետաքրքիրն այն է, որ երկու դեպքում էլ՝ `new Animal()` և `new Rabbit()`, `alert`-ը `(*)` տողում ցույց է տալիս `animal`:
 
-**In other words, the parent constructor always uses its own field value, not the overridden one.**
+**Այլ կերպ ասած, ծնող կոնստրուկտորը միշտ օգտագործում է իր դաշտի արժեքը, այլ ոչ թե գերակայվողը:**
 
-What's odd about it?
+Ի՞նչ տարօրինակ բան կա դրա մեջ:
 
-If it's not clear yet, please compare with methods.
+Եթե դեռ պարզ չէ, խնդրում ենք համեմատել մեթոդների հետ։
 
-Here's the same code, but instead of `this.name` field we call `this.showName()` method:
+Ահա նույն կոդը, բայց `this.name` դաշտի փոխարեն, մենք կանչում ենք `this.showName()` մեթոդը.
 
 ```js run
 class Animal {
-  showName() {  // instead of this.name = 'animal'
-    alert('animal');
+  showName() {  // «this.name = 'կենդանի'»-ի փոխարեն
+    alert('կենդանի');
   }
 
   constructor() {
-    this.showName(); // instead of alert(this.name);
+    this.showName(); // «alert(this.name);»-ի փոխարեն
   }
 }
 
 class Rabbit extends Animal {
   showName() {
-    alert('rabbit');
+    alert('ճագար');
   }
 }
 
-new Animal(); // animal
+new Animal(); // կենդանի
 *!*
-new Rabbit(); // rabbit
+new Rabbit(); // ճագար
 */!*
 ```
 
-Please note: now the output is different.
+Նկատի ունեցեք. այժմ արդյունքն այլ է:
 
-And that's what we naturally expect. When the parent constructor is called in the derived class, it uses the overridden method.
+Եվ դա այն է, ինչ մենք բնականաբար ակնկալում էինք: Երբ ծնող կոնստրուկտորը կանչվում է ածանցյալ class-ում, այն օգտագործում է գերակայող մեթոդը:
 
-...But for class fields it's not so. As said, the parent constructor always uses the parent field.
+...Բայց class-ի դաշտերի համար այդպես չէ։ Ինչպես նշվեց, ծնող կոնստրուկտորը միշտ օգտագործում է ծնող դաշտը:
 
-Why is there a difference?
+Ինչո՞ւ կա տարբերություն:
 
-Well, the reason is the field initialization order. The class field is initialized:
-- Before constructor for the base class (that doesn't extend anything),
-- Immediately after `super()` for the derived class.
+Դե, պատճառը դաշտի սկզբնավորման կարգն է։ Class-ի դաշտը սկզբնավորվում է.
+- Նախքան կոնստրուկտորը՝ հիմնական class-ի համար (որը ոչինչ չի ընդլայնում),
+- Անմիջապես `super()`-ից հետո՝ ածանցյալ class-ի համար:
 
-In our case, `Rabbit` is the derived class. There's no `constructor()` in it. As said previously, that's the same as if there was an empty constructor with only `super(...args)`.
+Մեր դեպքում `Rabbit`-ը ածանցյալ class-ն է: Դրանում `constructor()` չկա: Ինչպես նախկինում նշվեց, դա նույնն է, ինչ եթե դատարկ կոնստրուկտոր լիներ միայն `super(...args)`-ով:
 
-So, `new Rabbit()` calls `super()`, thus executing the parent constructor, and (per the rule for derived classes) only after that its class fields are initialized. At the time of the parent constructor execution, there are no `Rabbit` class fields yet, that's why `Animal` fields are used.
+Այսպիսով, `new Rabbit()`-ը կանչում է `super()`-ին՝ գործարկելով ծնող կոնստրուկտորը, և (ըստ ածանցյալ class-ների կանոնի) միայն այն բանից հետո, երբ իր class-ի դաշտերը սկզբնավորվում են: Ծնող կոնստրուկտորի գործարկման պահին `Rabbit`-ում class-ի դաշտեր դեռ չկան, այդ իսկ պատճառով օգտագործվում են `Animal`-ի դաշտերը։
 
-This subtle difference between fields and methods is specific to JavaScript.
+Դաշտերի և մեթոդների միջև այս նուրբ տարբերությունը հատկանշական է JavaScript-ին:
 
-Luckily, this behavior only reveals itself if an overridden field is used in the parent constructor. Then it may be difficult to understand what's going on, so we're explaining it here.
+Բարեբախտաբար, այս վարքագիծը բացահայտվում է միայն այն դեպքում, երբ գերակայող դաշտն օգտագործվում է ծնող կոնստրուկտորում: Այնուհետև գուցե դժվար լինի հասկանալ, թե ինչ է կատարվում, ուստի դա բացատրվում է այստեղ:
 
-If it becomes a problem, one can fix it by using methods or getters/setters instead of fields.
+Եթե դա խնդիր է առաջացնում, կարելի է ուղղել այն՝ դաշտերի փոխարեն օգտագործելով մեթոդներ կամ գեթթերներ/սեթթերներ:
 
-## Super: internals, [[HomeObject]]
+## Super. ներքին կառուցվածք, [[HomeObject]]
 
-```warn header="Advanced information"
-If you're reading the tutorial for the first time - this section may be skipped.
+```warn header="Ընդլայնված տեղեկատվություն"
+Եթե դուք առաջին անգամ եք ընթերցում ձեռնարկը, այս բաժինը կարող եք բաց թողնել:
 
-It's about the internal mechanisms behind inheritance and `super`.
+Սա ժառանգականության և `super`-ի հետևում գտնվող ներքին մեխանիզմների մասին է:
 ```
 
-Let's get a little deeper under the hood of `super`. We'll see some interesting things along the way.
+Եկեք մի փոքր խորանանք `super`-ի ներքո։ Հետաքրքիր բաներ կտեսնենք ճանապարհին:
 
-First to say, from all that we've learned till now, it's impossible for `super` to work at all!
+Առաջին հերթին, այն ամենի հիմքով, ինչ սովորել ենք մինչ այժմ, անհնար է, որ `super`-ն ընդհանրապես աշխատի:
 
-Yeah, indeed, let's ask ourselves, how it should technically work? When an object method runs, it gets the current object as `this`. If we call `super.method()` then, the engine needs to get the `method` from the prototype of the current object. But how?
+Այո, իսկապես, եկեք ինքներս մեզ հարցնենք՝ տեխնիկապես ինչպե՞ս այն պետք է աշխատի: Երբ գործարկվում է օբյեկտի մեթոդը, այն ստանում է ընթացիկ օբյեկտը որպես `this`: Եթե մենք կանչենք `super.method()`, ապա շարժիչը պետք է ստանա `method`-ն ընթացիկ օբյեկտի նախատիպից: Բայց ինչպե՞ս։
 
-The task may seem simple, but it isn't. The engine knows the current object `this`, so it could get the parent `method` as `this.__proto__.method`. Unfortunately, such a "naive" solution won't work.
+Առաջադրանքը կարող է պարզ թվալ, բայց դա այդպես չէ: Շարժիչը գիտի `this` ընթացիկ օբյեկտը, ուստի այն կարող է ստանալ ծնող `method`-ը որպես `this.__proto__.method`: Ցավոք սրտի, նման «միամիտ» լուծումը չէ, որ աշխատում է իրականում։
 
-Let's demonstrate the problem. Without classes, using plain objects for the sake of simplicity.
+Եկեք խնդիրն ավելի պարզ ձևով պատկերացնելու նպատակով դիտարկենք առանց class-ների, այլ պարզ օբյեկտների օրինակով:
 
-You may skip this part and go below to the `[[HomeObject]]` subsection if you don't want to know the details. That won't harm. Or read on if you're interested in understanding things in-depth.
+Եթե չեք ցանկանում իմանալ մանրամասները, ապա կարող եք բաց թողնել այս մասը և անցնել `[[HomeObject]]` ենթաբաժնին: Դա չի վնասի: Կամ ընթերցեք, եթե հետաքրքիր է ամեն ինչ խորությամբ հասկանալը:
 
-In the example below, `rabbit.__proto__ = animal`. Now let's try: in `rabbit.eat()` we'll call `animal.eat()`, using `this.__proto__`:
+Ստորև բերված օրինակում՝ `rabbit.__proto__ = animal`: Հիմա եկեք փորձենք. `rabbit.eat()`-ում կկանչենք `animal.eat()`-ը՝ օգտագործելով `this.__proto__`-ն:
 
 ```js run
 let animal = {
@@ -418,11 +418,11 @@ let rabbit = {
 rabbit.eat(); // Rabbit eats.
 ```
 
-At the line `(*)` we take `eat` from the prototype (`animal`) and call it in the context of the current object. Please note that `.call(this)` is important here, because a simple `this.__proto__.eat()` would execute parent `eat` in the context of the prototype, not the current object.
+`(*)` տողում մենք վերցնում ենք `eat`-ը նախատիպից (`animal`) և այն կանչում ենք ընթացիկ օբյեկտի համատեքստում: Նկատի ունեցեք, որ `.call(this)`-ը կարևոր է այստեղ, քանի որ պարզ `this.__proto__.eat()`-ը կգործարկի ծնողի `eat`-ը նախատիպի համատեքստում, այլ ոչ թե ընթացիկ օբյեկտի:
 
-And in the code above it actually works as intended: we have the correct `alert`.
+Եվ վերը նշված կոդում այն իրականում աշխատում է այնպես, ինչպես նախատեսված է. մենք ունենք ճշգրիտ `alert`:
 
-Now let's add one more object to the chain. We'll see how things break:
+Հիմա շղթային ավելացնենք ևս մեկ օբյեկտ։ Մենք կտեսնենք, թե ինչպես է ամեն ինչ կոտրվում.
 
 ```js run
 let animal = {
@@ -453,39 +453,39 @@ longEar.eat(); // Error: Maximum call stack size exceeded
 */!*
 ```
 
-The code doesn't work anymore! We can see the error trying to call `longEar.eat()`.
+Կոդն այլևս չի աշխատում: Մենք կարող ենք տեսնել սխալ, երբ փորձենք կանչել `longEar.eat()`-ը:
 
-It may be not that obvious, but if we trace `longEar.eat()` call, then we can see why. In both lines `(*)` and `(**)` the value of `this` is the current object (`longEar`). That's essential: all object methods get the current object as `this`, not a prototype or something.
+Հավանաբար դա այնքան էլ ակնհայտ չէ, բայց եթե մենք հետևենք `longEar.eat()` կանչին, ապա մենք կարող ենք նկատել, թե ինչու: Երկու տողերում էլ՝ `(*)` և `(**)`, `this`-ի արժեքը ընթացիկ օբյեկտն է (`longEar`): Դա կարևոր է. օբյեկտների բոլոր մեթոդները ստանում են ընթացիկ օբյեկտը որպես `this`, այլ ոչ թե նախատիպ կամ մեկ այլ բան:
 
-So, in both lines `(*)` and `(**)` the value of `this.__proto__` is exactly the same: `rabbit`. They both call `rabbit.eat` without going up the chain in the endless loop.
+Այսպիսով, `(*)` և `(**)` տողերում էլ `this.__proto__`-ի արժեքը նույնն է՝ `rabbit`: Նրանք երկուսն էլ կանչում են `rabbit.eat`-ը՝ չբարձրանալով շղթան անվերջ ցիկլով:
 
-Here's the picture of what happens:
+Ահա պատկերը, թե ինչ է տեղի ունենում.
 
 ![](this-super-loop.svg)
 
-1. Inside `longEar.eat()`, the line `(**)` calls `rabbit.eat` providing it with `this=longEar`.
+1. Inside `longEar.eat()`, the line `(**)` calls `rabbit.eat` providing it with `this=longEar`. `longEar.eat()`-ի ներսում `(**)` տողը կանչում է `rabbit.eat`-ին՝ տրամադրելով `this=longEar`-ը:
     ```js
-    // inside longEar.eat() we have this = longEar
+    // longEar.eat()-ի ներսում մենք ունենք՝ this = longEar
     this.__proto__.eat.call(this) // (**)
-    // becomes
+    // ստացվում է
     longEar.__proto__.eat.call(this)
-    // that is
+    // դա նույնն է, ինչ
     rabbit.eat.call(this);
     ```
-2. Then in the line `(*)` of `rabbit.eat`, we'd like to pass the call even higher in the chain, but `this=longEar`, so `this.__proto__.eat` is again `rabbit.eat`!
+2. Այնուհետև `rabbit.eat`-ի `(*)` տողում մեզ անհրաժեշտ էր կանչը փոխանցել շղթայով ավելի բարձր, բայց `this=longEar`, այնպես որ `this.__proto__.eat`-ը կրկին `rabbit.eat` է։
 
     ```js
-    // inside rabbit.eat() we also have this = longEar
+    // rabbit.eat()-ի ներսում մենք նույնպես ունենք՝ this = longEar
     this.__proto__.eat.call(this) // (*)
-    // becomes
+    // ստացվում է
     longEar.__proto__.eat.call(this)
-    // or (again)
+    // կամ (կրկին)
     rabbit.eat.call(this);
     ```
 
-3. ...So `rabbit.eat` calls itself in the endless loop, because it can't ascend any further.
+3. ...Այսպիսով, `rabbit.eat`-ն իրեն կանչում է անվերջ ցիկլում, քանի որ այն չի կարող ավելի բարձրանալ:
 
-The problem can't be solved by using `this` alone.
+Խնդիրը չի կարող լուծվել միայն `this` օգտագործելով:
 
 ### `[[HomeObject]]`
 
