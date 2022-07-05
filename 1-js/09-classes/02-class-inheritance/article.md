@@ -1,13 +1,13 @@
 
-# Class inheritance
+# Class-ի ժառանգում
 
-Class inheritance is a way for one class to extend another class.
+Class-ի ժառանգումը միջոց է, երբ մի class-ն ընդլայնվում է մեկ այլ class-ից:
 
-So we can create new functionality on top of the existing.
+Այդպես, գոյություն ունեցող class-ի հիման վրա մենք կարող ենք ստեղծել նոր ֆունկցիոնալ:
 
-## The "extends" keyword
+## «Extends» հիմնաբառը
 
-Let's say we have class `Animal`:
+Ենթադրենք, մենք ունենք `Animal` class.
 
 ```js
 class Animal {
@@ -28,17 +28,17 @@ class Animal {
 let animal = new Animal("My animal");
 ```
 
-Here's how we can represent `animal` object and `Animal` class graphically:
+Ահա թե ինչպես կարող ենք գրաֆիկորեն ներկայացնել `animal` օբյեկտը և `Animal` class-ը.
 
 ![](rabbit-animal-independent-animal.svg)
 
-...And we would like to create another `class Rabbit`.
+...Եվ մեզ անհրաժեշտ է ստեղծել ևս մեկը՝ `class Rabbit`:
 
-As rabbits are animals, `Rabbit` class should be based on `Animal`, have access to animal methods, so that rabbits can do what "generic" animals can do.
+Քանի որ ճագարները կենդանիներ են, ապա `Rabbit` class-ը պետք է հիմնված լինի `Animal`-ի վրա, հասանելիություն ունենա կենդանիների մեթոդներին, որպեսզի ճագարները կարողանան անել այն, ինչ կարող են անել «ընդհանուր» կենդանիները:
 
-The syntax to extend another class is: `class Child extends Parent`.
+Մեկ այլ class-ից ընդլայնվելու շարահյուսությունը հետևյալն է. `class Child extends Parent`:
 
-Let's create `class Rabbit` that inherits from `Animal`:
+Եկեք ստեղծենք `class Rabbit`, որը ժառանգում է `Animal`-ից.
 
 ```js
 *!*
@@ -55,23 +55,23 @@ rabbit.run(5); // White Rabbit runs with speed 5.
 rabbit.hide(); // White Rabbit hides!
 ```
 
-Object of `Rabbit` class have access both to `Rabbit` methods, such as `rabbit.hide()`, and also to `Animal` methods, such as `rabbit.run()`.
+`Rabbit` class-ի օբյեկտը հասանելիություն ունի ինչպես `Rabbit`-ի մեթոդներին, օրինակ՝ `rabbit.hide()`, այնպես էլ `Animal`-ի մեթոդներին, օրինակ՝ `rabbit.run()`:
 
-Internally, `extends` keyword works using the good old prototype mechanics. It sets `Rabbit.prototype.[[Prototype]]` to `Animal.prototype`. So, if a method is not found in `Rabbit.prototype`, JavaScript takes it from `Animal.prototype`.
+Ներքին առումով, `extends` հիմնաբառը աշխատում է հին ու բարի նախատիպի մեխանիկայով: Այն `Rabbit.prototype.[[Prototype]]`-ը սահմանում է `Animal.prototype`: Այսպիսով, եթե մեթոդը չի գտնվել `Rabbit.prototype`-ում, JavaScript-ը վերցնում է այն `Animal.prototype`-ից:
 
 ![](animal-rabbit-extends.svg)
 
-For instance, to find `rabbit.run` method, the engine checks (bottom-up on the picture):
-1. The `rabbit` object (has no `run`).
-2. Its prototype, that is `Rabbit.prototype` (has `hide`, but not `run`).
-3. Its prototype, that is (due to `extends`) `Animal.prototype`, that finally has the `run` method.
+Օրինակ՝ `rabbit.run` մեթոդը գտնելու համար շարժիչը ստուգում է (նկարում՝ ներքևից վերև).
+1. `rabbit` օբյեկտը (չունի `run`)։
+2. Դրա նախատիպը, որը `Rabbit.prototype`-ն է (ունի `hide`, բայց չունի `run`)։
+3. Դրա նախատիպը, որը (շնորհիվ `extends`-ի) `Animal.prototype`-ն է, վերջապես ունի `run` մեթոդ:
 
-As we can recall from the chapter <info:native-prototypes>, JavaScript itself uses prototypal inheritance for built-in objects. E.g. `Date.prototype.[[Prototype]]` is `Object.prototype`. That's why dates have access to generic object methods.
+Ինչպես հիշում ենք <info:native-prototypes> գլխից, JavaScript-ն ինքնին օգտագործում է նախատիպային ժառանգություն ներկառուցված օբյեկտների համար: Օրինակ՝ `Date.prototype.[[Prototype]]`-ը `Object.prototype`-ն է: Ահա թե ինչու ամսաթվերն ունեն հասանելիություն ընդհանուր օբյեկտների մեթոդներին:
 
-````smart header="Any expression is allowed after `extends`"
-Class syntax allows to specify not just a class, but any expression after `extends`.
+````smart header="Ցանկացած արտահայտություն թույլատրվում է `extends`-ից հետո"
+Class-ի շարահյուսությունը թույլ է տալիս նշել ոչ միայն class-ը, այլ ցանկացած արտահայտություն `extends`-ից հետո:
 
-For instance, a function call that generates the parent class:
+Օրինակ՝ ֆունկցիայի կանչը, որը ստեղծում է ծնող class-ը.
 
 ```js run
 function f(phrase) {
@@ -86,9 +86,9 @@ class User extends f("Hello") {}
 
 new User().sayHi(); // Hello
 ```
-Here `class User` inherits from the result of `f("Hello")`.
+Այստեղ `class User`-ը ժառանգում է `f("Hello")`-ի վերադարձրած արդյունքից:
 
-That may be useful for advanced programming patterns when we use functions to generate classes depending on many conditions and can inherit from them.
+Դա կարող է օգտակար լինել ծրագրավորման առաջադեմ օրինաչափությունների համար, երբ մենք օգտագործում ենք ֆունկցիաներ՝ բազմաթիվ պայմաններից կախված class-ներ ստեղծելու և դրանցից ժառանգելու համար:
 ````
 
 ## Overriding a method
