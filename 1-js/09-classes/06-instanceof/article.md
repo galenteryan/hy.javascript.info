@@ -1,31 +1,31 @@
-# Class checking: "instanceof"
+# Class-ի ստուգում․ «instanceof»
 
-The `instanceof` operator allows to check whether an object belongs to a certain class. It also takes inheritance into account.
+`instanceof` օպերատորը թույլ է տալիս ստուգել՝ արդյո՞ք օբյեկտը պատկանում է որևէ class-ին: Այն նաև հաշվի է առնում ժառանգությունը:
 
-Such a check may be necessary in many cases. For example, it can be used for building a *polymorphic* function, the one that treats arguments differently depending on their type.
+Նման ստուգումը շատ դեպքերում կարող է անհրաժեշտ լինել: Օրինակ՝ այն կարող է օգտագործվել *պոլիմորֆ* (polymorphic) ֆունկցիա կառուցելու համար, որը տարբեր ձևերով է վերաբերվում արգումենտներին՝ կախված դրանց տեսակից:
 
-## The instanceof operator [#ref-instanceof]
+## Instanceof օպերատորը [#ref-instanceof]
 
-The syntax is:
+Շարահյուսությունը հետևյալն է.
 ```js
 obj instanceof Class
 ```
 
-It returns `true` if `obj` belongs to the `Class` or a class inheriting from it.
+Այն վերադարձնում է `true`, եթե `obj`-ն պատկանում է `Class`-ին կամ նրանից ժառանգած class-ին:
 
-For instance:
+Օրինակ՝
 
 ```js run
 class Rabbit {}
 let rabbit = new Rabbit();
 
-// is it an object of Rabbit class?
+// արդյո՞ք դա Rabbit class-ի օբյեկտ է
 *!*
 alert( rabbit instanceof Rabbit ); // true
 */!*
 ```
 
-It also works with constructor functions:
+Այն նաև աշխատում է կոնստրուկտոր ֆունկցիաների հետ.
 
 ```js run
 *!*
@@ -36,7 +36,7 @@ function Rabbit() {}
 alert( new Rabbit() instanceof Rabbit ); // true
 ```
 
-...And with built-in classes like `Array`:
+...Նաև ներկառուցված class-ների հետ, ինչպիսին է `Array`-ը․
 
 ```js run
 let arr = [1, 2, 3];
@@ -44,19 +44,19 @@ alert( arr instanceof Array ); // true
 alert( arr instanceof Object ); // true
 ```
 
-Please note that `arr` also belongs to the `Object` class. That's because `Array` prototypically inherits from `Object`.
+Նկատի ունեցեք, որ `arr`-ը նույնպես պատկանում է `Object` class-ին: Դա պայմանավորված է նրանով, որ `Array`-ը նախատիպով ժառանգում է `Object`-ից:
 
-Normally, `instanceof` examines the prototype chain for the check. We can also set a custom logic in the static method `Symbol.hasInstance`.
+Սովորաբար, ստուգելու համար `instanceof`-ն ուսումնասիրում է նախատիպային շղթան: Մենք կարող ենք նաև հատուկ տրամաբանություն սահմանել `Symbol.hasInstance` ստատիկ մեթոդում:
 
-The algorithm of `obj instanceof Class` works roughly as follows:
+`obj instanceof Class`-ի ալգորիթմն աշխատում է մոտավորապես հետևյալ կերպ.
 
-1. If there's a static method `Symbol.hasInstance`, then just call it: `Class[Symbol.hasInstance](obj)`. It should return either `true` or `false`, and we're done. That's how we can customize the behavior of `instanceof`.
+1. Եթե կա `Symbol.hasInstance` ստատիկ մեթոդ, ապա պարզապես կանչել այն՝ `Class[Symbol.hasInstance](obj)`: Այն պետք է վերադարձնի կամ `true` կամ `false`, վերջ: Ահա, թե ինչպես կարող ենք կարգավորել `instanceof`-ի պահելաձևը:
 
-    For example:
+    Օրինակ՝
 
     ```js run
-    // setup instanceOf check that assumes that
-    // anything with canEat property is an animal
+    // ստեղծենք instanceOf-ի օրինակ, որը ենթադրում է, որ
+    // canEat հատկություն ունեցող ցանկացած բան animal է
     class Animal {
       static [Symbol.hasInstance](obj) {
         if (obj.canEat) return true;
@@ -65,7 +65,7 @@ The algorithm of `obj instanceof Class` works roughly as follows:
 
     let obj = { canEat: true };
 
-    alert(obj instanceof Animal); // true: Animal[Symbol.hasInstance](obj) is called
+    alert(obj instanceof Animal); // true՝ Animal[Symbol.hasInstance](obj)-ն է կանչվել
     ```
 
 2. Most classes do not have `Symbol.hasInstance`. In that case, the standard logic is used: `obj instanceOf Class` checks whether `Class.prototype` is equal to one of the prototypes in the `obj` prototype chain.
