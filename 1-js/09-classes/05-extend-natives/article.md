@@ -34,7 +34,6 @@ arr.constructor === PowerArray
 
 Մենք կարող ենք class-ին ավելացնել `Symbol.species` հատուկ ստատիկ գեթթեր: Եթե այն գոյություն ունի, ապա պետք է վերադարձնի այն կոնստրուկտորը, որը JavaScript-ը կօգտագործի ներքին կարգով՝ `map`, `filter` և այլնում նոր կազմավորումներ ստեղծելու համար:
 
-If we'd like built-in methods like `map` or `filter` to return regular arrays, we can return `Array` in `Symbol.species`, like here:
 Եթե մեզ անհրաժեշտ է, որ ներկառուցված մեթոդները, ինչպիսիք են `map`-ը կամ `filter`-ը, վերադարձնեն սովորական զանգվածներ, ապա կարող ենք վերադարձնել `Array`-ը `Symbol.species`-ում, այպես.
 
 ```js run
