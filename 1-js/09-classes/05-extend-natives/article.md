@@ -1,12 +1,12 @@
 
-# Extending built-in classes
+# Ընդլայնում ներկառուցված class-ներից 
 
-Built-in classes like Array, Map and others are extendable also.
+Ներկառուցված class-ները, ինչպիսիք են Array-ը, Map-ը և այլն, նույնպես ընդլայնվող են:
 
-For instance, here `PowerArray` inherits from the native `Array`:
+Օրինակ՝ այստեղ `PowerArray`-ը ժառանգում է հարազատ `Array`-ից.
 
 ```js run
-// add one more method to it (can do more)
+// ավելացնենք ևս մեկ մեթոդ (կարող է անել ավելին)
 class PowerArray extends Array {
   isEmpty() {
     return this.length === 0;
@@ -21,20 +21,21 @@ alert(filteredArr); // 10, 50
 alert(filteredArr.isEmpty()); // false
 ```
 
-Please note a very interesting thing. Built-in methods like `filter`, `map` and others -- return new objects of exactly the inherited type `PowerArray`. Their internal implementation uses the object's `constructor` property for that.
+Նկատի ունեցեք, կա մի շատ հետաքրքիր երևույթ։ Ներկառուցված մեթոդները, ինչպիսիք են `filter`, `map` և այլն, վերադարձնում են `PowerArray`-ից ճիշտ ժառանգված տիպով նոր օբյեկտներ: Դրանց ներքին իրագործումը դրա համար օգտագործում է օբյեկտի `constructor` հատկությունը:
 
-In the example above,
+Վերոնշյալ օրինակում՝
 ```js
 arr.constructor === PowerArray
 ```
 
-When `arr.filter()` is called, it internally creates the new array of results using exactly `arr.constructor`, not basic `Array`. That's actually very cool, because we can keep using `PowerArray` methods further on the result.
+Երբ `arr.filter()`-ը կանչվում է, այն ներքին կարգով ստեղծում է արդյունքների նոր զանգված՝ օգտագործելով հենց `arr.constructor`-ը, ոչ թե հիմնական `Array`-ը: Դա իրականում հրաշալի է, քանի որ արդյունքում մենք կարող ենք շարունակել օգտագործել `PowerArray`-ի մեթոդները:
 
-Even more, we can customize that behavior.
+Ավելին, մենք կարող ենք կարգավորել այս վարքագիծը:
 
-We can add a special static getter `Symbol.species` to the class. If it exists, it should return the constructor that JavaScript will use internally to create new entities in `map`, `filter` and so on.
+Մենք կարող ենք class-ին ավելացնել `Symbol.species` հատուկ ստատիկ գեթթեր: Եթե այն գոյություն ունի, ապա պետք է վերադարձնի այն կոնստրուկտորը, որը JavaScript-ը կօգտագործի ներքին կարգով՝ `map`, `filter` և այլնում նոր կազմավորումներ ստեղծելու համար:
 
 If we'd like built-in methods like `map` or `filter` to return regular arrays, we can return `Array` in `Symbol.species`, like here:
+Եթե մեզ անհրաժեշտ է, որ ներկառուցված մեթոդները, ինչպիսիք են `map`-ը կամ `filter`-ը, վերադարձնեն սովորական զանգվածներ, ապա կարող ենք վերադարձնել `Array`-ը `Symbol.species`-ում, այպես.
 
 ```js run
 class PowerArray extends Array {
@@ -43,7 +44,7 @@ class PowerArray extends Array {
   }
 
 *!*
-  // built-in methods will use this as the constructor
+  // ներկառուցված մեթոդները կօգտագործեն սա որպես կոնստրուկտոր
   static get [Symbol.species]() {
     return Array;
   }
@@ -53,37 +54,37 @@ class PowerArray extends Array {
 let arr = new PowerArray(1, 2, 5, 10, 50);
 alert(arr.isEmpty()); // false
 
-// filter creates new array using arr.constructor[Symbol.species] as constructor
+// filter-ը ստեղծում է նոր զանգված՝ օգտագործելով arr.constructor[Symbol.species]-ը որպես կոնստրուկտոր
 let filteredArr = arr.filter(item => item >= 10);
 
 *!*
-// filteredArr is not PowerArray, but Array
+// filteredArr-ը PowerArray չէ, այլ Array է
 */!*
 alert(filteredArr.isEmpty()); // Error: filteredArr.isEmpty is not a function
 ```
 
-As you can see, now `.filter` returns `Array`. So the extended functionality is not passed any further.
+Ինչպես տեսնում եք, այժմ `.filter`-ը վերադարձնում է `Array`-ը: Այսպիսով, ընդլայնված ֆունկցիոնալն այլևս չի փոխանցվում:
 
-```smart header="Other collections work similarly"
-Other collections, such as `Map` and `Set`, work alike. They also use `Symbol.species`.
+```smart header="Մյուս հավաքածուները նույն կերպ են աշխատում"
+Մյուս հավաքածուները, ինչպիսիք են `Map`-ը և `Set`-ը, աշխատում են նույն կերպ: Նրանք նաև օգտագործում են `Symbol.species`:
 ```
 
-## No static inheritance in built-ins
+## Ներկառուցված class-ներում ստատիկ ժառանգությունը բացակայում է
 
-Built-in objects have their own static methods, for instance `Object.keys`, `Array.isArray` etc.
+Ներկառուցված օբյեկտներն ունեն իրենց սեփական ստատիկ մեթոդները, օրինակ՝ `Object.keys`, `Array.isArray` և այլն․․․
 
-As we already know, native classes extend each other. For instance, `Array` extends `Object`.
+Ինչպես արդեն գիտենք, հարազատ class-ները միմյանց ընդլայնում են։ Օրինակ՝ `Array`-ն ընդլայնում է `Object`-ը:
 
-Normally, when one class extends another, both static and non-static methods are inherited. That was thoroughly explained in the article [](info:static-properties-methods#statics-and-inheritance).
+Սովորաբար, երբ մի class-ը ընդլայնում է մյուսին, և՛ ստատիկ, և՛ ոչ ստատիկ մեթոդները ժառանգվում են: Դա մանրամասնորեն բացատրվում է այս հոդվածում՝ [](info:static-properties-methods#statics-and-inheritance)։
 
-But built-in classes are an exception. They don't inherit statics from each other.
+Բայց ներկառուցված class-ները բացառություն են: Նրանք միմյանցից ստատիկներ չեն ժառանգում:
 
-For example, both `Array` and `Date` inherit from `Object`, so their instances have methods from `Object.prototype`. But `Array.[[Prototype]]` does not reference `Object`, so there's no, for instance, `Array.keys()` (or `Date.keys()`) static method.
+Օրինակ՝ և `Array`-ը, և `Date`-ը ժառանգում են `Object`-ից, այնպես որ դրանց նմուշներն ունեն մեթոդներ `Object.prototype`-ից: Բայց `Array.[[Prototype]]`-ը հղում չի անում `Object`-ին, ուստի, օրինակ՝ `Array.keys()`-ում (կամ `Date.keys()`-ում) ստատիկ մեթոդ չկա:
 
-Here's the picture structure for `Date` and `Object`:
+Ահա `Date`-ի և `Object`-ի պատկերավոր կառուցվածքը.
 
 ![](object-date-inheritance.svg)
 
-As you can see, there's no link between `Date` and `Object`. They are independent, only `Date.prototype` inherits from `Object.prototype`.
+Ինչպես տեսնում եք, `Date`-ի և `Object`-ի միջև կապ չկա: Նրանք անկախ են, միայն `Date.prototype`-ն է ժառանգում `Object.prototype`-ից:
 
-That's an important difference of inheritance between built-in objects compared to what we get with `extends`.
+Սա ներկառուցված օբյեկտների միջև ժառանգության կարևոր տարբերություն է այն բանի համեմատ, ինչ մենք ստանում ենք `extends`-ով:
