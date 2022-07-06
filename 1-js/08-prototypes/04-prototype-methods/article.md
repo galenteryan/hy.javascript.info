@@ -176,9 +176,9 @@ alert(Object.keys(chineseDictionary)); // hello,bye
 
 Նախատիպը կարգավորելու և դրանց ուղղակիորեն մուտք գործելու ժամանակակից մեթոդներն են.
 
-- [Object.create(proto, [descriptors])](mdn:js/Object/create) -- ստեղծում է դատարկ օբյեկտ տրված `proto`-ով որպես `[[Prototype]]` (կարող է լինել `null`) և կամընտիր հատկությունների նկարագրիչներ:
-- [Object.getPrototypeOf(obj)](mdn:js/Object/getPrototypeOf) -- վերադարձնում է `obj`-ի `[[Prototype]]`-ը (նույնն է, ինչ `__proto__`-ի գեթթերը):
-- [Object.setPrototypeOf(obj, proto)](mdn:js/Object/setPrototypeOf) -- `obj`-ի `[[Prototype]]`-ը դնում է `proto` (նույնը, ինչ `proto`-ի սեթթերը):
+- [Object.create(proto, [descriptors])](mdn:js/Object/create)՝ ստեղծում է դատարկ օբյեկտ տրված `proto`-ով որպես `[[Prototype]]` (կարող է լինել `null`) և կամընտիր հատկությունների նկարագրիչներ:
+- [Object.getPrototypeOf(obj)](mdn:js/Object/getPrototypeOf)՝ վերադարձնում է `obj`-ի `[[Prototype]]`-ը (նույնն է, ինչ `__proto__`-ի գեթթերը):
+- [Object.setPrototypeOf(obj, proto)](mdn:js/Object/setPrototypeOf)՝ `obj`-ի `[[Prototype]]`-ը դնում է `proto` (նույնը, ինչ `proto`-ի սեթթերը):
 
 Ներկառուցված `__proto__`-ի գեթթերը/սեթթերը անվտանգ չէ, եթե մենք ցանկանում ենք օբյեկտի մեջ տեղադրել օգտվողի կողմից ստեղծված բանալիներ: Պարզապես այն պատճառով, որ օգտատերը կարող է մուտքագրել `«__proto__»`՝ որպես բանալի, և սխալ կլինի, հուսանք՝ թեթև, բայց ընդհանուր առմամբ անկանխատեսելի հետևանքներով:
 
