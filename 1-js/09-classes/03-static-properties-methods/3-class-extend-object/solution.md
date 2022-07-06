@@ -1,14 +1,14 @@
-First, let's see why the latter code doesn't work.
+Նախ, եկեք տեսնենք, թե ինչու վերջին կոդը չի աշխատում:
 
-The reason becomes obvious if we try to run it. An inheriting class constructor must call `super()`. Otherwise `"this"` won't be "defined".
+Պատճառն ակնհայտ է դառնում, եթե փորձենք գործարկել այն։ Ժառանգող class-ի կոնստրուկտորը պետք է կանչի `super()`-ին: Հակառակ դեպքում `«this»`-ը չի «սահմանվի»:
 
-So here's the fix:
+Այսպիսով, ահա ուղղումը.
 
 ```js run
 class Rabbit extends Object {
   constructor(name) {
 *!*
-    super(); // need to call the parent constructor when inheriting
+    super(); // ժառանգելիս անհրաժեշտ է կանչել ծնող կոնստրուկտորը
 */!*
     this.name = name;
   }
@@ -19,16 +19,16 @@ let rabbit = new Rabbit("Rab");
 alert( rabbit.hasOwnProperty('name') ); // true
 ```
 
-But that's not all yet.
+Բայց դա դեռ ամենը չէ։
 
-Even after the fix, there's still an important difference between `"class Rabbit extends Object"` and `class Rabbit`.
+Նույնիսկ ուղղումից հետո, դեռևս կարևոր տարբերություն կա `class Rabbit extends Object`-ի և `class Rabbit`-ի միջև:
 
-As we know, the "extends" syntax sets up two prototypes:
+Ինչպես գիտենք, «extends» շարահյուսությունը ստեղծում է երկու նախատիպ.
 
-1. Between `"prototype"` of the constructor functions (for methods).
-2. Between the constructor functions themselves (for static methods).
+1. Կոնստրուկտոր ֆունկցիաների `«prototype»`-երի միջև (մեթոդների համար):
+2. Անմիւապես կոնստրուկտոր ֆունկցիաների միջև (ստատիկ մեթոդների համար):
 
-In the case of `class Rabbit extends Object` it means:
+`class Rabbit extends Object`-ի դեպքում դա նշանակում է.
 
 ```js run
 class Rabbit extends Object {}
@@ -38,44 +38,45 @@ alert( Rabbit.__proto__ === Object ); // (2) true
 ```
 
 So `Rabbit` now provides access to the static methods of `Object` via `Rabbit`, like this:
+Այսպիսով, `Rabbit`-ն այժմ `Rabbit`-ի միջոցով ապահովում է հասանելիություն `Object`-ի ստատիկ մեթոդներին, այսպես.
 
 ```js run
 class Rabbit extends Object {}
 
 *!*
-// normally we call Object.getOwnPropertyNames
+// սովորաբար մենք կանչում ենք Object.getOwnPropertyNames
 alert ( Rabbit.getOwnPropertyNames({a: 1, b: 2})); // a,b
 */!*
 ```
 
-But if we don't have `extends Object`, then `Rabbit.__proto__` is not set to `Object`.
+Բայց եթե մենք չունենք `extends Object`, ապա `Rabbit.__proto__`-ն սահմանված չէ որպես `Object`:
 
-Here's the demo:
+Ահա ցուցադրումը.
 
 ```js run
 class Rabbit {}
 
 alert( Rabbit.prototype.__proto__ === Object.prototype ); // (1) true
 alert( Rabbit.__proto__ === Object ); // (2) false (!)
-alert( Rabbit.__proto__ === Function.prototype ); // as any function by default
+alert( Rabbit.__proto__ === Function.prototype ); // ինչպես ցանկացած ֆունկցիա կանխադրված կերպով
 
 *!*
-// error, no such function in Rabbit
+// սխալ, Rabbit-ում նման ֆունկցիա չկա
 alert ( Rabbit.getOwnPropertyNames({a: 1, b: 2})); // Error
 */!*
 ```
 
-So `Rabbit` doesn't provide access to static methods of `Object` in that case.
+Այսպիսով, `Rabbit`-ն այդ դեպքում հասանելիություն չի ապահովում `Object`-ի ստատիկ մեթոդներին:
 
-By the way, `Function.prototype` also has "generic" function methods, like `call`, `bind` etc. They are ultimately available in both cases, because for the built-in `Object` constructor, `Object.__proto__ === Function.prototype`.
+Ի դեպ, `Function.prototype`-ն ունի նաև «ընդհանուր» ֆունկցիայի մեթոդներ, ինչպիսիք են՝ `call`, `bind` և այլն․․․ Դրանք ի վերջո երկու դեպքում էլ հասանելի են, քանի որ ներկառուցված `Object`-ի կոնստրուկտորի համար՝ `Object.__proto__ === Function.prototype`:
 
-Here's the picture:
+Ահա պատկերը.
 
 ![](rabbit-extends-object.svg)
 
-So, to put it short, there are two differences:
+Այսպիսով, կարճ ասած, երկու տարբերություն կա.
 
 | class Rabbit | class Rabbit extends Object  |
 |--------------|------------------------------|
-| --             | needs to call `super()` in constructor |
+| --             | անհրաժեշտ է կոնստրուկտորում կանչել `super()`-ին |
 | `Rabbit.__proto__ === Function.prototype` | `Rabbit.__proto__ === Object` |
