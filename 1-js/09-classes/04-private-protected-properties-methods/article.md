@@ -154,7 +154,6 @@ coffeeMachine.power = 25; // Error (no setter)
 ````smart header="Getter/setter ֆունկցիաներ"
 Այստեղ մենք օգտագործեցինք getter/setter շարահյուսությունը։
 
-But most of the time `get.../set...` functions are preferred, like this:
 Բայց շատ ժամանակ գերադասելի են `get.../set...` ֆունկցիաներ, այսպես.
 
 ```js
@@ -286,38 +285,38 @@ class User {
 
 ## Ամփոփում
 
-In terms of OOP, delimiting of the internal interface from the external one is called [encapsulation](https://en.wikipedia.org/wiki/Encapsulation_(computer_programming)).
+OOP-ի տերմիններով տարբերությունը ներքին ինտերֆեյսի և արտաքին ինտերֆեյսի միջև կոչվում է [ինկապսուլյացիա](https://en.wikipedia.org/wiki/Encapsulation_(computer_programming)).
 
-It gives the following benefits:
+Այն տալիս է հետևյալ առավելությունները.
 
-Protection for users, so that they don't shoot themselves in the foot
-: Imagine, there's a team of developers using a coffee machine. It was made by the "Best CoffeeMachine" company, and works fine, but a protective cover was removed. So the internal interface is exposed.
+Պաշտպանություն օգտատերերի համար, որպեսզի նրանք «իրենց ոտքին չկրակեն»
+: Պատկերացրեք, կա սուրճի մեքենա օգտագործող ինժեներների թիմ: Պատրաստված է «Best CoffeeMachine» ընկերության կողմից, լավ է աշխատում, բայց պաշտպանիչ ծածկույթը հանվել է։ Այսպիսով, ներքին ինտերֆեյսը բաց է:
 
-    All developers are civilized -- they use the coffee machine as intended. But one of them, John, decided that he's the smartest one, and made some tweaks in the coffee machine internals. So the coffee machine failed two days later.
+    Բոլոր ինժեներները քաղաքակիրթ են. նրանք օգտագործում են սուրճի մեքենան այնպես, ինչպես նախատեսված է: Բայց նրանցից մեկը՝ Ջոնը, որոշեց, որ ինքն ամենախելացին է և որոշ փոփոխություններ արեց սուրճի մեքենայի ներքին մասերում: Այսպիսով, սուրճի մեքենան երկու օր անց խափանվեց:
 
-    That's surely not John's fault, but rather the person who removed the protective cover and let John do his manipulations.
+    Դա, անշուշտ, Ջոնի մեղքը չէ, այլ այն անձի, ով հանել էր պաշտպանիչ ծածկույթը և այդպիսով թույլ էր տվել Ջոնին անել իր մանիպուլյացիաները:
 
-    The same in programming. If a user of a class will change things not intended to be changed from the outside -- the consequences are unpredictable.
+    Նույնը ծրագրավորման մեջ։ Եթե class-ի օգտատերը փոխի ինչ-որ բաներ, որոնք նախատեսված չեն դրսից փոխելու համար, ապա հետևանքները անկանխատեսելի են:
 
-Supportable
-: The situation in programming is more complex than with a real-life coffee machine, because we don't just buy it once. The code constantly undergoes development and improvement.
+Սպասարկվող
+: Իրավիճակը ծրագրավորման մեջ ավելի բարդ է, քան իրական կյանքի սուրճի մեքենայի դեպքում, քանի որ մենք այն միայն մեկ անգամ չենք գնում: Կոդն անընդհատ մշակման և կատարելագործման է ենթարկվում։
 
-    **If we strictly delimit the internal interface, then the developer of the class can freely change its internal properties and methods, even without informing the users.**
+    **Եթե մենք խստորեն սահմանազատում ենք ներքին ինտերֆեյսը, ապա class-ի մշակողը կարող է ազատորեն փոխել դրա ներքին հատկություններն ու մեթոդները, նույնիսկ առանց օգտատերերին տեղեկացնելու։**
 
-    If you're a developer of such class, it's great to know that private methods can be safely renamed, their parameters can be changed, and even removed, because no external code depends on them.
+    Եթե դուք նման class-ի մշակող եք, կարևոր է իմանալ, որ մասնավոր մեթոդները կարող են ապահով կերպով վերանվանվել, դրանց պարամետրերը կարող են փոփոխվել և նույնիսկ հեռացվել, քանի որ դրանցից ոչ մի արտաքին կոդ կախված չէ:
 
-    For users, when a new version comes out, it may be a total overhaul internally, but still simple to upgrade if the external interface is the same.
+    Օգտատերերի համար, երբ նոր տարբերակ է թողարկվում, դա կարող է լինել ներքին ամբողջական վերանորոգում, բայց դեռ հեշտ կլինի թարմացնել, եթե արտաքին ինտերֆեյսը նույնն է:
 
-Hiding complexity
-: People adore using things that are simple. At least from outside. What's inside is a different thing.
+Թաքցնելով բարդությունը
+: Մարդիկ սիրում են օգտագործել պարզ բաներ: Գոնե դրսից։ Այն, ինչ ներսում է, այլ բան է:
 
-    Programmers are not an exception.
+    Ծրագրավորողները բացառություն չեն:
 
-    **It's always convenient when implementation details are hidden, and a simple, well-documented external interface is available.**
+    **Միշտ հարմար է, երբ իրականացման մանրամասները թաքնված են, և հասանելի է պարզ, լավ փաստագրված արտաքին ինտերֆեյս:**
 
-To hide an internal interface we use either protected or private properties:
+Ներքին ինտերֆեյսը թաքցնելու համար մենք օգտագործում ենք պաշտպանված կամ մասնավոր հատկություններ.
 
-- Protected fields start with `_`. That's a well-known convention, not enforced at the language level. Programmers should only access a field starting with `_` from its class and classes inheriting from it.
-- Private fields start with `#`. JavaScript makes sure we can only access those from inside the class.
+- Պաշտպանված դաշտերը սկսվում են `_`-ով: Դա հայտնի կոնվենցիա է, որը չի կիրառվում լեզվի մակարդակով: Ծրագրավորողները պետք է հասանելիություն ունենան միայն `_`-ով սկսվող դաշտին իր class-ից և դրանից ժառանգվող class-ներից:
+- Մասնավոր դաշտերը սկսվում են `#`-ով: JavaScript-ը վստահեցնում է, որ մենք կարող ենք հասանելիություն ունենալ դրանց միայն class-ի ներսից:
 
-Right now, private fields are not well-supported among browsers, but can be polyfilled.
+Այս պահին մասնավոր դաշտերը լավ չեն սպասարկվում բրաուզերների կողմից, բայց կարող են պոլիֆիլացվել:
