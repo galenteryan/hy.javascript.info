@@ -85,7 +85,7 @@ coffeeMachine.waterAmount = 200;
 
 Եկեք փոխենք `waterAmount` հատկությունը պաշտպանվածի, որպեսզի ավելի շատ վերահսկողություն ունենանք դրա նկատմամբ: Օրինակ՝ մենք չենք ուզում, որ որևէ մեկը այն սահմանի զրոյից ցածր:
 
-**Պաշտպանված հատկությունները սովորաբար նշվում են `_` ընդգծված նախածանցով։**
+**Պաշտպանված (protected) հատկությունները սովորաբար նշվում են `_` ընդգծված նախածանցով։**
 
 Դա չի կիրառվում լեզվի մակարդակով, բայց ծրագրավորողների միջև հայտնի կոնվենցիա կա, որ նման հատկություններն ու մեթոդները չպետք է հասանելի լինեն դրսից:
 
@@ -121,13 +121,13 @@ coffeeMachine.waterAmount = -10; // _waterAmount կլինի 0, ոչ՝ -10
 
 Այժմ հասանելիությունը վերահսկվում է, ուստի ջրի տարողությունը զրոյից ցածր սահմանելն անհնար է դառնում:
 
-## Read-only "power"
+## Միայն-ընթեռնելի (read-only) «հզորություն»
 
-For `power` property, let's make it read-only. It sometimes happens that a property must be set at creation time only, and then never modified.
+Եկեք `power` հատկությունը դարձնենք միայն-ընթեռնելի: Երբեմն պատահում է, որ հատկությունը պետք է սահմանվի միայն ստեղծման պահին, այնուհետև երբեք չփոփոխվի:
 
-That's exactly the case for a coffee machine: power never changes.
+Դա հենց այդպես է սուրճի մեքենայի դեպքում. հզորությունը երբեք չի փոխվում:
 
-To do so, we only need to make getter, but not the setter:
+Դա անելու համար մեզ միայն անհրաժեշտ է ստեղծել գեթթեր, բայց ոչ սեթթեր.
 
 ```js run
 class CoffeeMachine {
@@ -143,18 +143,19 @@ class CoffeeMachine {
 
 }
 
-// create the coffee machine
+// ստեղծել սուրճի մեքենան
 let coffeeMachine = new CoffeeMachine(100);
 
-alert(`Power is: ${coffeeMachine.power}W`); // Power is: 100W
+alert(`Հզորությունը՝ ${coffeeMachine.power}W`); // Հզորությունը՝ 100W
 
 coffeeMachine.power = 25; // Error (no setter)
 ```
 
-````smart header="Getter/setter functions"
-Here we used getter/setter syntax.
+````smart header="Getter/setter ֆունկցիաներ"
+Այստեղ մենք օգտագործեցինք getter/setter շարահյուսությունը։
 
 But most of the time `get.../set...` functions are preferred, like this:
+Բայց շատ ժամանակ գերադասելի են `get.../set...` ֆունկցիաներ, այսպես.
 
 ```js
 class CoffeeMachine {
@@ -173,26 +174,26 @@ class CoffeeMachine {
 new CoffeeMachine().setWaterAmount(100);
 ```
 
-That looks a bit longer, but functions are more flexible. They can accept multiple arguments (even if we don't need them right now).
+Մի փոքր ավելի երկար է թվում, բայց ֆունկցիաներն ավելի ճկուն են: Նրանք կարող են ընդունել բազմաթիվ արգումենտներ (նույնիսկ, եթե դրանք մեզ հիմա պետք չեն):
 
-On the other hand, get/set syntax is shorter, so ultimately there's no strict rule, it's up to you to decide.
+Մյուս կողմից, get/set շարահյուսությունն ավելի կարճ է, ուստի, ի վերջո, խիստ կանոն չկա, որոշումը ձերն է:
 ````
 
-```smart header="Protected fields are inherited"
-If we inherit `class MegaMachine extends CoffeeMachine`, then nothing prevents us from accessing `this._waterAmount` or `this._power` from the methods of the new class.
+```smart header="Պաշտպանված դաշտերը ժառանգվում են"
+Եթե մենք ժառանգում ենք՝ `class MegaMachine extends CoffeeMachine`, ապա ոչինչ չի խանգարում մեզ մուտք գործել `this._waterAmount` կամ `this._power` նոր class-ի մեթոդներից:
 
-So protected fields are naturally inheritable. Unlike private ones that we'll see below.
+Այսպիսով, պաշտպանված դաշտերը բնականաբար ժառանգվում են, ի տարբերություն մասնավորների, որոնք կտեսնենք ստորև։
 ```
 
-## Private "#waterLimit"
+## Մասնավոր «#waterLimit»
 
 [recent browser=none]
 
-There's a finished JavaScript proposal, almost in the standard, that provides language-level support for private properties and methods.
+Կա ավարտված JavaScript առաջարկ, գրեթե ստանդարտում, որն ապահովում է լեզվի մակարդակով աջակցություն մասնավոր հատկությունների և մեթոդների համար:
 
-Privates should start with `#`. They are only accessible from inside the class.
+Մասնավորները պետք է սկսվեն `#`-ով: Դրանք հասանելի են միայն class-ի ներսում:
 
-For instance, here's a private `#waterLimit` property and the water-checking private method `#fixWaterAmount`:
+Օրինակ՝ ահա մասնավոր `#waterLimit` հատկությունը և ջրի ստուգման մասնավոր մեթոդը՝ `#fixWaterAmount`․
 
 ```js run
 class CoffeeMachine {
@@ -216,17 +217,17 @@ class CoffeeMachine {
 let coffeeMachine = new CoffeeMachine();
 
 *!*
-// can't access privates from outside of the class
+// class-ից դուրս հասանելիություն չկա դեպի մասնավորներ 
 coffeeMachine.#fixWaterAmount(123); // Error
 coffeeMachine.#waterLimit = 1000; // Error
 */!*
 ```
 
-On the language level, `#` is a special sign that the field is private. We can't access it from outside or from inheriting classes.
+Լեզվի մակարդակում `#`-ը հատուկ նիշ է, որը մասնավոր է դարձնում դաշտը: Մենք չենք կարող հասանելիություն ունենալ դրան դրսից կամ ժառանգական class-ներից:
 
-Private fields do not conflict with public ones. We can have both private `#waterAmount` and public `waterAmount` fields at the same time.
+Մասնավոր դաշտերը չեն հակասում հանրայինի հետ։ Մենք կարող ենք միաժամանակ ունենալ և՛ մասնավոր `#waterAmount`, և՛ հանրային `waterAmount` դաշտեր:
 
-For instance, let's make `waterAmount` an accessor for `#waterAmount`:
+Օրինակ՝ եկեք `waterAmount`-ը դարձնենք `#waterAmount`-ի մուտքային (accessor).
 
 ```js run
 class CoffeeMachine {
@@ -249,9 +250,9 @@ machine.waterAmount = 100;
 alert(machine.#waterAmount); // Error
 ```
 
-Unlike protected ones, private fields are enforced by the language itself. That's a good thing.
+Ի տարբերություն պաշտպանվածների, մասնավոր դաշտերը պարտադրվում են հենց լեզվով: Դա լավ բան է:
 
-But if we inherit from `CoffeeMachine`, then we'll have no direct access to `#waterAmount`. We'll need to rely on `waterAmount` getter/setter:
+Բայց, եթե մենք ժառանգենք `CoffeeMachine`-ից, ապա մենք անմիջական մուտք չենք ունենա `#waterAmount`-ին: Մենք պետք է ապավինենք `waterAmount` գեթթերին/սեթթերին.
 
 ```js
 class MegaCoffeeMachine extends CoffeeMachine {
@@ -263,12 +264,12 @@ class MegaCoffeeMachine extends CoffeeMachine {
 }
 ```
 
-In many scenarios such limitation is too severe. If we extend a `CoffeeMachine`, we may have legitimate reasons to access its internals. That's why protected fields are used more often, even though they are not supported by the language syntax.
+Շատ սցենարներում նման սահմանափակումը չափազանց խիստ է: Եթե մենք ընդլայնենք `CoffeeMachine`-ը, մենք կարող ենք օրինական պատճառներ ունենալ դրա ներքին բաղադրիչներին հասանելիություն ունենալու համար: Այդ իսկ պատճառով պաշտպանված դաշտերն ավելի հաճախ են օգտագործվում, թեև դրանք չեն ապահովվում լեզվի շարահյուսությամբ:
 
-````warn header="Private fields are not available as this[name]"
-Private fields are special.
+````warn header="Մասնավոր դաշտերը հասանելի չեն որպես this[name]"
+Մասնավոր դաշտերը հատուկ են:
 
-As we know, usually we can access fields using `this[name]`:
+Ինչպես գիտենք, սովորաբար մենք կարող ենք մուտք գործել դաշտեր՝ օգտագործելով `this[name]`․
 
 ```js
 class User {
@@ -280,10 +281,10 @@ class User {
 }
 ```
 
-With private fields that's impossible: `this['#name']` doesn't work. That's a syntax limitation to ensure privacy.
+Մասնավոր դաշտերի դեպքում դա անհնար է. `this['#name']`-ը չի աշխատում: Դա շարահյուսական սահմանափակում է՝ գաղտնիությունն ապահովելու համար:
 ````
 
-## Summary
+## Ամփոփում
 
 In terms of OOP, delimiting of the internal interface from the external one is called [encapsulation](https://en.wikipedia.org/wiki/Encapsulation_(computer_programming)).
 
