@@ -120,11 +120,11 @@ article.createTodays(); /// Error: article.createTodays is not a function
 ```
 ````
 
-## Static properties
+## Ստատիկ հատկություններ
 
 [recent browser=Chrome]
 
-Static properties are also possible, they look like regular class properties, but prepended by `static`:
+Հնարավոր է ստեղծել նաև ստատիկ հատկություններ, որոնք նման են class-ի սովորական հատկություններին, բայց նշված են `static`-ով.
 
 ```js run
 class Article {
@@ -134,17 +134,17 @@ class Article {
 alert( Article.publisher ); // Ilya Kantor
 ```
 
-That is the same as a direct assignment to `Article`:
+Դա նույնն է, ինչ `Article`-ին ուղղակիորեն նշանակումը.
 
 ```js
 Article.publisher = "Ilya Kantor";
 ```
 
-## Inheritance of static properties and methods [#statics-and-inheritance]
+## Ստատիկ հատկությունների և մեթոդների ժառանգում [#statics-and-inheritance]
 
-Static properties and methods are inherited.
+Ստատիկ հատկությունները և մեթոդները ժառանգվում են:
 
-For instance, `Animal.compare` and `Animal.planet` in the code below are inherited and accessible as `Rabbit.compare` and `Rabbit.planet`:
+Օրինակ՝ `Animal.compare`-ը և `Animal.planet`-ը ստորև կոդում ժառանգվում են և հասանելի են դառնում որպես `Rabbit.compare` և `Rabbit.planet`․
 
 ```js run
 class Animal {
@@ -189,20 +189,20 @@ rabbits[0].run(); // Black Rabbit runs with speed 5.
 alert(Rabbit.planet); // Earth
 ```
 
-Now when we call `Rabbit.compare`, the inherited `Animal.compare` will be called.
+Այժմ, երբ մենք կանչում ենք `Rabbit.compare`-ը, կկանչվի ժառանգած `Animal.compare`-ը:
 
-How does it work? Again, using prototypes. As you might have already guessed, `extends` gives `Rabbit` the `[[Prototype]]` reference to `Animal`.
+Ինչպե՞ս է դա աշխատում։ Կրկին՝ օգտագործելով նախատիպերը: Ինչպես արդեն կռահեցիք, `extends`-ը `Rabbit`-ին տալիս է `[[Prototype]]` հղումը դեպի `Animal`:
 
 ![](animal-rabbit-static.svg)
 
-So, `Rabbit extends Animal` creates two `[[Prototype]]` references:
+Այսպիսով, `Rabbit extends Animal`-ը ստեղծում է երկու `[[Prototype]]` հղում.
 
-1. `Rabbit` function prototypally inherits from `Animal` function.
-2. `Rabbit.prototype` prototypally inherits from `Animal.prototype`.
+1. `Rabbit` ֆունկցիան նախատիպով ժառանգում է `Animal` ֆունկցիայից:
+2. `Rabbit.prototype`-ը նախատիպով ժառանգում է `Animal.prototype`-ից:
 
-As a result, inheritance works both for regular and static methods.
+Արդյունքում ժառանգությունը գործում է ինչպես կանոնավոր, այնպես էլ ստատիկ մեթոդների դեպքում:
 
-Here, let's check that by code:
+Ահա, եկեք ստուգենք դա կոդով.
 
 ```js run
 class Animal {}
@@ -215,17 +215,17 @@ alert(Rabbit.__proto__ === Animal); // true
 alert(Rabbit.prototype.__proto__ === Animal.prototype); // true
 ```
 
-## Summary
+## Ամփոփում
 
-Static methods are used for the functionality that belongs to the class "as a whole". It doesn't relate to a concrete class instance.
+Ստատիկ մեթոդներն օգտագործվում են այն ֆունկցիոնալի համար, որն «ամբողջությամբ» պատկանում է class-ին: Դա չի վերաբերում կոնկրետ class-ի օրինակին:
 
-For example, a method for comparison `Article.compare(article1, article2)` or a factory method `Article.createTodays()`.
+Օրինակ՝ `Article.compare(article1, article2)` համեմատության մեթոդը կամ `Article.createTodays()` գործարանային մեթոդը:
 
-They are labeled by the word `static` in class declaration.
+Class-ի հայտարարագրում դրանք պիտակավորված են `static` բառով:
 
-Static properties are used when we'd like to store class-level data, also not bound to an instance.
+Ստատիկ հատկություններն օգտագործվում են, երբ մենք ցանկանում ենք պահել class-ի մակարդակի տվյալներ, ինչպես նաև չկապված որևէ նմուշի հետ:
 
-The syntax is:
+Շարահյուսությունը հետևյալն է.
 
 ```js
 class MyClass {
@@ -237,13 +237,13 @@ class MyClass {
 }
 ```
 
-Technically, static declaration is the same as assigning to the class itself:
+Տեխնիկապես ստատիկ հայտարարությունը նույնն է, ինչ անմիջապես class-ին վերագրելը.
 
 ```js
 MyClass.property = ...
 MyClass.method = ...
 ```
 
-Static properties and methods are inherited.
+Ստատիկ հատկություններն ու մեթոդները ժառանգվում են:
 
-For `class B extends A` the prototype of the class `B` itself points to `A`: `B.[[Prototype]] = A`. So if a field is not found in `B`, the search continues in `A`.
+`class B extends A`-ի համար `B` class-ի նախատիպն ինքնին հղում է անում `A`-ին. `B.[[Prototype]] = A`: Այսպիսով, եթե դաշտը չի գտնվել `B`-ում, որոնումը շարունակվում է `A`-ում:
