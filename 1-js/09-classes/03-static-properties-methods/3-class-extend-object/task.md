@@ -4,7 +4,6 @@
 
 # Class-ն ընդլայնո՞ւմ է օբյեկտը:
 
-As we know, all objects normally inherit from `Object.prototype` and get access to "generic" object methods like `hasOwnProperty` etc.
 Ինչպես գիտենք, բոլոր օբյեկտները սովորաբար ժառանգում են `Object.prototype`-ից և ստանում հասանելիություն «ընդհանուր» օբյեկտի մեթոդներն, օր․՝ `hasOwnProperty` և այլն...
 
 Օրինակ․
