@@ -33,63 +33,63 @@
 
 ## Ներքին և արտաքին ինտերֆեյս
 
-In object-oriented programming, properties and methods are split into two groups:
+Օբյեկտ-կողմնորոշված ծրագրավորման մեջ հատկությունները և մեթոդները բաժանվում են երկու խմբի.
 
-- *Internal interface* -- methods and properties, accessible from other methods of the class, but not from the outside.
-- *External interface* -- methods and properties, accessible also from outside the class.
+- *Ներքին ինտերֆեյս*՝ մեթոդներ և հատկություններ, որոնք հասանելի են class-ի այլ մեթոդներից, բայց ոչ դրսից:
+- *Արտաքին ինտերֆեյս*՝ մեթոդներ և հատկություններ, որոնք հասանելի են նաև class-ից դուրս։
 
-If we continue the analogy with the coffee machine -- what's hidden inside: a boiler tube, heating element, and so on -- is its internal interface.
+Եթե մենք շարունակենք անալոգիան սուրճի մեքենայի հետ, ապա այն, ինչ թաքնված է ներսում՝ կաթսայի խողովակ, ջեռուցման տարր և այլն, նրա ներքին ինտերֆեյսն է:
 
-An internal interface is used for the object to work, its details use each other. For instance, a boiler tube is attached to the heating element.
+Օբյեկտի աշխատանքի համար օգտագործվում է ներքին ինտերֆեյսը, դրա դետալներն օգտագործում են միմյանց: Օրինակ՝ ջեռուցման տարրին միացված է կաթսայի խողովակը:
 
-But from the outside a coffee machine is closed by the protective cover, so that no one can reach those. Details are hidden and inaccessible. We can use its features via the external interface.
+Բայց դրսից սուրճի մեքենան փակված է պաշտպանիչ ծածկույթով, որպեսզի ոչ ոք չդիպչի դրանց։ Դետալները թաքնված են և անհասանելի։ Մենք կարող ենք օգտագործել մեքենայի հնարավորությունները արտաքին ինտերֆեյսի միջոցով:
 
-So, all we need to use an object is to know its external interface. We may be completely unaware how it works inside, and that's great.
+Այսպիսով, օբյեկտն օգտագործելու համար մեզ անհրաժեշտ է իմանալ միայն դրա արտաքին ինտերֆեյսը: Մենք կարող ենք ամբողջովին անտեղյակ լինել, թե ինչպես է այն աշխատում ներսում և դա հիանալի է:
 
-That was a general introduction.
+Դա ընդհանուր ներածություն էր։
 
-In JavaScript, there are two types of object fields (properties and methods):
+JavaScript-ում կա օբյեկտների դաշտերի երկու տեսակ (հատկություններ և մեթոդներ).
 
-- Public: accessible from anywhere. They comprise the external interface. Until now we were only using public properties and methods.
-- Private: accessible only from inside the class. These are for the internal interface.
+- Հանրային (public)․ հասանելի է ցանկացած վայրից։ Սրանք ներառում են արտաքին ինտերֆեյսը: Մինչ այս մենք օգտագործում էինք միայն հանրային հատկություններն ու մեթոդները։
+- Մասնավոր (private)․ հասանելի է միայն class-ի ներսում։ Սրանք ներքին ինտերֆեյսի համար են:
 
-In many other languages there also exist "protected" fields: accessible only from inside the class and those extending it (like private, but plus access from inheriting classes). They are also useful for the internal interface. They are in a sense more widespread than private ones, because we usually want inheriting classes to gain access to them.
+Շատ այլ լեզուներում կան նաև «պաշտպանված» (protected) դաշտեր. հասանելի են միայն class-ի ներսից և այն ընդլայնողներից (ինչպես մասնավորը, բայց դրան գումարած նաև հասանելիությունը ժառանգական class-ներից): Դրանք նաև օգտակար են ներքին ինտերֆեյսի համար: Դրանք ինչ-որ առումով ավելի տարածված են, քան մասնավորները, քանի որ մեզ սովորաբար անհրաժեշտ է լինում, որ ժառանգական class-ները հասանելիություն ունենան դրանց:
 
-Protected fields are not implemented in JavaScript on the language level, but in practice they are very convenient, so they are emulated.
+Պաշտպանված դաշտերը չեն ներդրվում JavaScript-ում լեզվի մակարդակով, բայց գործնականում դրանք շատ հարմար են, ուստի նմանակվում են։
 
-Now we'll make a coffee machine in JavaScript with all these types of properties. A coffee machine has a lot of details, we won't model them to stay simple (though we could).
+Այժմ մենք կպատրաստենք սուրճի մեքենա JavaScript-ով այս բոլոր տեսակի հատկություններով: Սուրճի մեքենան ունի շատ դետալներ, մենք չենք մոդելավորի դրանք պարզ մնալու համար (թեև կարող էինք):
 
-## Protecting "waterAmount"
+## «WaterAmount»-ի պաշտպանություն
 
-Let's make a simple coffee machine class first:
+Եկեք նախ պատրաստենք սուրճի մեքենայի պարզ class.
 
 ```js run
 class CoffeeMachine {
-  waterAmount = 0; // the amount of water inside
+  waterAmount = 0; // ջրի տարողությունը
 
   constructor(power) {
     this.power = power;
-    alert( `Created a coffee-machine, power: ${power}` );
+    alert( `Ստեղծվել է սուրճի մեքենա, հզորություն՝ ${power}` );
   }
 
 }
 
-// create the coffee machine
+// ստեղծել սուրճի մեքենան
 let coffeeMachine = new CoffeeMachine(100);
 
-// add water
+// ավելացնել ջուր
 coffeeMachine.waterAmount = 200;
 ```
 
-Right now the properties `waterAmount` and `power` are public. We can easily get/set them from the outside to any value.
+Այս պահին `waterAmount` և `power` հատկությունները հրապարակային են: Մենք դրսից հեշտությամբ կարող ենք ստանալ և սահմանել դրանց համար ցանկացած արժեք:
 
-Let's change `waterAmount` property to protected to have more control over it. For instance, we don't want anyone to set it below zero.
+Եկեք փոխենք `waterAmount` հատկությունը պաշտպանվածի, որպեսզի ավելի շատ վերահսկողություն ունենանք դրա նկատմամբ: Օրինակ՝ մենք չենք ուզում, որ որևէ մեկը այն սահմանի զրոյից ցածր:
 
-**Protected properties are usually prefixed with an underscore `_`.**
+**Պաշտպանված հատկությունները սովորաբար նշվում են `_` ընդգծված նախածանցով։**
 
-That is not enforced on the language level, but there's a well-known convention between programmers that such properties and methods should not be accessed from the outside.
+Դա չի կիրառվում լեզվի մակարդակով, բայց ծրագրավորողների միջև հայտնի կոնվենցիա կա, որ նման հատկություններն ու մեթոդները չպետք է հասանելի լինեն դրսից:
 
-So our property will be called `_waterAmount`:
+Այսպիսով, մեր հատկությունը կկոչվի `_waterAmount`:
 
 ```js run
 class CoffeeMachine {
@@ -112,14 +112,14 @@ class CoffeeMachine {
 
 }
 
-// create the coffee machine
+// ստեղծել սուրճի մեքենան
 let coffeeMachine = new CoffeeMachine(100);
 
-// add water
-coffeeMachine.waterAmount = -10; // _waterAmount will become 0, not -10
+// ավելացնել ջուր
+coffeeMachine.waterAmount = -10; // _waterAmount կլինի 0, ոչ՝ -10
 ```
 
-Now the access is under control, so setting the water amount below zero becomes impossible.
+Այժմ հասանելիությունը վերահսկվում է, ուստի ջրի տարողությունը զրոյից ցածր սահմանելն անհնար է դառնում:
 
 ## Read-only "power"
 
