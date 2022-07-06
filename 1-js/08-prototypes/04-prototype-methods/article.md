@@ -190,7 +190,7 @@ alert(Object.keys(chineseDictionary)); // hello,bye
 let clone = Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj));
 ```
 
-Մենք նաև պարզ դարձրեցինք, որ `__proto__`-ն `[[Prototype]]`-ի գեթթեր/սեթթեր է և գտնվում է `Object.prototype`-ում, ինչպես մյուս մեթոդները:
+Մենք նաև պարզաբանեցինք, որ `__proto__`-ն `[[Prototype]]`-ի գեթթեր/սեթթեր է և գտնվում է `Object.prototype`-ում, ինչպես մյուս մեթոդները:
 
 Մենք `Object.create(null)`-ով կարող ենք օբյեկտ ստեղծել առանց նախատիպի: Նման օբյեկտները օգտագործվում են որպես «մաքուր բառարաններ», դրանք `«__proto__»`-ի՝ որպես բանալիի հետ, խնդիրներ չունեն:
 
