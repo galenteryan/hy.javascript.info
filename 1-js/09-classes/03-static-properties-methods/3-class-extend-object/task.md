@@ -1,12 +1,13 @@
-importance: 3
+Կարևորություն՝ 3
 
 ---
 
-# Class extends Object?
+# Class-ն ընդլայնո՞ւմ է օբյեկտը:
 
 As we know, all objects normally inherit from `Object.prototype` and get access to "generic" object methods like `hasOwnProperty` etc.
+Ինչպես գիտենք, բոլոր օբյեկտները սովորաբար ժառանգում են `Object.prototype`-ից և ստանում հասանելիություն «ընդհանուր» օբյեկտի մեթոդներն, օր․՝ `hasOwnProperty` և այլն...
 
-For instance:
+Օրինակ․
 
 ```js run
 class Rabbit {
@@ -18,16 +19,16 @@ class Rabbit {
 let rabbit = new Rabbit("Rab");
 
 *!*
-// hasOwnProperty method is from Object.prototype
+// hasOwnProperty մեթոդը Object.prototype-ից է
 alert( rabbit.hasOwnProperty('name') ); // true
 */!*
 ```
 
-But if we spell it out explicitly like `"class Rabbit extends Object"`, then the result would be different from a simple `"class Rabbit"`?
+Բայց, եթե մենք այն հստակ ձևակերպենք՝ `«class Rabbit extends Object»`, ապա արդյունքը կտարբերվի՞ արդյոք պարզ `«class Rabbit»`-ից:
 
-What's the difference?
+Ո՞րն է տարբերությունը։
 
-Here's an example of such code (it doesn't work -- why? fix it?):
+Ահա այսպիսի կոդի օրինակ (այն չի աշխատում․ ինչո՞ւ, ուղղեք այն):
 
 ```js
 class Rabbit extends Object {
