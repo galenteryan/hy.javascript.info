@@ -1,15 +1,15 @@
 
-# Private and protected properties and methods
+# Մասնավոր և պաշտպանված հատկություններ ու մեթոդներ
 
-One of the most important principles of object oriented programming -- delimiting internal interface from the external one.
+Օբյեկտ կողմնորոշված ծրագրավորման ամենակարևոր սկզբունքներից մեկն է՝ ներքին ինտերֆեյսի սահմանազատումն արտաքինից:
 
-That is "a must" practice in developing anything more complex than a "hello world" app.
+Դա «պարտադիր» պրակտիկա է «բարև աշխարհ» հավելվածից ավելի բարդ բան մշակելու համար:
 
-To understand this, let's break away from development and turn our eyes into the real world.
+Սա հասկանալու համար եկեք կտրվենք ծրագրավորումից և մեր հայացքն ուղղենք դեպի իրական աշխարհ:
 
-Usually, devices that we're using are quite complex. But delimiting the internal interface from the external one allows to use them without problems.
+Սովորաբար, սարքերը, որոնք մենք օգտագործում ենք, բավականին բարդ են: Բայց ներքին ինտերֆեյսը արտաքինից սահմանազատելը թույլ է տալիս դրանք օգտագործել առանց խնդիրների։
 
-## A real-life example
+## Իրական կյանքի օրինակ
 
 For instance, a coffee machine. Simple from outside: a button, a display, a few holes...And, surely, the result -- great coffee! :)
 
