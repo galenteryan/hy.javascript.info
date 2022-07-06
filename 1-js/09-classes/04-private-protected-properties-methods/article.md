@@ -11,27 +11,27 @@
 
 ## Իրական կյանքի օրինակ
 
-For instance, a coffee machine. Simple from outside: a button, a display, a few holes...And, surely, the result -- great coffee! :)
+Օրինակ՝ սուրճի մեքենան։ Դրսից պարզ է՝ կոճակ, էկրան, մի քանի անցք... Եվ, անկասկած, արդյունքը՝ հիանալի սուրճ: :)
 
 ![](coffee.jpg)
 
-But inside... (a picture from the repair manual)
+Բայց ներսում... (նկար վերանորոգման ձեռնարկից)
 
 ![](coffee-inside.jpg)
 
-A lot of details. But we can use it without knowing anything.
+Շատ մանրամասներ։ Բայց մենք, առանց դրա մասին որևէ բան իմանալու, կարող ենք օգտագործել այն:
 
-Coffee machines are quite reliable, aren't they? We can use one for years, and only if something goes wrong -- bring it for repairs.
+Սուրճի մեքենաները բավականին հուսալի են, այնպես չէ՞: Մենք կարող ենք օգտագործել դրանցից մեկը տարիներ շարունակ, և միայն այն դեպքում, երբ ինչ-որ բան չի աշխատում, տանել այն վերանորոգման:
 
-The secret of reliability and simplicity of a coffee machine -- all details are well-tuned and *hidden* inside.
+Սուրճի մեքենայի հուսալիության և պարզության գաղտնիքը. բոլոր դետալները լավ կարգաբերված են և *թաքցրած* են ներսում:
 
-If we remove the protective cover from the coffee machine, then using it will be much more complex (where to press?), and dangerous (it can electrocute).
+Եթե սուրճի մեքենայի վրայից հանենք պաշտպանիչ ծածկույթը, ապա դրա օգտագործումը կլինի շատ ավելի բարդ (որտե՞ղ սեղմել) և վտանգավոր (կարող է էլեկտրահարել):
 
-As we'll see, in programming objects are like coffee machines.
+Ինչպես կնկատենք, ծրագրավորման մեջ օբյեկտները նման են սուրճի մեքենաներին:
 
-But in order to hide inner details, we'll use not a protective cover, but rather special syntax of the language and conventions.
+Բայց ներքին դետալները թաքցնելու համար մենք կօգտագործենք ոչ թե պաշտպանիչ ծածկույթ, այլ լեզվի հատուկ շարահյուսություն և պայմանականություններ:
 
-## Internal and external interface
+## Ներքին և արտաքին ինտերֆեյս
 
 In object-oriented programming, properties and methods are split into two groups:
 
