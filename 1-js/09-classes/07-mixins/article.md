@@ -1,18 +1,18 @@
-# Mixins
+# Խառնուրդներ (mixins)
 
-In JavaScript we can only inherit from a single object. There can be only one `[[Prototype]]` for an object. And a class may extend only one other class.
+JavaScript-ում կարող ենք ժառանգել միայն մեկ օբյեկտից: Օբյեկտի համար կարող է լինել միայն մեկ `[[Prototype]]`: Եվ class-ը կարող է ընդլայնել միայն մեկ class:
 
-But sometimes that feels limiting. For instance, we have a class `StreetSweeper` and a class `Bicycle`, and want to make their mix: a `StreetSweepingBicycle`.
+Բայց, երբեմն դա սահմանափակ է թվում: Օրինակ՝ մենք ունենք `StreetSweeper` և `Bicycle` class-ներ, և ցանկանում ենք ստեղծել դրանց խառնուրդը՝ `StreetSweepingBicycle`:
 
-Or we have a class `User` and a class `EventEmitter` that implements event generation, and we'd like to add the functionality of `EventEmitter` to `User`, so that our users can emit events.
+Կամ, ունենք `User` class և `EventEmitter` class, որն իրագործում է իրադարձությունների ստեղծումը, և մեզ անհրաժեշտ է ավելացնել `EventEmitter`-ի ֆունկցիոնալը `User`-ում, որպեսզի մեր օգտվողները կարողանան ստեղծել իրադարձություններ:
 
-There's a concept that can help here, called "mixins".
+Կա մի հասկացություն, որը կարող է օգնել մեզ այստեղ, դա կոչվում է «խառնուրդներ» (mixins):
 
-As defined in Wikipedia, a [mixin](https://en.wikipedia.org/wiki/Mixin) is a class containing methods that can be used by other classes without a need to inherit from it.
+Ինչպես սահմանված է Վիքիպեդիայում, [mixin](https://en.wikipedia.org/wiki/Mixin)-ը class է, որը պարունակում է մեթոդներ, որոնք կարող են օգտագործվել այլ class-ների կողմից՝ առանց դրանից ժառանգելու անհրաժեշտության։
 
-In other words, a *mixin* provides methods that implement a certain behavior, but we do not use it alone, we use it to add the behavior to other classes.
+Այլ կերպ ասած, *mixin*-ը տրամադրում է մեթոդներ, որոնք իրականացնում են որոշակի վարքագիծ, բայց մենք այն չենք օգտագործում որպես այդպիսին, այլ օգտագործում ենք դա՝ իր վարքագիծը այլ class-ներում ավելացնելու համար։
 
-## A mixin example
+## Խառնուրդի օրինակ
 
 The simplest way to implement a mixin in JavaScript is to make an object with useful methods, so that we can easily merge them into a prototype of any class.
 
