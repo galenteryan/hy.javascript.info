@@ -200,10 +200,10 @@ menu.choose("123");
 
 ## Ամփոփում
 
-*Mixin* -- is a generic object-oriented programming term: a class that contains methods for other classes.
+*Mixin*՝ ընդհանուր օբյեկտի վրա հիմնված ծրագրավորման տերմին է՝ class, որը պարունակում է մեթոդներ այլ class-ների համար։
 
-Some other languages allow multiple inheritance. JavaScript does not support multiple inheritance, but mixins can be implemented by copying methods into prototype.
+Որոշ այլ լեզուներ թույլ են տալիս բազմակի ժառանգություն: JavaScript-ը չի աջակցում բազմակի ժառանգությանը, սակայն խառնուրդները կարող են իրագործվել՝ պատճենելով մեթոդները նախատիպի մեջ:
 
-We can use mixins as a way to augment a class by adding multiple behaviors, like event-handling as we have seen above.
+Որպես class-ը մեծացնելու միջոց կարող ենք օգտագործել խառնուրդները՝ ավելացնելով բազմաթիվ վարքագծեր, օրինակ՝ իրադարձությունների մշակումը, ինչպես տեսանք վերևում:
 
-Mixins may become a point of conflict if they accidentally overwrite existing class methods. So generally one should think well about the naming methods of a mixin, to minimize the probability of that happening.
+Խառնուրդները կարող են դառնալ հակասությունների աղբյուր, եթե դրանք պատահաբար վերագրեն առկա class-ի մեթոդները: Այսպիսով, ընդհանուր առմամբ, պետք է լավ մտածել խառնուրդի մեթոդներին անվանում տալուց առաջ, որպեսզի նվազագույնի հասցվի կոնֆլիկտների հավանականությունը:
