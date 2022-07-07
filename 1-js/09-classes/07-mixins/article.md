@@ -108,19 +108,19 @@ new User("Dude").sayHi(); // Ողջույն Dude
 
 ## EventMixin
 
-Now let's make a mixin for real life.
+Հիմա եկեք խառնուրդ պատրաստենք իրական կյանքի համար:
 
-An important feature of many browser objects (for instance) is that they can generate events. Events are a great way to "broadcast information" to anyone who wants it. So let's make a mixin that allows us to easily add event-related functions to any class/object.
+Բրաուզերի մի շարք օբյեկտների (օրինակ) կարևոր առանձնահատկությունն այն է, որ դրանք կարող են առաջացնել իրադարձություններ: Իրադարձությունները հիանալի միջոց են «տեղեկատվություն հեռարձակելու» բոլոր ցանկացողներին: Այսպիսով, եկեք ստեղծենք խառնուրդ, որը թույլ է տալիս մեզ հեշտությամբ ավելացնել իրադարձությունների հետ կապված ֆունկցիաներ ցանկացած class/object-ում:
 
-- The mixin will provide a method `.trigger(name, [...data])` to "generate an event" when something important happens to it. The `name` argument is a name of the event, optionally followed by additional arguments with event data.
-- Also the method `.on(name, handler)` that adds `handler` function as the listener to events with the given name. It will be called when an event with the given `name` triggers, and get the arguments from the `.trigger` call.
-- ...And the method `.off(name, handler)` that removes the `handler` listener.
+- Միքսինը կտրամադրի `.trigger(name, [...data])` մեթոդ՝ «իրադարձություն առաջացնելու» համար, երբ դրա հետ որևէ կարևոր բան է պատահում: `name` արգումենտը իրադարձության անվանումն է, որին կամայականորեն հաջորդում են լրացուցիչ արգումենտներ՝ իրադարձության տվյալներով:
+- Նաև `.on(name, handler)` մեթոդը, որն ավելացնում է `handler` ֆունկցիան որպես ունկնդիր տվյալ անունով իրադարձությունների համար: Այն կկանչվի, երբ գործարկվի տրված `name` ունեցող իրադարձությունը և կստանա արգումենտներ `.trigger` կանչից:
+- ...Եվ `.off(name, handler)` մեթոդը, որը հեռացնում է `handler` ունկնդրին:
 
-After adding the mixin, an object `user` will be able to generate an event `"login"` when the visitor logs in. And another object, say, `calendar` may want to listen for such events to load the calendar for the logged-in person.
+Խառնուրդ ավելացնելուց հետո `user` օբյեկտը կկարողանա ստեղծել `«login»` իրադարձություն, երբ այցելուն մուտք է գործում: Եվ մեկ այլ օբյեկտին, ասենք՝ `calendar`-ին, կարող է պետք լինի ունկնդրել նման իրադարձությունները՝ մուտք գործած անձանց համար օրացույցը բեռնելու նպատակով:
 
-Or, a `menu` can generate the event `"select"` when a menu item is selected, and other objects may assign handlers to react on that event. And so on.
+Կամ, `menu`-ն կարող է ստեղծել `«select»` իրադարձությունը, երբ ընտրվում է ընտրացանկի տարրը, և այլ օբյեկտները կարող են նշանակել մշակողների՝ արձագանքելու այդ իրադարձությանը: Եվ այսպես շարունակ։
 
-Here's the code:
+Ահա կոդը.
 
 ```js run
 let eventMixin = {
@@ -166,11 +166,11 @@ let eventMixin = {
 ```
 
 
-- `.on(eventName, handler)` -- assigns function `handler` to run when the event with that name occurs. Technically, there's an `_eventHandlers` property that stores an array of handlers for each event name, and it just adds it to the list.
-- `.off(eventName, handler)` -- removes the function from the handlers list.
-- `.trigger(eventName, ...args)` -- generates the event: all handlers from `_eventHandlers[eventName]` are called, with a list of arguments `...args`.
+- `.on(eventName, handler)`՝ վերագրում է `handler` ֆունկցիան, որը պետք է գործարկվի, երբ տեղի է ունենում այդ անվանումով իրադարձությունը: Տեխնիկապես կա `_eventHandlers` հատկություն, որը պահում է մշակողների զանգված յուրաքանչյուր իրադարձության անվան համար և պարզապես դա ավելացնում է ցանկին:
+- `.off(eventName, handler)`՝ հեռացնում է ֆունկցիան մշակողների ցանկից:
+- `.trigger(eventName, ...args)`՝ ստեղծում է իրադարձություն․ բոլոր մշակողները `_eventHandlers[eventName]`-ից կանչվում են `...args` արգումենտների ցանկով `...args`։
 
-Usage:
+Օգտագործեում․
 
 ```js run
 // Make a class
@@ -194,11 +194,11 @@ menu.on("select", value => alert(`Value selected: ${value}`));
 menu.choose("123");
 ```
 
-Now, if we'd like any code to react to a menu selection, we can listen for it with `menu.on(...)`.
+Այժմ, եթե մենք ցանկանում ենք, որ որևէ կոդ արձագանքի ընտրացանկի ընտրությանը, մենք կարող ենք ունկնդրել այն `menu.on(...)`-ով:
 
-And `eventMixin` mixin makes it easy to add such behavior to as many classes as we'd like, without interfering with the inheritance chain.
+Եվ `eventMixin` խառնուրդը հեշտացնում է նման վարքագծի ավելացումը այնքան class-ներում, որքան մեզ անհրաժեշտ է՝ առանց ժառանգական շղթային միջամտելու:
 
-## Summary
+## Ամփոփում
 
 *Mixin* -- is a generic object-oriented programming term: a class that contains methods for other classes.
 
