@@ -1,7 +1,7 @@
-Yeah, looks strange indeed.
+Այո, իսկապես տարօրինակ է երևում:
 
-But `instanceof` does not care about the function, but rather about its `prototype`, that it matches against the prototype chain.
+Բայց `instanceof`-ին ֆունկցիան չի հետաքրքրում, այլ նրա `prototype`-ը, որը համապատասխանում է նախատիպերի շղթային:
 
-And here `a.__proto__ == B.prototype`, so `instanceof` returns `true`.
+Իսկ այստեղ `a.__proto__ == B.prototype`, ուստի `instanceof`-ը վերադարձնում է `true`:
 
-So, by the logic of `instanceof`, the `prototype` actually defines the type, not the constructor function.
+Այսպիսով, `instanceof`-ի տրամաբանությամբ `prototype`-ը իրականում սահմանում է տեսակը, այլ ոչ թե կոնստրուկտոր ֆունկցիան:
