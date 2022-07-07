@@ -32,7 +32,7 @@ let sayHiMixin = {
 };
 
 *!*
-// օգտագործում՝
+// Կիրառություն․
 */!*
 class User {
   constructor(name) {
@@ -125,7 +125,7 @@ new User("Dude").sayHi(); // Ողջույն Dude
 ```js run
 let eventMixin = {
   /**
-   * Subscribe to event, usage:
+   * Բաժանորդագրվում ենք իրադարձությանը, կիրառություն.
    *  menu.on('select', function(item) { ... }
   */
   on(eventName, handler) {
@@ -137,7 +137,7 @@ let eventMixin = {
   },
 
   /**
-   * Cancel the subscription, usage:
+   * Չեղարկում ենք բաժանորդագրությունը, կիրառություն․
    *  menu.off('select', handler)
    */
   off(eventName, handler) {
@@ -151,15 +151,15 @@ let eventMixin = {
   },
 
   /**
-   * Generate an event with the given name and data
+   * Ստեղծում ենք իրադարձություն տրված անվանումով և տվյալներով
    *  this.trigger('select', data1, data2);
    */
   trigger(eventName, ...args) {
     if (!this._eventHandlers?.[eventName]) {
-      return; // no handlers for that event name
+      return; // այդ անվանումով իրադարձության համար մշակողներ չկան
     }
 
-    // call the handlers
+    // կանչում ենք մշակողներին
     this._eventHandlers[eventName].forEach(handler => handler.apply(this, args));
   }
 };
@@ -170,27 +170,27 @@ let eventMixin = {
 - `.off(eventName, handler)`՝ հեռացնում է ֆունկցիան մշակողների ցանկից:
 - `.trigger(eventName, ...args)`՝ ստեղծում է իրադարձություն․ բոլոր մշակողները `_eventHandlers[eventName]`-ից կանչվում են `...args` արգումենտների ցանկով `...args`։
 
-Օգտագործեում․
+Կիրառություն․
 
 ```js run
-// Make a class
+// Ստեղծում ենք class
 class Menu {
   choose(value) {
     this.trigger("select", value);
   }
 }
-// Add the mixin with event-related methods
+// Ավելացնում ենք խառնուրդ՝ իրադարձության հետ կապված մեթոդներով
 Object.assign(Menu.prototype, eventMixin);
 
 let menu = new Menu();
 
-// add a handler, to be called on selection:
+// ավելացնում ենք մշակող, որը պետք է կանչվի ընտրության ժամանակ.
 *!*
-menu.on("select", value => alert(`Value selected: ${value}`));
+menu.on("select", value => alert(`Ընտրված արժեքը՝ ${value}`));
 */!*
 
-// triggers the event => the handler above runs and shows:
-// Value selected: 123
+// գործարկվում է իրադարձությունը => վերին մշակիչը գործարկվում է և ցույց է տալիս.
+// Ընտրված արժեքը՝ 123
 menu.choose("123");
 ```
 
