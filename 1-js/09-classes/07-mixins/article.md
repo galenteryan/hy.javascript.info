@@ -14,25 +14,25 @@ JavaScript-ում կարող ենք ժառանգել միայն մեկ օբյե�
 
 ## Խառնուրդի օրինակ
 
-The simplest way to implement a mixin in JavaScript is to make an object with useful methods, so that we can easily merge them into a prototype of any class.
+JavaScript-ում խառնուրդիի ներդրման ամենապարզ ձևը օգտակար մեթոդներով օբյեկտ պատրաստելն է, որպեսզի հեշտությամբ կարողանանք դրանք միավորել ցանկացած class-ի նախատիպի մեջ:
 
-For instance here the mixin `sayHiMixin` is used to add some "speech" for `User`:
+Օրինակի համար, այստեղ `sayHiMixin` խառնուրդիը օգտագործվում է `User`-ի համար ինչ-որ «խոսք» ավելացնելու նպատակով.
 
 ```js run
 *!*
-// mixin
+// խառնուրդ
 */!*
 let sayHiMixin = {
   sayHi() {
-    alert(`Hello ${this.name}`);
+    alert(`Ողջույն ${this.name}`);
   },
   sayBye() {
-    alert(`Bye ${this.name}`);
+    alert(`Ցտեսություն ${this.name}`);
   }
 };
 
 *!*
-// usage:
+// օգտագործում՝
 */!*
 class User {
   constructor(name) {
@@ -40,14 +40,15 @@ class User {
   }
 }
 
-// copy the methods
+// մեթոդների պատճենում
 Object.assign(User.prototype, sayHiMixin);
 
-// now User can say hi
-new User("Dude").sayHi(); // Hello Dude!
+// այժմ User-ը կարող է ասել ողջույն
+new User("Dude").sayHi(); // Ողջույն Dude
 ```
 
 There's no inheritance, but a simple method copying. So `User` may inherit from another class and also include the mixin to "mix-in" the additional methods, like this:
+Չկա ժառանգություն, բայց կա պատճենահանման պարզ մեթոդ: Այսպիսով, `User`-ը կարող է ժառանգել մեկ այլ class-ից, ինչպես նաև ներառել խառնուրդը՝ լրացուցիչ մեթոդները «խառնելու» համար, այսպես.
 
 ```js
 class User extends Person {
@@ -57,9 +58,9 @@ class User extends Person {
 Object.assign(User.prototype, sayHiMixin);
 ```
 
-Mixins can make use of inheritance inside themselves.
+Խառնուրդները կարող են օգտվել ժառանգությունից իրենց ներսում:
 
-For instance, here `sayHiMixin` inherits from `sayMixin`:
+Օրինակ՝ այստեղ `sayHiMixin`-ը ժառանգում է `sayMixin`-ից․
 
 ```js run
 let sayMixin = {
@@ -69,16 +70,16 @@ let sayMixin = {
 };
 
 let sayHiMixin = {
-  __proto__: sayMixin, // (or we could use Object.setPrototypeOf to set the prototype here)
+  __proto__: sayMixin, // (կամ այստեղ նախատիպը տեղադրելու համար կարող ենք օգտագործել Object.setPrototypeOf)
 
   sayHi() {
     *!*
-    // call parent method
+    // կանչում ենք ծնողի մեթոդը
     */!*
-    super.say(`Hello ${this.name}`); // (*)
+    super.say(`Ողջույն ${this.name}`); // (*)
   },
   sayBye() {
-    super.say(`Bye ${this.name}`); // (*)
+    super.say(`Ցտեսություն ${this.name}`); // (*)
   }
 };
 
@@ -88,22 +89,22 @@ class User {
   }
 }
 
-// copy the methods
+// պատճենում ենք մեթոդները
 Object.assign(User.prototype, sayHiMixin);
 
-// now User can say hi
-new User("Dude").sayHi(); // Hello Dude!
+// այժմ User-ը կարող է ասել ողջույն
+new User("Dude").sayHi(); // Ողջույն Dude
 ```
 
-Please note that the call to the parent method `super.say()` from `sayHiMixin` (at lines labelled with `(*)`) looks for the method in the prototype of that mixin, not the class.
+Նկատի ունեցեք, որ `super.say()`-ից `super.say()` ծնող մեթոդի կանչը (`(*)` պիտակավորված տողերում) որոնում է մեթոդը այդ խառնուրդի նախատիպում, այլ ոչ թե class-ի նախատիպում:
 
-Here's the diagram (see the right part):
+Ահա գծապատկերը (տեսեք աջ մասը).
 
 ![](mixin-inheritance.svg)
 
-That's because methods `sayHi` and `sayBye` were initially created in `sayHiMixin`. So even though they got copied, their `[[HomeObject]]` internal property references `sayHiMixin`, as shown in the picture above.
+Դա պայմանավորված է նրանով, որ `sayHi` և `sayBye` մեթոդներն ի սկզբանե ստեղծվել են `sayHiMixin`-ում: Այսպիսով, չնայած դրանք պատճենվել են, բայց դրանց `[[HomeObject]]` ներքին հատկությունը հղում է անում `sayHiMixin`-ին, ինչպես ցուցադրված է վերևի նկարում:
 
-As `super` looks for parent methods in `[[HomeObject]].[[Prototype]]`, that means it searches `sayHiMixin.[[Prototype]]`, not `User.[[Prototype]]`.
+Քանի որ `super`-ը `[[HomeObject]].[[Prototype]]`-ում փնտրում է ծնողի մեթոդները, ապա դա նշանակում է, որ այն փնտրում է `sayHiMixin.[[Prototype]]`-ում, այլ ոչ թե `User.[[Prototype]]`-ում:
 
 ## EventMixin
 
