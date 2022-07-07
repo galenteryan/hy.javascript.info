@@ -68,21 +68,21 @@ alert( arr instanceof Object ); // true
     alert(obj instanceof Animal); // true՝ Animal[Symbol.hasInstance](obj)-ն է կանչվել
     ```
 
-2. Most classes do not have `Symbol.hasInstance`. In that case, the standard logic is used: `obj instanceOf Class` checks whether `Class.prototype` is equal to one of the prototypes in the `obj` prototype chain.
+2. Class-ների մեծ մասը չունի `Symbol.hasInstance`: Այդ դեպքում օգտագործվում է ստանդարտ տրամաբանություն. `obj instanceOf Class`-ը ստուգում է՝ արդյո՞ք `Class.prototype`-ը հավասար է `obj`-ի նախատիպային շղթայում առկա նախատիպերից որևէ մեկին:
 
-    In other words, compare one after another:
+    Այլ կերպ ասած՝ համեմատում է մեկը մյուսի հետևից.
     ```js
     obj.__proto__ === Class.prototype?
     obj.__proto__.__proto__ === Class.prototype?
     obj.__proto__.__proto__.__proto__ === Class.prototype?
     ...
-    // if any answer is true, return true
-    // otherwise, if we reached the end of the chain, return false
+    // Եթե որևէ համեմատություն true է, ապա վերադարձնում է true
+    // հակառակ դեպքում, երբ հասնում է շղթայի վերջին, վերադարձնում է false
     ```
 
-    In the example above `rabbit.__proto__ === Rabbit.prototype`, so that gives the answer immediately.
+    Վերոնշյալ օրինակում՝ `rabbit.__proto__ === Rabbit.prototype`, հետևաբար այն անմիջապես վերադարձնում է պատասխանը:
 
-    In the case of an inheritance, the match will be at the second step:
+    Ժառանգության դեպքում համընկնումը կլինի երկրորդ քայլում.
 
     ```js run
     class Animal {}
@@ -93,76 +93,76 @@ alert( arr instanceof Object ); // true
     alert(rabbit instanceof Animal); // true
     */!*
 
-    // rabbit.__proto__ === Animal.prototype (no match)
+    // rabbit.__proto__ === Animal.prototype (չկա համընկնում)
     *!*
-    // rabbit.__proto__.__proto__ === Animal.prototype (match!)
+    // rabbit.__proto__.__proto__ === Animal.prototype (համընկավ)
     */!*
     ```
 
-Here's the illustration of what `rabbit instanceof Animal` compares with `Animal.prototype`:
+Ահա պատկերազարդումը, թե ինչ է `rabbit instanceof Animal`-ը համեմատվում `Animal.prototype`-ի հետ.
 
 ![](instanceof.svg)
 
-By the way, there's also a method [objA.isPrototypeOf(objB)](mdn:js/object/isPrototypeOf), that returns `true` if `objA` is somewhere in the chain of prototypes for `objB`. So the test of `obj instanceof Class` can be rephrased as `Class.prototype.isPrototypeOf(obj)`.
+Ի դեպ, կա նաև մեթոդ՝ [objA.isPrototypeOf(objB)](mdn:js/object/isPrototypeOf), որը վերադարձնում է `true`, եթե `objA`-ն ինչ-որ տեղ `objB`-ի նախատիպերի շղթայում է: Այսպիսով, «obj instanceof Class»-ի թեստը կարող է վերաձեւակերպվել որպես «Class.prototype.isPrototypeOf(obj)»:
 
-It's funny, but the `Class` constructor itself does not participate in the check! Only the chain of prototypes and `Class.prototype` matters.
+Ծիծաղելի է, բայց `Class` կոնստրուկտորն ինքնին չի մասնակցում ստուգմանը: Միայն նախատիպերի շղթան է կարևոր և `Class.prototype`-ը:
 
-That can lead to interesting consequences when a `prototype` property is changed after the object is created.
+Դա կարող է հանգեցնել հետաքրքիր հետևանքների, երբ օբյեկտի ստեղծումից հետո փոխվում է `prototype`-ի հատկությունը:
 
-Like here:
+Ինչպես այստեղ․
 
 ```js run
 function Rabbit() {}
 let rabbit = new Rabbit();
 
-// changed the prototype
+// փոփոխվեց նախատիպը
 Rabbit.prototype = {};
 
-// ...not a rabbit any more!
+// ...այլևս rabbit չէ
 *!*
 alert( rabbit instanceof Rabbit ); // false
 */!*
 ```
 
-## Bonus: Object.prototype.toString for the type
+## Բոնուս․ Object.prototype.toString-ը տիպերի համար
 
-We already know that plain objects are converted to string as `[object Object]`:
+Մենք արդեն գիտենք, որ պարզ օբյեկտները վերածվում են տողի (string), որպես՝ `[object Object]`․
 
 ```js run
 let obj = {};
 
 alert(obj); // [object Object]
-alert(obj.toString()); // the same
+alert(obj.toString()); // նույնը
 ```
 
-That's their implementation of `toString`. But there's a hidden feature that makes `toString` actually much more powerful than that. We can use it as an extended `typeof` and an alternative for `instanceof`.
+Դա `toString`-ի իրագործումն է: Բայց կա մի թաքնված հատկություն, որը `toString`-ն իրականում դրանից շատ ավելի զորեղ է դարձնում: Մենք կարող ենք օգտագործել այն որպես ընդլայնված `typeof` և `instanceof`-ի համար այլընտրանք:
 
-Sounds strange? Indeed. Let's demystify.
+Տարօրինա՞կ է հնչում։ Իսկապես։ Եկեք փորձարկենք.
 
-By [specification](https://tc39.github.io/ecma262/#sec-object.prototype.tostring), the built-in `toString` can be extracted from the object and executed in the context of any other value. And its result depends on that value.
+Ըստ [specification](https://tc39.github.io/ecma262/#sec-object.prototype.tostring)-ի, ներկառուցված `toString`-ը կարող է հանվել օբյեկտից և գործարկվել ցանկացած այլ արժեքի համատեքստում: Եվ դրա արդյունքը կախված է այդ արժեքից։
 
-- For a number, it will be `[object Number]`
-- For a boolean, it will be `[object Boolean]`
-- For `null`: `[object Null]`
-- For `undefined`: `[object Undefined]`
-- For arrays: `[object Array]`
-- ...etc (customizable).
+- Թվերի դեպքում, այն կլինի `[object Number]`
+- Բուլյանի դեպքում, այն կլինի `[object Boolean]`
+- Երբ `null` է՝ `[object Null]`
+- Երբ `undefined` է՝ `[object Undefined]`
+- Զանգվածների համար՝ `[object Array]`
+- ...և այլն (կարգավորելի)։
 
-Let's demonstrate:
+Եկեք ցուցադրենք․
 
 ```js run
-// copy toString method into a variable for convenience
+// հարմարության համար պատճենեք toString մեթոդը փոփոխականի մեջ
 let objectToString = Object.prototype.toString;
 
-// what type is this?
+// ի՞նչ տեսակ է սա
 let arr = [];
 
 alert( objectToString.call(arr) ); // [object *!*Array*/!*]
 ```
 
-Here we used [call](mdn:js/function/call) as described in the chapter [](info:call-apply-decorators) to execute the function `objectToString` in the context `this=arr`.
+Այստեղ մենք օգտագործեցինք [call](mdn:js/function/call)-ը՝ ինչպես նկարագրված էր այս գլխում՝ [](info:call-apply-decorators), որպեսզի գործարկենք `objectToString` ֆունկցիան `this=arr` կոնտեքստում։
 
-Internally, the `toString` algorithm examines `this` and returns the corresponding result. More examples:
+Ներքին կարգով, `toString`-ի ալգորիթմը ուսումնասիրում է `this`-ը և վերադարձնում համապատասխան արդյունքը: Լրացուցիչ օրինակներ.
 
 ```js run
 let s = Object.prototype.toString;
@@ -174,9 +174,9 @@ alert( s.call(alert) ); // [object Function]
 
 ### Symbol.toStringTag
 
-The behavior of Object `toString` can be customized using a special object property `Symbol.toStringTag`.
+Օբյեկտից կախված, `toString`-ի վարքագիծը կարող է հարմարեցվել՝ օգտագործելով `Symbol.toStringTag` հատուկ օբյեկտի հատկությունը:
 
-For instance:
+Օրինակ․
 
 ```js run
 let user = {
@@ -186,10 +186,10 @@ let user = {
 alert( {}.toString.call(user) ); // [object User]
 ```
 
-For most environment-specific objects, there is such a property. Here are some browser specific examples:
+Շրջակա միջավայրին հատուկ օբյեկտների մեծ մասի համար կա այդպիսի հատկություն։ Ահա որոշ բրաուզերի հատուկ օրինակներ.
 
 ```js run
-// toStringTag for the environment-specific object and class:
+// toStringTag-ը միջավայրին հատուկ օբյեկտի and class-ի համար․
 alert( window[Symbol.toStringTag]); // Window
 alert( XMLHttpRequest.prototype[Symbol.toStringTag] ); // XMLHttpRequest
 
@@ -197,15 +197,15 @@ alert( {}.toString.call(window) ); // [object Window]
 alert( {}.toString.call(new XMLHttpRequest()) ); // [object XMLHttpRequest]
 ```
 
-As you can see, the result is exactly `Symbol.toStringTag` (if exists), wrapped into `[object ...]`.
+Ինչպես տեսնում եք, արդյունքը հենց `Symbol.toStringTag` է (եթե գոյություն ունի)՝ փաթաթված `[object ...]`-ում:
 
-At the end we have "typeof on steroids" that not only works for primitive data types, but also for built-in objects and even can be customized.
+Վերջում մենք ունենք «typeof-ը ստերոիդների համար», որը ոչ միայն աշխատում է պարզ (primitive) տվյալների տեսակների, այլև ներկառուցված օբյեկտների համար և նույնիսկ կարող է հարմարեցվել, կարգավորվել:
 
-We can use `{}.toString.call` instead of `instanceof` for built-in objects when we want to get the type as a string rather than just to check.
+Կարող ենք նաև ներկառուցված օբյեկտների համար օգտագործել `{}.toString.call`-ը՝ `instanceof`-ի փոխարեն, երբ մեզ անհրաժեշտ է ստանալ տեսակը որպես տող, այլ ոչ թե պարզապես ստուգելու համար:
 
-## Summary
+## Ամփոփում
 
-Let's summarize the type-checking methods that we know:
+Եկեք ամփոփենք տիպերի ստուգման մեթոդները, որոնք մեզ հայտնի են.
 
 |               | works for   |  returns      |
 |---------------|-------------|---------------|
@@ -213,6 +213,6 @@ Let's summarize the type-checking methods that we know:
 | `{}.toString` | primitives, built-in objects, objects with `Symbol.toStringTag`   |       string |
 | `instanceof`  | objects     |  true/false   |
 
-As we can see, `{}.toString` is technically a "more advanced" `typeof`.
+Ինչպես տեսնում ենք, `{}.toString`-ը տեխնիկապես «ավելի առաջադեմ» `typeof` է:
 
-And `instanceof` operator really shines when we are working with a class hierarchy and want to check for the class taking into account inheritance.
+Իսկ `instanceof` օպերատորը իսկապես փայլում է, երբ աշխատում ենք class-ի հիերարխիայի հետ և ցանկանում ենք ստուգել class-ի առկայությունը՝ հաշվի առնելով ժառանգականությունը:
