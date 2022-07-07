@@ -1,10 +1,10 @@
-importance: 5
+Կարևորություն՝ 5
 
 ---
 
-# Strange instanceof
+# Տարօրինակ instanceof
 
-In the code below, why does `instanceof` return `true`? We can easily see that `a` is not created by `B()`.
+Ստորև բերված կոդում ինչո՞ւ է `instanceof`-ը վերադարձնում `true`: Մենք հեշտությամբ կարող ենք տեսնել, որ `a`-ն չի ստեղծվում `B()`-ով:
 
 ```js run
 function A() {}
