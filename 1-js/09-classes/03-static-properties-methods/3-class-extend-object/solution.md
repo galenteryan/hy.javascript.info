@@ -37,7 +37,6 @@ alert( Rabbit.prototype.__proto__ === Object.prototype ); // (1) true
 alert( Rabbit.__proto__ === Object ); // (2) true
 ```
 
-So `Rabbit` now provides access to the static methods of `Object` via `Rabbit`, like this:
 Այսպիսով, `Rabbit`-ն այժմ `Rabbit`-ի միջոցով ապահովում է հասանելիություն `Object`-ի ստատիկ մեթոդներին, այսպես.
 
 ```js run
@@ -74,7 +73,7 @@ alert ( Rabbit.getOwnPropertyNames({a: 1, b: 2})); // Error
 
 ![](rabbit-extends-object.svg)
 
-Այսպիսով, կարճ ասած, երկու տարբերություն կա.
+Կարճ ասած՝ երկու տարբերություն կա.
 
 | class Rabbit | class Rabbit extends Object  |
 |--------------|------------------------------|
