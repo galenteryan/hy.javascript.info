@@ -54,7 +54,6 @@ alert(rabbit.jumps); // true
 
 Նկարագրիչները նույն ձևաչափով են, ինչպես նկարագրված է <info:property-descriptors> գլխում:
 
-We can use `Object.create` to perform an object cloning more powerful than copying properties in `for..in`:
 Մենք կարող ենք օգտագործել `Object.create`՝ օբյեկտի կլոնավորումն ավելի հզոր ձևով իրականացնելու համար, քան `for..in`-ով հատկություններ պատճենելն է․
 
 ```js
