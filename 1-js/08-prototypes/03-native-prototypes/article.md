@@ -2,7 +2,6 @@
 
 Այս `«prototype»` հատկությունը լայնորեն օգտագործվում է հենց JavaScript-ի միջուկի կողմից: Բոլոր ներկառուցված կոնստրուկտոր ֆունկցիաներն օգտագործում են այն:
 
-First we'll see at the details, and then how to use it for adding new capabilities to built-in objects.
 Սկզբում մենք կդիտարկենք մանրամասները, իսկ հետո՝ ինչպես օգտագործել այն ներկառուցված օբյեկտներին նոր հնարավորություններ ավելացնելու համար:
 
 ## Object.prototype
