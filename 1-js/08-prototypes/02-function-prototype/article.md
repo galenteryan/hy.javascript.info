@@ -140,7 +140,7 @@ Rabbit.prototype.jumps = true
 // կանխադրված Rabbit.prototype.constructor-ը պահպանված է
 ```
 
-Կամ, որպես այլընտրանք, հենց մենք վերստեղծեք `constructor` հատկությունը.
+Կամ, որպես այլընտրանք, հենց մենք վերստեղծենք `constructor` հատկությունը.
 
 ```js
 Rabbit.prototype = {
